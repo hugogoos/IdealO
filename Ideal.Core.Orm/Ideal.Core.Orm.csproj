@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<PackageId>Ideal.Core.Orm</PackageId>
+		<Authors>hugogoos</Authors>
+		<Company>$(Authors)</Company>
+		<Version>1.0.1</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile>Ideal.Core.Orm.xml</DocumentationFile>
+		<Description>Orm组件，该组件定义Orm核心接口。</Description>
+		<PackageProjectUrl>https://github.com/hugogoos/Ideal</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Ideal.Core.Common\Ideal.Core.Common.csproj" />
+	</ItemGroup>
+
+</Project>

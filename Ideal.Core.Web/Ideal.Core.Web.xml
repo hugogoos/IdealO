@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.Web</name>
+    </assembly>
+    <members>
+        <member name="T:Ideal.Core.Web.ResultResponse`1">
+            <summary>
+            统一返回类型
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Ideal.Core.Web.ResultResponse`1.Data">
+            <summary>
+            获取 返回数据
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Web.ResultResponse">
+            <summary>
+            统一返回类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Web.ResultResponse.IsSucceed">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Web.ResultResponse.Code">
+            <summary>
+            操作结果类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Web.ResultResponse.Msg">
+            <summary>
+            获取 消息内容
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Web.LifetimesEnum">
+            <summary>
+            生命周期
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Web.LifetimesEnum.Scoped">
+            <summary>
+            域
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Web.LifetimesEnum.Singleton">
+            <summary>
+            单例
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Web.LifetimesEnum.Transient">
+            <summary>
+            瞬时
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Web.ServiceCollectionExtensions">
+            <summary>
+            服务集合扩展
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Web.ServiceCollectionExtensions.AddRegisters(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String,Ideal.Core.Web.LifetimesEnum)">
+            <summary>
+            动态注册接口
+            </summary>
+            <param name="services"></param>
+            <param name="assemblyName">程序集名称</param>
+            <param name="serviceNameSuffix">服务后缀</param>
+            <param name="lifetimesEnum">生命周期</param>
+        </member>
+    </members>
+</doc>

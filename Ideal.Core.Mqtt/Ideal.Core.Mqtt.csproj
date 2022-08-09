@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<PackageId>Ideal.Core.Mqtt</PackageId>
+		<Authors>hugogoos</Authors>
+		<Company>$(Authors)</Company>
+		<Version>1.0.1</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile>Ideal.Core.Mqtt.xml</DocumentationFile>
+		<Description>Mqtt组件，该组件用于提供Mqtt封装。</Description>
+		<PackageProjectUrl>https://github.com/hugogoos/Ideal</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+		<PackageReference Include="MQTTnet" Version="3.1.0" />
+	</ItemGroup>
+
+</Project>

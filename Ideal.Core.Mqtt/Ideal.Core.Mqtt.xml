@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.Mqtt</name>
+    </assembly>
+    <members>
+        <member name="T:Ideal.Core.Mqtt.Configurations.ConfigManager">
+            <summary>
+            配置管理
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Configurations.ConfigManager.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="configuration">IConfiguration</param>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.ConfigManager.MQTTOptions">
+            <summary>
+            MQTT配置
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Mqtt.Configurations.IConfigManager">
+            <summary>
+            配置管理
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.IConfigManager.MQTTOptions">
+            <summary>
+            MQTT配置
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Mqtt.Configurations.Options.MQTTOptions">
+            <summary>
+            MQTT配置
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.Options.MQTTOptions.Server">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.Options.MQTTOptions.Port">
+            <summary>
+            监听端口号
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.Options.MQTTOptions.User">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.Options.MQTTOptions.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Configurations.Options.MQTTOptions.ClientId">
+            <summary>
+            客户端id
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Mqtt.Extensions.MqttClientSetupExtensions">
+            <summary>
+            Mqtt客户端启动项
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Extensions.MqttClientSetupExtensions.AddMqttClientSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Mqtt客户端启动项
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Extensions.MqttClientSetupExtensions.AddMqttClientSetupWithConfig(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Ideal.Core.Mqtt.Options.MqttClientOptionBuilder})">
+            <summary>
+            Mqtt客户端启动项
+            </summary>
+            <param name="services"></param>
+            <param name="configure">Mqtt配置项</param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Mqtt.Options.MqttClientOptionBuilder">
+            <summary>
+            Mqtt配置项创建
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Mqtt.Options.MqttClientOptionBuilder.ServiceProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Options.MqttClientOptionBuilder.#ctor(System.IServiceProvider)">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+        </member>
+        <member name="T:Ideal.Core.Mqtt.Services.IMqttClientHandler">
+            <summary>
+            Mqtt客户端Handler
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Mqtt.Services.IMqttClientService">
+            <summary>
+            MqttClientService
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.GetMqttClient">
+            <summary>
+            获取IMqttClient对象
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.SubscribeAsync(System.String)">
+            <summary>
+            订阅主题
+            </summary>
+            <param name="topic">主题名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.SubscribeQueueAsync(System.String)">
+            <summary>
+            不带群组的共享订阅
+            </summary>
+            <param name="topic">主题名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.SubscribeShareAsync(System.String)">
+            <summary>
+            带群组的共享订阅
+            </summary>
+            <param name="topic">主题名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.UnsubscribeAsync(System.String)">
+            <summary>
+            取消订阅主题
+            </summary>
+            <param name="topic">主题名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.UnsubscribeQueueAsync(System.String)">
+            <summary>
+            取消不带群组的共享订阅
+            </summary>
+            <param name="topic">主题名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.UnsubscribeShareAsync(System.String)">
+            <summary>
+            取消带群组的共享订阅
+            </summary>
+            <param name="topic">主题名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.PublishAsync(System.String,System.String)">
+            <summary>
+            发布主题
+            </summary>
+            <param name="topic">主题名</param>
+            <param name="message">发布内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.PublishAsync(System.String,System.Byte[])">
+            <summary>
+            发布主题
+            </summary>
+            <param name="topic">主题名</param>
+            <param name="message">发布内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.PublishAsync(System.String,System.String,System.Int32,System.Boolean)">
+            <summary>
+            发布主题
+            </summary>
+            <param name="topic">主题名</param>
+            <param name="message">发布内容</param>
+            <param name="mqttQualityOfServiceLevel">QoS服务质量</param>
+            <param name="retainFlag">是否保留</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Mqtt.Services.IMqttClientService.PublishAsync(System.String,System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            发布主题
+            </summary>
+            <param name="topic">主题名</param>
+            <param name="message">发布内容</param>
+            <param name="mqttQualityOfServiceLevel">QoS服务质量</param>
+            <param name="retainFlag">是否保留</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

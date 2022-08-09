@@ -1,0 +1,694 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Ideal.Core.Common.Attributes.ColumnNameAttribute">
+            <summary>
+            标注次特性之后，可用于将此特性的属性值作为DataTable的列名称
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Attributes.ColumnNameAttribute.TableColumnName">
+            <summary>
+            表列名
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Attributes.ColumnNameAttribute.#ctor(System.String)">
+            <summary>
+            列名
+            </summary>
+            <param name="tableColumnName"></param>
+        </member>
+        <member name="T:Ideal.Core.Common.Encodings.DESEncrypt">
+            <summary>
+            DES加密、解密帮助类
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Encrypt(System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="Text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Encrypt(System.String,System.String)">
+            <summary>
+            加密数据
+            </summary>
+            <param name="Text"></param>
+            <param name="sKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Decrypt(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="Text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Decrypt(System.String,System.String)">
+            <summary>
+            解密数据
+            </summary>
+            <param name="Text"></param>
+            <param name="sKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Encodings.Md5">
+            <summary>
+            MD5加密
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Encodings.Md5.MD5Hash(System.String)">
+            <summary>
+            netcore下的实现MD5加密
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Extensions.EnumExtension">
+            <summary>
+            枚举扩展
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetDescription(System.Enum)">
+            <summary>
+            获取枚举的描述信息(Descripion)。
+            支持位域，如果是位域组合值，多个按分隔符组合。
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetDescriptions(System.Enum,System.String)">
+            <summary>
+            获取枚举的说明
+            </summary>
+            <param name="source"></param>
+            <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumItemDesc(System.Type)">
+            <summary>
+             获取枚举项+描述
+            </summary>
+            <param name="enumType">Type,该参数的格式为typeof(需要读的枚举类型)</param>
+            <returns>键值对</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumItemValueDesc(System.Type)">
+            <summary>
+             获取枚举值+描述
+            </summary>
+            <param name="enumType">Type,该参数的格式为typeof(需要读的枚举类型)</param>
+            <returns>键值对</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumValByDescription(System.Type,System.String)">
+            <summary>
+            将注释转换成枚举值，匹配不上返回Null
+            </summary>
+            <param name="type"></param>
+            <param name="strDescription"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEunItemValueAndDesc(System.Type)">
+            <summary>
+            获取枚举类型键值对
+            </summary>
+            <param name="em"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Helpers.DateTimeHelper">
+            <summary>
+            时间处理帮助类
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToLocalTimeDateBySeconds(System.Int64)">
+            <summary>
+             时间戳转本地时间-时间戳精确到秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToUnixTimestampBySeconds(System.DateTime)">
+            <summary>
+             时间转时间戳Unix-时间戳精确到秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToLocalTimeDateByMilliseconds(System.Int64)">
+            <summary>
+             时间戳转本地时间-时间戳精确到毫秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToUnixTimestampByMilliseconds(System.DateTime)">
+            <summary>
+             时间转时间戳Unix-时间戳精确到毫秒
+            </summary> 
+        </member>
+        <member name="T:Ideal.Core.Common.Helpers.SpaceHelper">
+            <summary>
+            区域计算帮助
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsPtInPoly(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D[]@)">
+            <summary>
+            是否在区域内
+            </summary>
+            <param name="point"></param>
+            <param name="pts"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsInAreaByCrossingNumber(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D[]@)">
+            <summary>
+            是否在区域内
+            </summary>
+            <param name="current">当前判断点</param>
+            <param name="points">区域集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsInAreaByWindingNumber(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D[]@)">
+            <summary>
+            是否在区域内
+            </summary>
+            <param name="current">当前判断点</param>
+            <param name="points">区域集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsLeft(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@)">
+            <summary>
+            current 在线段左侧
+            </summary>
+            <param name="current">点坐标</param>
+            <param name="start">线段起点</param>
+            <param name="end">线段终点</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsRight(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@)">
+            <summary>
+            current 在线段右侧 
+            </summary>
+            <param name="current">点坐标</param>
+            <param name="start">线段起点</param>
+            <param name="end">线段终点</param>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.JudgeDirection(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@)">
+            <summary>
+            判断点与线段关系
+            </summary>
+            <param name="current">点坐标</param>
+            <param name="start">线段起点</param>
+            <param name="end">线段终点</param>
+            <returns>0: current 在线段上 小于0: current 在线段右侧   大于0: current 在线段左侧 </returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.TransforCoordinateLowerLeft(System.Double,System.Double,Ideal.Core.Common.Helpers.MapInfo@)">
+            <summary>
+            获取定位相对左下角为原点坐标
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="mapInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.CalculateTwoPointsDistance(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D@)">
+            <summary>
+            计算两点距离
+            </summary>
+            <param name="start">start</param>
+            <param name="end">p2</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.CalculateSpeed(System.Double,System.Int64,System.Int64)">
+            <summary>
+            计算两点速度
+            </summary>
+            <param name="distance"></param>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.CalculateCPoint(Ideal.Core.Common.Helpers.Point2D,Ideal.Core.Common.Helpers.Point2D,System.Double,System.Boolean)">
+            <summary>
+            已知直角三角形两点坐标和一边长，求另一点坐标
+            </summary>
+            <param name="a">a点</param>
+            <param name="b">b点</param>
+            <param name="bc">bc长度</param>
+            <param name="abRigth">位于ab方向右边</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.CalculateMidPoint(Ideal.Core.Common.Helpers.Point2D,Ideal.Core.Common.Helpers.Point2D)">
+            <summary>
+            计算中点坐标
+            </summary>
+            <param name="a">a点</param>
+            <param name="b">b点</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.ConvertToPoint2Ds(System.String,System.String,System.String)">
+            <summary>
+            区域坐标字符串转区域坐标集合
+            </summary>
+            <param name="source"></param>
+            <param name="splitSapn1"></param>
+            <param name="splitSapn2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.ExpandArea(Ideal.Core.Common.Helpers.Point2D[],System.Double)">
+            <summary>
+            多边形扩展或收缩
+            </summary>
+            <param name="points">多边形顶点集合</param>
+            <param name="expand">扩展大小，为负则收缩</param>
+            <returns>扩展或收缩后的多边形</returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Helpers.MapInfo">
+            <summary>
+            地图信息
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.MapInfo.OriginOffsetPixelX">
+            <summary>
+            描述:地图相对坐标原点偏移 x
+            默认值:
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.MapInfo.OriginOffsetPixelY">
+            <summary>
+            描述:地图相对坐标原点偏移 y
+            默认值:
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.MapInfo.ImageCenterPixelX">
+            <summary>
+            描述:图纸中⼼原点 x
+            默认值:
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.MapInfo.ImageCenterPixelY">
+            <summary>
+            描述:图纸中⼼原点 y
+            默认值:
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.MapInfo.Scale">
+            <summary>
+            描述:坐标比例尺
+            默认值:
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Helpers.Point2D">
+            <summary>
+            二维坐标点
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.Point2D.#ctor(System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.Point2D.X">
+            <summary>
+            x轴
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Helpers.Point2D.Y">
+            <summary>
+            y轴
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Helpers.TableHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.Create``1">
+            <summary>
+            根据类创建表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.Create``1(System.String)">
+            <summary>
+            根据类创建表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="tableName">表名</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.CreateWithPropertyDescription``1">
+            <summary>
+            通过类属性特性创建表格（将设置了ExportColumnAttribute特性的属性的特性值作为表格的列名称）
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.CreateWithPropertyDescription``1(System.String)">
+            <summary>
+            将设置了ExportColumnAttribute特性的属性的特性值作为表格的列名称
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="tableName">表名</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.Create(System.String[])">
+            <summary>
+            根据列名数组创建表格
+            </summary>
+            <param name="cols">列名数组</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.Create(System.String,System.String[])">
+            <summary>
+            根据列名数组创建表格
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="cols">列名数组</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.Create(System.Collections.Generic.Dictionary{System.String,System.Type})">
+            <summary>
+            根据列名集合（包含列名及数据类型）创建表格
+            </summary>
+            <param name="cols">列名集合（包含列名及数据类型）</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.Create(System.String,System.Collections.Generic.Dictionary{System.String,System.Type})">
+            <summary>
+            根据列名集合（包含列名及数据类型）创建表格
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="cols">列名集合（包含列名及数据类型）</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntity``1(``0)">
+            <summary>
+            把实体对象转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="model">实体对象</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntity``1(System.String,``0)">
+            <summary>
+            把实体对象转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="tableName">表名</param>
+            <param name="model">实体对象</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntityWithPropertyDescription``1(``0)">
+            <summary>
+            把实体对象转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="model">实体对象</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntityWithPropertyDescription``1(System.String,``0)">
+            <summary>
+            把实体对象转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="tableName">表名</param>
+            <param name="model">实体对象</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromArray(System.String,System.String[])">
+            <summary>
+            把一个一维数组转换为DataTable
+            </summary>
+            <param name="columnName">列名</param>
+            <param name="array">一维数组</param>
+            <returns>返回DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntity``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            把实体对象集合转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="models">实体对象集合</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntity``1(System.String,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            把实体对象集合转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="tableName">表名</param>
+            <param name="models">实体对象集合</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntityWithPropertyDescription``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            把实体对象集合转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="models">实体对象集合</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.FromEntityWithPropertyDescription``1(System.String,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            把实体对象集合转为表格
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="tableName">表名</param>
+            <param name="models">实体对象集合</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.ToEntities``1(System.Data.DataTable)">
+            <summary>
+            把表格转换为实体对象集合
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="dt">表</param>
+            <returns>实体对象集合</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.ToEntitiesWithPropertyDescription``1(System.Data.DataTable)">
+            <summary>
+            把表格转换为实体对象集合
+            </summary>
+            <typeparam name="T">类</typeparam>
+            <param name="dt">表</param>
+            <returns>实体对象集合</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.ToEntityFromDataRow``1(System.Data.DataRow)">
+            <summary>
+            把表格行记录转为实体对象
+            </summary>
+            <typeparam name="T">实体对象</typeparam>
+            <param name="dr">表格行记录</param>
+            <returns>实体对象</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.TableHelper.ToEntityFromDataRowWithPropertyDescription``1(System.Data.DataRow)">
+            <summary>
+            把表格行记录转为实体对象
+            </summary>
+            <typeparam name="T">实体对象</typeparam>
+            <param name="dr">表格行记录</param>
+            <returns>实体对象</returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Helpers.VerifyCodeHelper">
+            <summary>
+            验证码帮助类
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Helpers.VerifyCodeHelper.GetCaptcha(System.String@)">
+            <summary>
+            获取验证码
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Paging.IPagedList`1">
+            <summary>
+            分页接口
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.IPagedList`1.PageIndex">
+            <summary>
+            分页索引
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.IPagedList`1.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.IPagedList`1.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.IPagedList`1.Entities">
+            <summary>
+            实体集合
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Paging.OrderByMode">
+            <summary>
+            排序模式
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Common.Paging.OrderByMode.Asc">
+            <summary>
+            升序
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Common.Paging.OrderByMode.Desc">
+            <summary>
+            降序
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Paging.PagedList`1">
+            <summary>
+            分页实体
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.PagedList`1.PageIndex">
+            <summary>
+            分页索引
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.PagedList`1.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.PagedList`1.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.PagedList`1.Entities">
+            <summary>
+            实体集合
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Paging.Pager">
+            <summary>
+            分页器
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.Pager.PageIndex">
+            <summary>
+            分页索引（默认为1）
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.Paging.Pager.PageSize">
+            <summary>
+            分页大小（默认为10）
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Paging.PaginationExtensions">
+            <summary>
+            分页查询扩展类
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Paging.PaginationExtensions.ToPagedList``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
+            <summary>
+            返回对象分页列表
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="dataSource">已排序的数据源</param>
+            <param name="pageIndex">页码，1开始</param>
+            <param name="pageSize">页条数</param>
+            <returns>对象分页列表</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Paging.PaginationExtensions.ToPagedList``1(System.Collections.Generic.IEnumerable{``0},Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            返回对象分页列表
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="dataSource">已排序的数据源</param>
+            <param name="pager">分页器对象；当为空时，分页器取默认值</param>
+            <returns>对象分页列表</returns>
+        </member>
+        <member name="T:Ideal.Core.Common.ResultResponse`1">
+            <summary>
+            统一返回类型
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse`1.Data">
+            <summary>
+            获取 返回数据
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.ResultResponse">
+            <summary>
+            统一返回类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse.IsSucceed">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse.Code">
+            <summary>
+            操作结果类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse.Msg">
+            <summary>
+            获取 消息内容
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.Snowflake">
+            <summary>
+            雪花ID生成
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.Instance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.#ctor(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="machineId"></param>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.#ctor(System.Int64,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="machineId"></param>
+            <param name="datacenterId"></param>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.GetTimestamp">
+            <summary>
+            生成当前时间戳
+            </summary>
+            <returns>毫秒</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.GetNextTimestamp(System.Int64)">
+            <summary>
+            获取下一微秒时间戳
+            </summary>
+            <param name="lastTimestamp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.GetId">
+            <summary>
+            获取长整形的ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Snowflake.GetNewId">
+            <summary>
+            获取新的雪花ID
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

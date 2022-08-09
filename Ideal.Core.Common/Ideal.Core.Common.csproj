@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<PackageId>Ideal.Core.Common</PackageId>
+		<Authors>hugogoos</Authors>
+		<Company>$(Authors)</Company>
+		<Version>1.0.1</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile>Ideal.Core.Common.xml</DocumentationFile>
+		<Description>公共组件，该组件用于提供常用的，公共的功能封装。</Description>
+		<PackageProjectUrl>https://github.com/hugogoos/Ideal</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SkiaSharp" Version="2.80.3" />
+	</ItemGroup>
+
+</Project>

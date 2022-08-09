@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.Document</name>
+    </assembly>
+    <members>
+        <member name="T:Ideal.Core.Document.ExcelHelper">
+            <summary>
+            Excel帮助类
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.Read(System.String,System.Boolean)">
+            <summary>
+            读取Excel到DataSet
+            </summary>
+            <param name="filename">Excel完全名称</param>
+            <param name="firstRowAsHeader">是否把Excel第一行做为Table表头</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.Read(System.String,System.String,System.Boolean)">
+            <summary>
+            读取Excel到DataSet
+            </summary>
+            <param name="filename">Excel完全名称</param>
+            <param name="sheetname">读取指定的Sheet表</param>
+            <param name="firstRowAsHeader">是否把Excel第一行做为Table表头</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.Read(System.IO.Stream,System.String,System.Boolean)">
+            <summary>
+            读取Excel文件流到DataSet
+            </summary>
+            <param name="stream">Excel文件流</param>
+            <param name="filename">Excel完全名称</param>
+            <param name="firstRowAsHeader">是否把Excel第一行做为Table表头</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.Read(System.IO.Stream,System.String,System.String,System.Boolean)">
+            <summary>
+            读取Excel文件流到DataSet
+            </summary>
+            <param name="stream">Excel文件流</param>
+            <param name="filename">Excel完全名称</param>
+            <param name="sheetname">读取指定工作簿名</param>
+            <param name="firstRowAsHeader">是否把Excel第一行做为Table表头</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.Write``1(``0,System.String,System.String,System.String)">
+            <summary>
+            下载Excel
+            </summary>
+            <typeparam name="T">泛型类</typeparam>
+            <param name="source">泛型类</param>
+            <param name="filename">下载文件完全名称</param>
+            <param name="templateFileName">模板名称</param>
+            <param name="templateConfigXml">模板配置Xml</param>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.WriteMemoryStream(System.Data.DataTable[],System.String,System.Boolean)">
+            <summary>
+            下载Excel文件流
+            </summary>
+            <param name="source">Table数组</param>
+            <param name="filename">Excel文件名</param>
+            <param name="fillheader">Table列名是否做为Excel第一行</param>
+            <returns>MemoryStream</returns>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.WriteBytes(System.Data.DataTable[],System.String,System.Boolean)">
+            <summary>
+            下载Excel文件字节数组
+            </summary>
+            <param name="source">Table数组</param>
+            <param name="filename">Excel文件名</param>
+            <param name="fillheader">Table列名是否做为Excel第一行</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Ideal.Core.Document.ExcelHelper.Write(System.Data.DataTable[],System.String,System.Boolean)">
+            <summary>
+            下载Excel
+            </summary>
+            <param name="source">Table数组</param>
+            <param name="filename">Excel文件名</param>
+            <param name="fillheader">Table列名是否做为Excel第一行</param>
+        </member>
+        <member name="T:Ideal.Core.Document.Extensions.ExcelExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

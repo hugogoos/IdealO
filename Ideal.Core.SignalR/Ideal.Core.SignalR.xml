@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.SignalR</name>
+    </assembly>
+    <members>
+        <member name="M:Ideal.Core.SignalR.SignalRSetupExtensions.AddSignalRSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            SignalR配置项
+            </summary>
+            <param name="services">IServiceCollection</param>
+            <param name="url">SignalR服务器地址</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+    </members>
+</doc>

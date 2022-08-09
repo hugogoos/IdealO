@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<PackageId>Ideal.Core.Document</PackageId>
+		<Authors>hugogoos</Authors>
+		<Company>$(Authors)</Company>
+		<Version>1.0.1</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile>Ideal.Core.Document.xml</DocumentationFile>
+		<Description>文档组件，该组件用于导入导出Excel表格、PDF文件等文档。</Description>
+		<PackageProjectUrl>https://github.com/hugogoos/Ideal</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NPOI" Version="2.5.4" />
+	</ItemGroup>
+
+</Project>

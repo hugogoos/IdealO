@@ -1,0 +1,374 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.Orm</name>
+    </assembly>
+    <members>
+        <member name="T:Ideal.Core.Orm.Domain.AuditableEntity`1">
+            <summary>
+            支持审计的实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.AuditableEntity`1.CreatedTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.AuditableEntity`1.CreatedBy">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.AuditableEntity`1.UpdatedTime">
+            <summary>
+            修改时间
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.AuditableEntity`1.UpdatedBy">
+            <summary>
+            修改人
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.Entity`1">
+            <summary>
+            实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Entity`1.Id">
+            <summary>
+            实体标识
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.EntityEqualityComparer`2">
+            <summary>
+            实体比较器
+            </summary>
+            <typeparam name="TEntity">实体</typeparam>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.EntityEqualityComparer`2.Equals(`0,`0)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.EntityEqualityComparer`2.GetHashCode(`0)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.IAggregateRoot`1">
+            <summary>
+            聚合根
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.IAuditable">
+            <summary>
+            支持审计
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.IAuditable.CreatedTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.IAuditable.CreatedBy">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.IAuditable.UpdatedTime">
+            <summary>
+            修改时间
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.IAuditable.UpdatedBy">
+            <summary>
+            修改人
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.IEntity`1">
+            <summary>
+            实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.IEntity`1.Id">
+            <summary>
+            实体标识
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.IRepository`2">
+            <summary>
+            异步仓储接口
+            </summary>
+            <typeparam name="TAggregateRoot">充当聚合根的实体类型</typeparam>
+            <typeparam name="TKey">实体的主键类型</typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.FindByIdAsync(`1)">
+            <summary>
+            根据主键查找实体
+            </summary>
+            <param name="key">实体的主键</param>
+            <returns>返回实体结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.FirstOrDefaultAsync">
+            <summary>
+            查找第一个实体
+            </summary>
+            <returns>返回实体结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.FirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            根据条件查找第一个实体
+            </summary>
+            <param name="predicate">条件谓词</param>
+            <returns>返回实体结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.FindAllAsync">
+            <summary>
+            查找所有实体
+            </summary>
+            <returns>返回所有实体的列表的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.FindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            查找满足条件的实体
+            </summary>
+            <param name="predicate">条件谓词</param>
+            <returns>返回实体列表结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            分页查找所有实体
+            </summary>
+            <param name="orderByKeySelector">选择用于分页前排序的键</param>
+            <param name="orderByType">排序类型</param>
+            <param name="pager">分页器</param>
+            <returns>分页的实体列表</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            分页查找满足条件的实体
+            </summary>
+            <param name="predicate">条件谓词</param>
+            <param name="orderByKeySelector">选择用于分页前排序的键</param>
+            <param name="orderByType">排序类型</param>
+            <param name="pager">分页器</param>
+            <returns>分页的实体列表结果</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.ExistsAsync(`1)">
+            <summary>
+            判断是否存在指定主键的实体
+            </summary>
+            <param name="key">实体的主键</param>
+            <returns>返回是否存在的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.ExistsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            判断是否存在满足条件的实体
+            </summary>
+            <param name="predicate">条件谓词</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.AnyAsync">
+            <summary>
+            判断是否存在实体
+            </summary>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            判断是否存在满足条件的实体
+            </summary>
+            <param name="predicate">条件谓词</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.CountAsync">
+            <summary>
+            计算实体个数
+            </summary>
+            <returns>条数</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.CountAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            计算满足条件的实体个数
+            </summary>
+            <param name="predicate">条件谓词</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.CreateAsync(`0)">
+            <summary>
+            创建实体
+            </summary>
+            <param name="entity">新的实体</param>
+            <returns>已创建的实体</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.CreateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            批量创建实体
+            </summary>
+            <param name="entities">新的实体集合</param>
+            <returns>已创建的实体集合</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateAsync(`0)">
+            <summary>
+            更新实体
+            </summary>
+            <param name="entity">待更新的实体</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            批量更新实体
+            </summary>
+            <param name="entities">待更新的实体集合</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.SaveAsync(`0)">
+            <summary>
+            保存实体
+            </summary>
+            <param name="entity">待保存的实体</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.SaveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            批量保存实体
+            </summary>
+            <param name="entities">待保存的实体集合</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.RemoveByIdAsync(`1)">
+            <summary>
+            根据主键删除实体
+            </summary>
+            <param name="key">待删除实体的主键</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.RemoveAsync(`0)">
+            <summary>
+            删除实体
+            </summary>
+            <param name="entity">待删除的实体</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.RemoveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            批量删除实体
+            </summary>
+            <param name="entities">待删除的实体集合</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.RemoveAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            删除满足条件的实体
+            </summary>
+            <param name="predicate">条件谓词</param>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.ISoftDelete">
+            <summary>
+            支持软删除
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.ISoftDelete.IsDeleted">
+            <summary>
+            软删除标志
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.Organization.IOrgAggregateRoot`1">
+            <summary>
+            机构聚合根
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.Organization.IOrganization">
+            <summary>
+            支持机构
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.IOrganization.OrganizationId">
+            <summary>
+            机构Id
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1">
+            <summary>
+            支持机构审计的实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.CreatedTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.CreatedBy">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.UpdatedTime">
+            <summary>
+            修改时间
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.UpdatedBy">
+            <summary>
+            修改人
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.Organization.OrgEntity`1">
+            <summary>
+            支持机构的实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgEntity`1.OrganizationId">
+            <summary>
+            机构标志
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.Organization.OrgSoftDeleteEntity`1">
+            <summary>
+            支持机构软删除的实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgSoftDeleteEntity`1.IsDeleted">
+            <summary>
+            软删除标志
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.SoftDeleteEntity`1">
+            <summary>
+            支持软删除的实体
+            </summary>
+            <typeparam name="TKey">实体标识类型</typeparam>
+        </member>
+        <member name="P:Ideal.Core.Orm.Domain.SoftDeleteEntity`1.IsDeleted">
+            <summary>
+            软删除标志
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Linq.QueryableExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.Linq.QueryableExtensions.WhereIf``1(System.Linq.IQueryable{``0},System.Boolean,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            当满足特定条件时执行查询
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="source">查询对象</param>
+            <param name="condition">需要满足的条件</param>
+            <param name="predicate">满足条件时执行的查询表达式</param>
+            <returns>结果集</returns>
+        </member>
+    </members>
+</doc>
