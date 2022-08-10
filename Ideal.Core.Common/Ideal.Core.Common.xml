@@ -72,7 +72,39 @@
             枚举扩展
             </summary>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetDescription(System.Enum)">
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.String)">
+            <summary>
+            根据枚举名称转换成枚举
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name">枚举名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.Int32)">
+            <summary>
+            根据枚举值转换成枚举
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">枚举值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumName``1(System.Int32)">
+            <summary>
+            根据枚举值转换成枚举名称
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">枚举值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumValue``1(System.String)">
+            <summary>
+            根据枚举名称转换成枚举值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name">枚举名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToDescription(System.Enum)">
             <summary>
             获取枚举的描述信息(Descripion)。
             支持位域，如果是位域组合值，多个按分隔符组合。
@@ -80,7 +112,7 @@
             <param name="source"></param>
             <returns></returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetDescriptions(System.Enum,System.String)">
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToDescriptions(System.Enum,System.String)">
             <summary>
             获取枚举的说明
             </summary>
@@ -604,37 +636,6 @@
             <param name="dataSource">已排序的数据源</param>
             <param name="pager">分页器对象；当为空时，分页器取默认值</param>
             <returns>对象分页列表</returns>
-        </member>
-        <member name="T:Ideal.Core.Common.ResultResponse`1">
-            <summary>
-            统一返回类型
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="P:Ideal.Core.Common.ResultResponse`1.Data">
-            <summary>
-            获取 返回数据
-            </summary>
-        </member>
-        <member name="T:Ideal.Core.Common.ResultResponse">
-            <summary>
-            统一返回类型
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Common.ResultResponse.IsSucceed">
-            <summary>
-            是否成功
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Common.ResultResponse.Code">
-            <summary>
-            操作结果类型
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Common.ResultResponse.Msg">
-            <summary>
-            获取 消息内容
-            </summary>
         </member>
         <member name="T:Ideal.Core.Common.Snowflake">
             <summary>

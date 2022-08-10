@@ -15,19 +15,91 @@ namespace Ideal.Core.Common.Extensions
         private static readonly ConcurrentDictionary<Enum, string> _concurrentDictionary = new();
 
         /// <summary>
+        /// 根据枚举名称转换成枚举
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name">枚举名称</param>
+        /// <returns></returns>
+        public static T? ToEnum<T>(this string name)
+        {
+            Enum.TryParse(typeof(T), name, true, out var result);
+            if (result is null)
+            {
+                return default;
+
+            }
+
+            return (T)result;
+        }
+
+        /// <summary>
+        /// 根据枚举值转换成枚举
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">枚举值</param>
+        /// <returns></returns>
+        public static T? ToEnum<T>(this int value)
+        {
+            Enum.TryParse(typeof(T), Enum.GetName(typeof(T), value), true, out var result);
+            if (result is null)
+            {
+                return default;
+
+            }
+
+            return (T)result;
+        }
+
+        /// <summary>
+        /// 根据枚举值转换成枚举名称
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">枚举值</param>
+        /// <returns></returns>
+        public static string ToEnumName<T>(this int value)
+        {
+            var result = Enum.GetName(typeof(T), value);
+            if (result is null)
+            {
+                return value.ToString();
+
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 根据枚举名称转换成枚举值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name">枚举名称</param>
+        /// <returns></returns>
+        public static int? ToEnumValue<T>(this string name)
+        {
+            var result = name.ToEnum<T>();
+            if (result is null)
+            {
+                return null;
+
+            }
+
+            return result.GetHashCode();
+        }
+
+        /// <summary>
         /// 获取枚举的描述信息(Descripion)。
         /// 支持位域，如果是位域组合值，多个按分隔符组合。
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static string GetDescription(this Enum source)
+        public static string ToDescription(this Enum source)
         {
             return _concurrentDictionary.GetOrAdd(source, (key) =>
             {
                 var type = key.GetType();
                 var field = type.GetField(key.ToString());
                 //如果field为null则应该是组合位域值，
-                return field == null ? key.GetDescriptions() : GetFieldDescription(field);
+                return field == null ? key.ToDescriptions() : GetFieldDescription(field);
             });
         }
 
@@ -36,7 +108,7 @@ namespace Ideal.Core.Common.Extensions
         /// </summary>
         /// <param name="source"></param>
         /// <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
-        public static string GetDescriptions(this Enum source, string split = ",")
+        public static string ToDescriptions(this Enum source, string split = ",")
         {
             var names = source.ToString().Split(',');
             var res = new string[names.Length];
@@ -119,7 +191,7 @@ namespace Ideal.Core.Common.Extensions
             foreach (var obj in Enum.GetValues(type))
             {
                 var nEnum = (Enum)obj;
-                if (nEnum.GetDescription() == strDescription)
+                if (nEnum.ToDescription() == strDescription)
                 {
                     enumVal = (int)Convert.ChangeType(nEnum, typeof(int));
                 }
