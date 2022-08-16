@@ -27,7 +27,15 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
 
                 AddCreateUserInfo(entity);
 
-                return await Context.Insertable(entity).ExecuteCommandAsync();
+                var isSplitTable = ClassHelper.IsSplitTable<IOrgAggregateRoot>();
+                if (!isSplitTable)
+                {
+                    return await Context.Insertable(entity).ExecuteCommandAsync();
+                }
+                else
+                {
+                    return await Context.Insertable(entity).SplitTable().ExecuteCommandAsync();
+                }
             }
 
             return await Task.FromResult(0);
@@ -41,7 +49,15 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
 
                 AddCreateUserInfo(entities);
 
-                return await Context.Insertable(entities.ToList()).ExecuteCommandAsync();
+                var isSplitTable = ClassHelper.IsSplitTable<IOrgAggregateRoot>();
+                if (!isSplitTable)
+                {
+                    return await Context.Insertable(entities.ToList()).ExecuteCommandAsync();
+                }
+                else
+                {
+                    return await Context.Insertable(entities.ToList()).SplitTable().ExecuteCommandAsync();
+                }
             }
 
             return await Task.FromResult(0);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ideal.Core.Orm.SqlSugar
 {
-    public abstract class SqlSugarRepository<TAggregateRoot, TKey> : IQuerableRepository<TAggregateRoot, TKey>, IRepository<TAggregateRoot, TKey>
+    public abstract class SqlSugarRepository<TAggregateRoot, TKey> : ISplitTableRepository<TAggregateRoot, TKey>, IQuerableRepository<TAggregateRoot, TKey>, IRepository<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, new()
     {
         protected ISqlSugarClient Context { get; }
@@ -58,18 +58,90 @@ namespace Ideal.Core.Orm.SqlSugar
 
         public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync()
         {
-            return await Context.Queryable<TAggregateRoot>().ToListAsync();
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (!isSplitTable)
+            {
+                return await Context.Queryable<TAggregateRoot>().ToListAsync();
+            }
+            else
+            {
+                return await Context.Queryable<TAggregateRoot>().SplitTable(tabs => tabs).ToListAsync();
+            }
+        }
+
+        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime)
+        {
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (isSplitTable)
+            {
+                return await Context.Queryable<TAggregateRoot>().SplitTable(startTime, endTime).ToListAsync();
+            }
+            else
+            {
+                return await Context.Queryable<TAggregateRoot>().ToListAsync();
+            }
         }
 
         public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().Where(predicate).ToListAsync();
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (!isSplitTable)
+            {
+                return await Context.Queryable<TAggregateRoot>().Where(predicate).ToListAsync();
+            }
+            else
+            {
+                return await Context.Queryable<TAggregateRoot>().Where(predicate).SplitTable(tabs => tabs).ToListAsync();
+            }
+        }
+
+        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (isSplitTable)
+            {
+                return await Context.Queryable<TAggregateRoot>().Where(predicate).SplitTable(startTime, endTime).ToListAsync();
+            }
+            else
+            {
+                return await Context.Queryable<TAggregateRoot>().Where(predicate).ToListAsync();
+            }
         }
 
         public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = new RefAsync<int>();
-            var page = await Context.Queryable<TAggregateRoot>().OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var query = Context.Queryable<TAggregateRoot>();
+
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (isSplitTable)
+            {
+                query = query.SplitTable(tabs => tabs);
+            }
+
+            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var result = new PagedList<TAggregateRoot>()
+            {
+                PageIndex = pager.PageIndex,
+                PageSize = pager.PageSize,
+                TotalCount = totalCount.Value,
+                Entities = page
+            };
+            return result;
+        }
+
+        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        {
+            var totalCount = new RefAsync<int>();
+            var query = Context.Queryable<TAggregateRoot>();
+
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (isSplitTable)
+            {
+                query = query.SplitTable(startTime, endTime);
+            }
+
+            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
             var result = new PagedList<TAggregateRoot>()
             {
                 PageIndex = pager.PageIndex,
@@ -83,7 +155,37 @@ namespace Ideal.Core.Orm.SqlSugar
         public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = new RefAsync<int>();
-            var page = await Context.Queryable<TAggregateRoot>().Where(predicate).OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var query = Context.Queryable<TAggregateRoot>().Where(predicate);
+
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (isSplitTable)
+            {
+                query = query.SplitTable(tabs => tabs);
+            }
+
+            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var result = new PagedList<TAggregateRoot>()
+            {
+                PageIndex = pager.PageIndex,
+                PageSize = pager.PageSize,
+                TotalCount = totalCount.Value,
+                Entities = page
+            };
+            return result;
+        }
+
+        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        {
+            var totalCount = new RefAsync<int>();
+            var query = Context.Queryable<TAggregateRoot>().Where(predicate);
+
+            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+            if (isSplitTable)
+            {
+                query = query.SplitTable(startTime, endTime);
+            }
+
+            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
             var result = new PagedList<TAggregateRoot>()
             {
                 PageIndex = pager.PageIndex,
@@ -128,7 +230,15 @@ namespace Ideal.Core.Orm.SqlSugar
         {
             if (entity != null)
             {
-                return await Context.Insertable(entity).ExecuteCommandAsync();
+                var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+                if (!isSplitTable)
+                {
+                    return await Context.Insertable(entity).ExecuteCommandAsync();
+                }
+                else
+                {
+                    return await Context.Insertable(entity).SplitTable().ExecuteCommandAsync();
+                }
             }
 
             return await Task.FromResult(0);
@@ -138,7 +248,15 @@ namespace Ideal.Core.Orm.SqlSugar
         {
             if (entities != null && entities.Any())
             {
-                return await Context.Insertable(entities.ToList()).ExecuteCommandAsync();
+                var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
+                if (!isSplitTable)
+                {
+                    return await Context.Insertable(entities.ToList()).ExecuteCommandAsync();
+                }
+                else
+                {
+                    return await Context.Insertable(entities.ToList()).SplitTable().ExecuteCommandAsync();
+                }
             }
 
             return await Task.FromResult(0);
