@@ -67,9 +67,44 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="T:Ideal.Core.Common.Extensions.DateTimeExtension">
+            <summary>
+            时间相关扩展
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateBySeconds(System.Int64)">
+            <summary>
+             时间戳转本地时间-时间戳精确到秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateBySeconds(System.Int64)">
+            <summary>
+             时间戳转UTC时间-时间戳精确到秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUnixTimestampBySeconds(System.DateTime)">
+            <summary>
+             时间转时间戳Unix-时间戳精确到秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateByMilliseconds(System.Int64)">
+            <summary>
+             时间戳转本地时间-时间戳精确到毫秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateByMilliseconds(System.Int64)">
+            <summary>
+             时间戳转UTC时间-时间戳精确到毫秒
+            </summary> 
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUnixTimestampByMilliseconds(System.DateTime)">
+            <summary>
+             时间转时间戳Unix-时间戳精确到毫秒
+            </summary> 
+        </member>
         <member name="T:Ideal.Core.Common.Extensions.EnumExtension">
             <summary>
-            枚举扩展
+            枚举相关扩展
             </summary>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.String)">

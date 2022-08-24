@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Ideal.Core.Common.Extensions
 {
     /// <summary>
-    /// 枚举扩展
+    /// 枚举相关扩展
     /// </summary>
     public static class EnumExtension
     {
