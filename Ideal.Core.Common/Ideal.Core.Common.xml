@@ -123,6 +123,13 @@
             <param name="value">枚举值</param>
             <returns></returns>
         </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumByDescription``1(System.String)">
+            <summary>
+            将注释转换成枚举值，匹配不上返回Null
+            </summary>
+            <param name="description"></param>
+            <returns></returns>
+        </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumName``1(System.Int32)">
             <summary>
             根据枚举值转换成枚举名称
@@ -139,49 +146,42 @@
             <param name="name">枚举名称</param>
             <returns></returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToDescription(System.Enum)">
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToDescription(System.Enum,System.String)">
             <summary>
             获取枚举的描述信息(Descripion)。
             支持位域，如果是位域组合值，多个按分隔符组合。
             </summary>
             <param name="source"></param>
+            <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
             <returns></returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToDescriptions(System.Enum,System.String)">
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumNameDescriptions(System.Type)">
             <summary>
-            获取枚举的说明
+             获取枚举名+描述
             </summary>
-            <param name="source"></param>
-            <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
-        </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumItemDesc(System.Type)">
-            <summary>
-             获取枚举项+描述
-            </summary>
-            <param name="enumType">Type,该参数的格式为typeof(需要读的枚举类型)</param>
+            <param name="enumType">枚举的类型</param>
             <returns>键值对</returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumItemValueDesc(System.Type)">
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumValueDescriptions(System.Type)">
             <summary>
              获取枚举值+描述
             </summary>
-            <param name="enumType">Type,该参数的格式为typeof(需要读的枚举类型)</param>
+            <param name="enumType">枚举的类型</param>
             <returns>键值对</returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumValByDescription(System.Type,System.String)">
-            <summary>
-            将注释转换成枚举值，匹配不上返回Null
-            </summary>
-            <param name="type"></param>
-            <param name="strDescription"></param>
-            <returns></returns>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumNameValues(System.Type)">
+             <summary>
+             获取枚举名+值
+             </summary>
+            <param name="enumType">枚举的类型</param>
+             <returns></returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEunItemValueAndDesc(System.Type)">
-            <summary>
-            获取枚举类型键值对
-            </summary>
-            <param name="em"></param>
-            <returns></returns>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumValueNames(System.Type)">
+             <summary>
+             获取枚举值+名
+             </summary>
+            <param name="enumType">枚举的类型</param>
+             <returns></returns>
         </member>
         <member name="T:Ideal.Core.Common.Helpers.DateTimeHelper">
             <summary>

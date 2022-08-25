@@ -28,7 +28,7 @@ namespace Ideal.Core.Common.Helpers
         /// <typeparam name="T">类</typeparam>
         /// <param name="tableName">表名</param>
         /// <returns>DataTable</returns>
-        public static DataTable Create<T>(string tableName)
+        public static DataTable Create<T>(string? tableName)
         {
             var entity = Activator.CreateInstance<T>();
             var propertys = entity.GetType().GetProperties().Where(u => u.CanWrite);
@@ -57,7 +57,7 @@ namespace Ideal.Core.Common.Helpers
         /// <typeparam name="T">类</typeparam>
         /// <param name="tableName">表名</param>
         /// <returns>DataTable</returns>
-        public static DataTable CreateWithPropertyDescription<T>(string tableName)
+        public static DataTable CreateWithPropertyDescription<T>(string? tableName)
         {
             var entity = Activator.CreateInstance<T>();
             var propertys = entity.GetType().GetProperties().Where(u => u.CanWrite);
@@ -102,7 +102,7 @@ namespace Ideal.Core.Common.Helpers
         /// <param name="tableName">表名</param>
         /// <param name="cols">列名数组</param>
         /// <returns>DataTable</returns>
-        public static DataTable Create(string tableName, string[] cols)
+        public static DataTable Create(string? tableName, string[] cols)
         {
             var tb = new DataTable(tableName);
             foreach (var col in cols)
@@ -129,7 +129,7 @@ namespace Ideal.Core.Common.Helpers
         /// <param name="tableName">表名</param>
         /// <param name="cols">列名集合（包含列名及数据类型）</param>
         /// <returns>DataTable</returns>
-        public static DataTable Create(string tableName, Dictionary<string, Type> cols)
+        public static DataTable Create(string? tableName, Dictionary<string, Type> cols)
         {
             var tb = new DataTable(tableName);
             foreach (var col in cols)
@@ -158,7 +158,7 @@ namespace Ideal.Core.Common.Helpers
         /// <param name="tableName">表名</param>
         /// <param name="model">实体对象</param>
         /// <returns>DataTable</returns>
-        public static DataTable FromEntity<T>(string tableName, T model)
+        public static DataTable FromEntity<T>(string? tableName, T model)
         {
             var dt = Create<T>(tableName);
             var propertys = Activator.CreateInstance<T>().GetType().GetProperties().Where(u => u.CanWrite);
@@ -185,7 +185,7 @@ namespace Ideal.Core.Common.Helpers
         /// <param name="tableName">表名</param>
         /// <param name="model">实体对象</param>
         /// <returns>DataTable</returns>
-        public static DataTable FromEntityWithPropertyDescription<T>(string tableName, T model)
+        public static DataTable FromEntityWithPropertyDescription<T>(string? tableName, T model)
         {
             var dt = CreateWithPropertyDescription<T>(tableName);
             var propertys = Activator.CreateInstance<T>().GetType().GetProperties().Where(u => u.CanWrite);
@@ -232,7 +232,7 @@ namespace Ideal.Core.Common.Helpers
         /// <param name="tableName">表名</param>
         /// <param name="models">实体对象集合</param>
         /// <returns>DataTable</returns>
-        public static DataTable FromEntity<T>(string tableName, IEnumerable<T> models)
+        public static DataTable FromEntity<T>(string? tableName, IEnumerable<T> models)
         {
             if (models == null || !models.Any())
             {
@@ -267,7 +267,7 @@ namespace Ideal.Core.Common.Helpers
         /// <param name="tableName">表名</param>
         /// <param name="models">实体对象集合</param>
         /// <returns>DataTable</returns>
-        public static DataTable FromEntityWithPropertyDescription<T>(string tableName, IEnumerable<T> models)
+        public static DataTable FromEntityWithPropertyDescription<T>(string? tableName, IEnumerable<T> models)
         {
             if (models == null || !models.Any())
             {
@@ -391,7 +391,7 @@ namespace Ideal.Core.Common.Helpers
             return ToEntityFromDataRowWithPropertyDescription<T>(dr, null);
         }
 
-        private static T ToEntityFromDataRow<T>(DataRow dr, IEnumerable<PropertyInfo> propertys)
+        private static T ToEntityFromDataRow<T>(DataRow dr, IEnumerable<PropertyInfo>? propertys)
         {
             var entity = Activator.CreateInstance<T>();
             propertys ??= entity.GetType().GetProperties().Where(u => u.CanWrite);
@@ -413,7 +413,7 @@ namespace Ideal.Core.Common.Helpers
             return entity;
         }
 
-        private static T ToEntityFromDataRowWithPropertyDescription<T>(DataRow dr, IEnumerable<PropertyInfo> propertys)
+        private static T ToEntityFromDataRowWithPropertyDescription<T>(DataRow dr, IEnumerable<PropertyInfo>? propertys)
         {
             var entity = Activator.CreateInstance<T>();
             propertys ??= entity.GetType().GetProperties().Where(u => u.CanWrite);
@@ -454,7 +454,7 @@ namespace Ideal.Core.Common.Helpers
             return RowColTranspose(null, dt, columnName);
         }
 
-        public static DataTable RowColTranspose(string tableName, DataTable dt, string columnName)
+        public static DataTable RowColTranspose(string? tableName, DataTable dt, string columnName)
         {
             return !dt.Columns.Contains(columnName) ? null : RowColTranspose(tableName, dt, dt.Columns.IndexOf(columnName));
         }
@@ -464,7 +464,7 @@ namespace Ideal.Core.Common.Helpers
             return RowColTranspose(null, dt, columnIndex);
         }
 
-        public static DataTable RowColTranspose(string tableName, DataTable dt, int columnIndex)
+        public static DataTable RowColTranspose(string? tableName, DataTable dt, int columnIndex)
         {
             if (dt.Columns.Count - 1 < columnIndex)
             {

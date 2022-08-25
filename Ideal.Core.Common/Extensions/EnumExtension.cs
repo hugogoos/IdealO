@@ -11,8 +11,12 @@ namespace Ideal.Core.Common.Extensions
     /// </summary>
     public static class EnumExtension
     {
-        private static readonly ConcurrentDictionary<Type, Dictionary<string, string>> _concurrentDicDictionary = new();
-        private static readonly ConcurrentDictionary<Enum, string> _concurrentDictionary = new();
+        private static readonly ConcurrentDictionary<Type, Dictionary<string, string>> _concurrentDicNameDescriptionDictionary = new();
+        private static readonly ConcurrentDictionary<Type, Dictionary<int, string>> _concurrentValueDescriptionDictionary = new();
+        private static readonly ConcurrentDictionary<Type, Dictionary<string, int>> _concurrentNameValueDictionary = new();
+        private static readonly ConcurrentDictionary<Type, Dictionary<int, string>> _concurrentValueNameDictionary = new();
+        private static readonly ConcurrentDictionary<Enum, string> _concurrentDescriptionDictionary = new();
+        private static readonly ConcurrentDictionary<string, string> _concurrentEnumByDescriptionDictionary = new();
 
         /// <summary>
         /// 根据枚举名称转换成枚举
@@ -20,16 +24,16 @@ namespace Ideal.Core.Common.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="name">枚举名称</param>
         /// <returns></returns>
-        public static T? ToEnum<T>(this string name)
+        public static T? ToEnum<T>(this string name) where T : struct, Enum
         {
             Enum.TryParse(typeof(T), name, true, out var result);
             if (result is null)
             {
                 return default;
-
             }
 
-            return (T)result;
+            return (T?)result!;
+
         }
 
         /// <summary>
@@ -38,16 +42,29 @@ namespace Ideal.Core.Common.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="value">枚举值</param>
         /// <returns></returns>
-        public static T? ToEnum<T>(this int value)
+        public static T? ToEnum<T>(this int value) where T : struct, Enum
         {
-            Enum.TryParse(typeof(T), Enum.GetName(typeof(T), value), true, out var result);
-            if (result is null)
-            {
-                return default;
+            return value.ToString().ToEnum<T>();
+        }
 
+        /// <summary>
+        /// 将注释转换成枚举值，匹配不上返回Null
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static T? ToEnumByDescription<T>(this string description) where T : struct, Enum
+        {
+            var type = typeof(T);
+            foreach (var obj in Enum.GetValues(type))
+            {
+                var nEnum = (Enum)obj;
+                if (nEnum.ToDescription() == description)
+                {
+                    return (T)obj;
+                }
             }
 
-            return (T)result;
+            return default;
         }
 
         /// <summary>
@@ -56,16 +73,16 @@ namespace Ideal.Core.Common.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="value">枚举值</param>
         /// <returns></returns>
-        public static string ToEnumName<T>(this int value)
+        public static string ToEnumName<T>(this int value) where T : struct, Enum
         {
-            var result = Enum.GetName(typeof(T), value);
+            var result = value.ToEnum<T>();
             if (result is null)
             {
                 return value.ToString();
-
             }
 
-            return result;
+            return result.ToString()!;
+
         }
 
         /// <summary>
@@ -74,7 +91,7 @@ namespace Ideal.Core.Common.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="name">枚举名称</param>
         /// <returns></returns>
-        public static int? ToEnumValue<T>(this string name)
+        public static int? ToEnumValue<T>(this string name) where T : struct, Enum
         {
             var result = name.ToEnum<T>();
             if (result is null)
@@ -91,132 +108,145 @@ namespace Ideal.Core.Common.Extensions
         /// 支持位域，如果是位域组合值，多个按分隔符组合。
         /// </summary>
         /// <param name="source"></param>
+        /// <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
         /// <returns></returns>
-        public static string ToDescription(this Enum source)
+        public static string ToDescription(this Enum source, string split = ",")
         {
-            return _concurrentDictionary.GetOrAdd(source, (key) =>
+            return _concurrentDescriptionDictionary.GetOrAdd(source, (key) =>
             {
+                var names = key.ToString().Split(',');
+                var res = new string[names.Length];
                 var type = key.GetType();
-                var field = type.GetField(key.ToString());
-                //如果field为null则应该是组合位域值，
-                return field == null ? key.ToDescriptions() : GetFieldDescription(field);
+                for (var i = 0; i < names.Length; i++)
+                {
+                    var field = type.GetField(names[i].Trim());
+                    if (field == null)
+                    {
+                        continue;
+                    }
+
+                    res[i] = GetFieldDescription(field);
+                }
+
+                return string.Join(split, res);
             });
         }
 
-        /// <summary>
-        /// 获取枚举的说明
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
-        public static string ToDescriptions(this Enum source, string split = ",")
-        {
-            var names = source.ToString().Split(',');
-            var res = new string[names.Length];
-            var type = source.GetType();
-            for (var i = 0; i < names.Length; i++)
-            {
-                var field = type.GetField(names[i].Trim());
-                if (field == null)
-                {
-                    continue;
-                }
-
-                res[i] = GetFieldDescription(field);
-            }
-            return string.Join(split, res);
-        }
-
         ///<summary>
-        /// 获取枚举项+描述
+        /// 获取枚举名+描述
         ///</summary>
-        ///<param name="enumType">Type,该参数的格式为typeof(需要读的枚举类型)</param>
+        ///<param name="enumType">枚举的类型</param>
         ///<returns>键值对</returns>
-        public static Dictionary<string, string> GetEnumItemDesc(Type enumType)
+        public static Dictionary<string, string> ToEnumNameDescriptions(this Type enumType)
         {
             var dic = new Dictionary<string, string>();
-            var fieldinfos = enumType.GetFields();
-            foreach (var field in fieldinfos)
+            if (!enumType.IsEnum)
             {
-                if (field.FieldType.IsEnum)
-                {
-                    var objs = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                    dic.Add(field.Name, ((DescriptionAttribute)objs[0]).Description);
-                }
+                return dic;
             }
-            return dic;
+
+            return _concurrentDicNameDescriptionDictionary.GetOrAdd(enumType, (key) =>
+            {
+                var fieldinfos = enumType.GetFields();
+                foreach (var field in fieldinfos)
+                {
+                    if (field.FieldType.IsEnum)
+                    {
+                        var desc = GetFieldDescription(field);
+                        dic.Add(field.Name, desc);
+                    }
+                }
+
+                return dic;
+            });
         }
 
         ///<summary>
         /// 获取枚举值+描述
         ///</summary>
-        ///<param name="enumType">Type,该参数的格式为typeof(需要读的枚举类型)</param>
+        ///<param name="enumType">枚举的类型</param>
         ///<returns>键值对</returns>
-        public static Dictionary<string, string> GetEnumItemValueDesc(Type enumType)
+        public static Dictionary<int, string> ToEnumValueDescriptions(this Type enumType)
         {
-            var dic = new Dictionary<string, string>();
-            var typeDescription = typeof(DescriptionAttribute);
-            var fields = enumType.GetFields();
-            foreach (var field in fields)
+            var dic = new Dictionary<int, string>();
+            if (!enumType.IsEnum)
             {
-                if (field.FieldType.IsEnum)
-                {
-                    var strValue = ((int)enumType.InvokeMember(field.Name, BindingFlags.GetField, null, null, null)).ToString();
-                    var arr = field.GetCustomAttributes(typeDescription, true);
-                    string strText;
-                    if (arr.Length > 0)
-                    {
-                        var aa = (DescriptionAttribute)arr[0];
-                        strText = aa.Description;
-                    }
-                    else
-                    {
-                        strText = field.Name;
-                    }
-                    dic.Add(strValue, strText);
-                }
+                return dic;
             }
 
-            return dic;
+            return _concurrentValueDescriptionDictionary.GetOrAdd(enumType, (key) =>
+            {
+                var fields = enumType.GetFields();
+                foreach (var field in fields)
+                {
+                    if (field.FieldType.IsEnum)
+                    {
+                        var value = Enum.Parse(enumType, field.Name) as Enum;
+                        var desc = GetFieldDescription(field);
+                        dic.Add(value!.GetHashCode(), desc);
+                    }
+                }
+
+                return dic;
+            });
         }
 
         /// <summary>
-        /// 将注释转换成枚举值，匹配不上返回Null
+        /// 获取枚举名+值
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="strDescription"></param>
+        ///<param name="enumType">枚举的类型</param>
         /// <returns></returns>
-        public static int? GetEnumValByDescription(this Type type, string strDescription)
+        public static Dictionary<string, int> GetEnumNameValues(this Type enumType)
         {
-            int? enumVal = null;
-            foreach (var obj in Enum.GetValues(type))
+            var dic = new Dictionary<string, int>();
+            if (!enumType.IsEnum)
             {
-                var nEnum = (Enum)obj;
-                if (nEnum.ToDescription() == strDescription)
-                {
-                    enumVal = (int)Convert.ChangeType(nEnum, typeof(int));
-                }
+                return dic;
             }
-            return enumVal;
+
+            return _concurrentNameValueDictionary.GetOrAdd(enumType, (key) =>
+            {
+                var fields = enumType.GetFields();
+                foreach (var field in fields)
+                {
+                    if (field.FieldType.IsEnum)
+                    {
+                        var value = Enum.Parse(enumType, field.Name) as Enum;
+                        dic.Add(field.Name, value!.GetHashCode());
+                    }
+                }
+
+                return dic;
+            });
         }
 
         /// <summary>
-        /// 获取枚举类型键值对
+        /// 获取枚举值+名
         /// </summary>
-        /// <param name="em"></param>
+        ///<param name="enumType">枚举的类型</param>
         /// <returns></returns>
-        public static Dictionary<string, string> GetEunItemValueAndDesc(Type em)
+        public static Dictionary<int, string> GetEnumValueNames(this Type enumType)
         {
-            return _concurrentDicDictionary.GetOrAdd(em, (key) =>
+            var dic = new Dictionary<int, string>();
+            if (!enumType.IsEnum)
             {
-                var type = key.GetType();
-                if (_concurrentDicDictionary.ContainsKey(key))
+                return dic;
+            }
+
+
+            return _concurrentValueNameDictionary.GetOrAdd(enumType, (key) =>
+            {
+                var fields = enumType.GetFields();
+                foreach (var field in fields)
                 {
-                    return _concurrentDicDictionary[key];
+                    if (field.FieldType.IsEnum)
+                    {
+                        var value = Enum.Parse(enumType, field.Name) as Enum;
+                        dic.Add(value!.GetHashCode(), field.Name);
+                    }
                 }
-                else
-                {
-                    return GetEnumItemValueDesc(em);
-                }
+
+                return dic;
             });
         }
 
