@@ -64,5 +64,21 @@ namespace Ideal.Core.Common.Extensions
             var dto = new DateTimeOffset(dt);
             return dto.ToUnixTimeMilliseconds();
         }
+
+        /// <summary>
+        /// 字符串转时间，转换失败则返回空
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime? ToDateTime(this string source)
+        {
+            if (DateTime.TryParse(source, out DateTime date))
+            {
+                return date;
+            }
+            else
+            {
+                return default;
+            }
+        }
     }
 }
