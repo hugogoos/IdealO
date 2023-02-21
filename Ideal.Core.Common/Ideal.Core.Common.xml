@@ -102,6 +102,12 @@
              时间转时间戳Unix-时间戳精确到毫秒
             </summary> 
         </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToDateTime(System.String)">
+            <summary>
+            字符串转时间，转换失败则返回空
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Ideal.Core.Common.Extensions.EnumExtension">
             <summary>
             枚举相关扩展

@@ -183,7 +183,17 @@ namespace Ideal.Core.Document
                 var row = sheet.GetRow(i);
                 var dr = dt.NewRow();
                 FillDataRowBySheetRow(row, evaluator, dr);
-                dt.Rows.Add(dr);
+
+                var isNullRow = true;
+                for (var j = 0; j < maxCellNum; j++)
+                {
+                    isNullRow = isNullRow && dr.IsNull(j);
+                }
+
+                if (!isNullRow)
+                {
+                    dt.Rows.Add(dr);
+                }
             }
 
             dt.TableName = sheet.SheetName;
@@ -221,7 +231,7 @@ namespace Ideal.Core.Document
                             }
                             break;
                         case CellType.String:
-                            dr[j] = cell.StringCellValue;
+                            dr[j] = !string.IsNullOrWhiteSpace(cell.StringCellValue) ? cell.StringCellValue : DBNull.Value;
                             break;
                         case CellType.Error:
                             dr[j] = cell.ErrorCellValue;
