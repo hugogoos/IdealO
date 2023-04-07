@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ideal.Core.Orm.SqlSugar.Configurations.Options
+﻿namespace Ideal.Core.Orm.SqlSugar.Configurations.Options
 {
     /// <summary>
     /// 主从库 配置

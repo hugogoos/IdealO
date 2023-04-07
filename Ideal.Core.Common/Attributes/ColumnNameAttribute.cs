@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ideal.Core.Common.Attributes
+﻿namespace Ideal.Core.Common.Attributes
 {
     /// <summary>
     /// 标注次特性之后，可用于将此特性的属性值作为DataTable的列名称

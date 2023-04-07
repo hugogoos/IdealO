@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Reflection;
 
 namespace Ideal.Core.Common.Extensions
 {
     /// <summary>
-    /// 枚举相关扩展
+    /// 枚举扩展
     /// </summary>
     public static class EnumExtension
     {

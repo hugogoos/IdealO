@@ -1,15 +1,11 @@
 ﻿using Ideal.Core.Common.Paging;
 using Ideal.Core.Orm.Domain;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Ideal.Core.Orm.SqlSugar
 {
-    public abstract class SqlSugarRepositoryWithDeleteFilter<TAggregateRoot, TKey> :
+    public abstract partial class SqlSugarRepositoryWithDeleteFilter<TAggregateRoot, TKey> :
         SqlSugarRepositoryWithAudit<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, IAuditable, ISoftDelete, new()
     {
@@ -37,209 +33,111 @@ namespace Ideal.Core.Orm.SqlSugar
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc);
         }
 
-        public override async Task<TAggregateRoot> FindByIdAsync(TKey key)
+        public override TAggregateRoot FindById(TKey key)
         {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).InSingleAsync(key);
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).InSingle(key);
         }
-        public virtual async Task<TAggregateRoot> FirstOrDefaultAsync()
+        public virtual TAggregateRoot FirstOrDefault()
         {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).FirstAsync();
-        }
-
-        public virtual async Task<TAggregateRoot> FirstOrDefaultAsync(Expression<Func<TAggregateRoot, bool>> predicate)
-        {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).FirstAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).First();
         }
 
-        public override async Task<IEnumerable<TAggregateRoot>> FindAllAsync()
+        public virtual TAggregateRoot FirstOrDefault(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (!isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).SplitTable(tabs => tabs).ToListAsync();
-            }
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).First(predicate);
         }
 
-        public override async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime)
+        public override IEnumerable<TAggregateRoot> FindAll()
         {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).SplitTable(startTime, endTime).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).ToListAsync();
-            }
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).ToList();
         }
 
-        public override async Task<IEnumerable<TAggregateRoot>> FindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public override IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (!isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).SplitTable(tabs => tabs).ToListAsync();
-            }
-        }
-        public override async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate)
-        {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).SplitTable(startTime, endTime).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).ToListAsync();
-            }
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).ToList();
         }
 
-
-        public override async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        public override IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
-            var totalCount = new RefAsync<int>();
-            var query = Context.Queryable<TAggregateRoot>();
+            var totalCount = 0;
+            var query = Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted);
 
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(tabs => tabs);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var page = query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageList(pager.PageIndex, pager.PageSize, ref totalCount);
             var result = new PagedList<TAggregateRoot>()
             {
                 PageIndex = pager.PageIndex,
                 PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
+                TotalCount = totalCount,
                 Entities = page
             };
             return result;
         }
 
-        public override async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        public override IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
-            var totalCount = new RefAsync<int>();
-            var query = Context.Queryable<TAggregateRoot>();
+            var totalCount = 0;
+            var query = Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate);
 
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(startTime, endTime);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var page = query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageList(pager.PageIndex, pager.PageSize, ref totalCount);
             var result = new PagedList<TAggregateRoot>()
             {
                 PageIndex = pager.PageIndex,
                 PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
+                TotalCount = totalCount,
                 Entities = page
             };
             return result;
         }
 
-        public override async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        public override bool Exists(TKey key)
         {
-            var totalCount = new RefAsync<int>();
-            var query = Context.Queryable<TAggregateRoot>().Where(predicate);
-
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(tabs => tabs);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
-            var result = new PagedList<TAggregateRoot>()
-            {
-                PageIndex = pager.PageIndex,
-                PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
-                Entities = page
-            };
-            return result;
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any(entity => entity.Id.Equals(key));
         }
 
-        public override async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        public override bool Exists(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            var totalCount = new RefAsync<int>();
-            var query = Context.Queryable<TAggregateRoot>().Where(predicate);
-
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(startTime, endTime);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
-            var result = new PagedList<TAggregateRoot>()
-            {
-                PageIndex = pager.PageIndex,
-                PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
-                Entities = page
-            };
-            return result;
-        }
-
-        public override async Task<bool> ExistsAsync(TKey key)
-        {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).AnyAsync(entity => entity.Id.Equals(key));
-        }
-
-        public override async Task<bool> ExistsAsync(Expression<Func<TAggregateRoot, bool>> predicate)
-        {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).AnyAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any(predicate);
         }
 
 
-        public virtual async Task<bool> AnyAsync()
+        public virtual bool Any()
         {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).AnyAsync();
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any();
         }
 
-        public virtual async Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual bool Any(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).AnyAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any(predicate);
         }
 
-        public virtual async Task<int> CountAsync()
+        public virtual int Count()
         {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).CountAsync();
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Count();
         }
 
-        public virtual async Task<int> CountAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual int Count(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).CountAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Count(predicate);
         }
 
-        public override async Task<int> RemoveByIdAsync(TKey key)
+        public override int RemoveById(TKey key)
         {
-            return await Context.Updateable<TAggregateRoot>().SetColumns(entity => entity.IsDeleted == true).SetColumns(entity => entity.UpdatedTime == DateTime.Now).Where(entity => entity.Id.Equals(key)).ExecuteCommandAsync();
+            return Context.Updateable<TAggregateRoot>().SetColumns(entity => entity.IsDeleted == true).SetColumns(entity => entity.UpdatedTime == DateTime.Now).Where(entity => entity.Id.Equals(key)).ExecuteCommand();
         }
 
-        public override async Task<int> RemoveAsync(TAggregateRoot entity)
+        public override int Remove(TAggregateRoot entity)
         {
             if (entity != null)
             {
                 entity.IsDeleted = true;
                 entity.UpdatedTime = DateTime.Now;
-                return await Context.Updateable(entity).ExecuteCommandAsync();
+                return Context.Updateable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> RemoveAsync(IEnumerable<TAggregateRoot> entities)
+        public override int Remove(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -250,15 +148,15 @@ namespace Ideal.Core.Orm.SqlSugar
                     entity.UpdatedTime = DateTime.Now;
                 });
 
-                return await Context.Updateable(es).ExecuteCommandAsync();
+                return Context.Updateable(es).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> RemoveAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public override int Remove(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Updateable<TAggregateRoot>().SetColumns(entity => entity.IsDeleted == true).SetColumns(entity => entity.UpdatedTime == DateTime.Now).Where(predicate).ExecuteCommandAsync();
+            return Context.Updateable<TAggregateRoot>().SetColumns(entity => entity.IsDeleted == true).SetColumns(entity => entity.UpdatedTime == DateTime.Now).Where(predicate).ExecuteCommand();
         }
     }
 }

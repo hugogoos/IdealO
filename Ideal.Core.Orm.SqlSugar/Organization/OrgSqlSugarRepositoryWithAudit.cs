@@ -1,47 +1,36 @@
 ﻿using Ideal.Core.Orm.Domain;
 using Ideal.Core.Orm.Domain.Organization;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Ideal.Core.Orm.SqlSugar.Organization
 {
-    public abstract class OrgSqlSugarRepositoryWithAudit<IOrgAggregateRoot, TKey> : OrgSqlSugarRepository<IOrgAggregateRoot, TKey>
+    public abstract partial class OrgSqlSugarRepositoryWithAudit<IOrgAggregateRoot, TKey> : OrgSqlSugarRepository<IOrgAggregateRoot, TKey>
         where IOrgAggregateRoot : class, IOrgAggregateRoot<TKey>, IAuditable, new()
     {
         protected OrgSqlSugarRepositoryWithAudit(ISqlSugarClient context, OrgContext orgContext) : base(context, orgContext)
         {
         }
 
-        public virtual async Task<int> CreateAsync(IOrgAggregateRoot entity)
+        public virtual int Create(IOrgAggregateRoot entity)
         {
             if (entity != null)
             {
                 var isIllegalOrg = IsIllegalOrg(entity);
                 if (isIllegalOrg)
                 {
-                    return await Task.FromResult(0);
+                    return 0;
                 }
 
                 AddCreateUserInfo(entity);
 
-                var isSplitTable = ClassHelper.IsSplitTable<IOrgAggregateRoot>();
-                if (!isSplitTable)
-                {
-                    return await Context.Insertable(entity).ExecuteCommandAsync();
-                }
-                else
-                {
-                    return await Context.Insertable(entity).SplitTable().ExecuteCommandAsync();
-                }
+                return Context.Insertable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> CreateAsync(IEnumerable<IOrgAggregateRoot> entities)
+        public virtual int Create(IEnumerable<IOrgAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -49,39 +38,31 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
 
                 AddCreateUserInfo(entities);
 
-                var isSplitTable = ClassHelper.IsSplitTable<IOrgAggregateRoot>();
-                if (!isSplitTable)
-                {
-                    return await Context.Insertable(entities.ToList()).ExecuteCommandAsync();
-                }
-                else
-                {
-                    return await Context.Insertable(entities.ToList()).SplitTable().ExecuteCommandAsync();
-                }
+                return Context.Insertable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> UpdateAsync(IOrgAggregateRoot entity)
+        public override int Update(IOrgAggregateRoot entity)
         {
             if (entity != null)
             {
                 var isIllegalOrg = IsIllegalOrg(entity);
                 if (isIllegalOrg)
                 {
-                    return await Task.FromResult(0);
+                    return 0;
                 }
 
                 AddUpdateUserInfo(entity);
 
-                return await Context.Updateable(entity).ExecuteCommandAsync();
+                return Context.Updateable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> UpdateAsync(IEnumerable<IOrgAggregateRoot> entities)
+        public override int Update(IEnumerable<IOrgAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -89,31 +70,60 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
 
                 AddUpdateUserInfo(entities);
 
-                return await Context.Updateable(entities.ToList()).ExecuteCommandAsync();
+
+                return Context.Updateable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> SaveAsync(IOrgAggregateRoot entity)
+        public virtual int UpdateColumns(Expression<Func<IOrgAggregateRoot, bool>> predicate)
+        {
+            var updatedBy = OrgContext?.GetUserIdAndName;
+
+            if (null != OrgWhere)
+            {
+                return Context.Updateable<IOrgAggregateRoot>().SetColumns(predicate).SetColumns(t => t.UpdatedTime == DateTime.Now && t.UpdatedBy == updatedBy).Where(t => t.Id != null).Where(OrgWhere).ExecuteCommand();
+            }
+            else
+            {
+                return Context.Updateable<IOrgAggregateRoot>().SetColumns(predicate).SetColumns(t => t.UpdatedTime == DateTime.Now).Where(t => t.Id != null).ExecuteCommand();
+            }
+        }
+
+        public virtual int UpdateColumns(Expression<Func<IOrgAggregateRoot, IOrgAggregateRoot>> predicate)
+        {
+            var updatedBy = OrgContext?.GetUserIdAndName;
+
+            if (null != OrgWhere)
+            {
+                return Context.Updateable<IOrgAggregateRoot>().SetColumns(predicate).SetColumns(t => t.UpdatedTime == DateTime.Now && t.UpdatedBy == updatedBy).Where(t => t.Id != null).Where(OrgWhere).ExecuteCommand();
+            }
+            else
+            {
+                return Context.Updateable<IOrgAggregateRoot>().SetColumns(predicate).SetColumns(t => t.UpdatedTime == DateTime.Now).Where(t => t.Id != null).ExecuteCommand();
+            }
+        }
+
+        public override int Save(IOrgAggregateRoot entity)
         {
             if (entity != null)
             {
                 var isIllegalOrg = IsIllegalOrg(entity);
                 if (isIllegalOrg)
                 {
-                    return await Task.FromResult(0);
+                    return 0;
                 }
 
                 AddUpdateUserInfo(entity);
 
-                return await Context.Storageable(entity).ExecuteCommandAsync();
+                return Context.Storageable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> SaveAsync(IEnumerable<IOrgAggregateRoot> entities)
+        public override int Save(IEnumerable<IOrgAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -121,10 +131,10 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
 
                 AddUpdateUserInfo(entities);
 
-                return await Context.Storageable(entities.ToList()).ExecuteCommandAsync();
+                return Context.Storageable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
         protected void AddCreateUserInfo(IOrgAggregateRoot entity)
@@ -142,9 +152,9 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(entity.OrganizationId))
+            if (string.IsNullOrWhiteSpace(entity.OrgId))
             {
-                entity.OrganizationId = OrgContext?.CurrentOrganizationId;
+                entity.OrgId = OrgContext?.CurrentOrgId;
             }
 
             entity.CreatedTime = DateTime.Now;

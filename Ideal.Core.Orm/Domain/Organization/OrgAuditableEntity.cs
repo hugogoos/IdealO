@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ideal.Core.Orm.Domain.Organization
+﻿namespace Ideal.Core.Orm.Domain.Organization
 {
     /// <summary>
     /// 支持机构审计的实体

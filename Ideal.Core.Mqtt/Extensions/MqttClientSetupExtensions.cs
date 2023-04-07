@@ -1,9 +1,11 @@
 ﻿using Ideal.Core.Mqtt.Configurations;
+using Ideal.Core.Mqtt.Configurations.Options;
 using Ideal.Core.Mqtt.Options;
 using Ideal.Core.Mqtt.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using MQTTnet.Client;
+using MQTTnet.Extensions.ManagedClient;
 
 namespace Ideal.Core.Mqtt.Extensions
 {
@@ -21,19 +23,56 @@ namespace Ideal.Core.Mqtt.Extensions
         {
             services.AddTransient<IConfigManager, ConfigManager>();
             var config = services.BuildServiceProvider().GetService<IConfigManager>();
-            var options = config.MQTTOptions;
-            if (options == null)
+            var options = config.MqttOptions;
+
+            return AddMqttClientSetupWithConfig(services, options);
+        }
+
+        /// <summary>
+        /// Mqtt客户端启动项
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddMqttClientSetup(this IServiceCollection services, IEnumerable<MqttOption> options)
+        {
+            return AddMqttClientSetupWithConfig(services, options);
+        }
+
+        private static IServiceCollection AddMqttClientSetupWithConfig(IServiceCollection services, IEnumerable<MqttOption> options)
+        {
+            if (options == null || !options.Any())
             {
-                throw new ArgumentNullException("请检查MQTTOptions配置是否添加！");
+                throw new ArgumentNullException(nameof(options), "请检查MQTTOptions配置是否添加！");
             }
 
-            services.AddMqttClientSetupWithConfig(optionBuilder =>
+            var isRepeat = options.GroupBy(i => i.ClientId).Any(g => g.Count() > 1);
+            if (isRepeat)
             {
-                optionBuilder
-                .WithCredentials(options.User, options.Password)
-                .WithClientId($"{options.ClientId}.{Guid.NewGuid()}")
-                .WithTcpServer(options.Server, options.Port);
+                throw new ArgumentNullException(nameof(options), $"请确保MQTTOptions配置中[{nameof(MqttOption.ClientId)}]值唯一，不可重复！");
+            }
+
+            services.AddMqttClientSetupWithConfig(optionBuilders =>
+            {
+                foreach (var option in options)
+                {
+                    for (var i = 0; i < option.ClientCount; i++)
+                    {
+                        var clientId = $"{option.ClientId}.{i}.{Guid.NewGuid()}";
+                        var opt = new ManagedMqttClientOptionsBuilder()
+                                .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
+                                .WithClientOptions(new MqttClientOptionsBuilder()
+                                   .WithCredentials(option.User, option.Password)
+                                   .WithClientId(clientId)
+                                   .WithTcpServer(option.Server, option.Port)
+                                   .Build()
+                                ).Build();
+
+                        optionBuilders.Add(opt);
+                    }
+                }
             });
+
             return services;
         }
 
@@ -43,13 +82,13 @@ namespace Ideal.Core.Mqtt.Extensions
         /// <param name="services"></param>
         /// <param name="configure">Mqtt配置项</param>
         /// <returns></returns>
-        public static IServiceCollection AddMqttClientSetupWithConfig(this IServiceCollection services, Action<MqttClientOptionBuilder> configure)
+        public static IServiceCollection AddMqttClientSetupWithConfig(this IServiceCollection services, Action<ManagedMqttClientOptionBuilder> configure)
         {
-            services.AddSingleton(serviceProvider =>
+            services.AddSingleton<List<ManagedMqttClientOptions>>(serviceProvider =>
             {
-                var optionBuilder = new MqttClientOptionBuilder(serviceProvider);
+                var optionBuilder = new ManagedMqttClientOptionBuilder(serviceProvider);
                 configure(optionBuilder);
-                return optionBuilder.Build();
+                return optionBuilder;
             });
             services.AddSingleton<MqttClientRepository>();
             services.AddSingleton<IHostedService>(serviceProvider =>

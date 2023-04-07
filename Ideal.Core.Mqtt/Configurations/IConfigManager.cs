@@ -10,6 +10,6 @@ namespace Ideal.Core.Mqtt.Configurations
         /// <summary>
         /// MQTT配置
         /// </summary>
-        MQTTOptions MQTTOptions { get; }
+        IEnumerable<MqttOption> MqttOptions { get; }
     }
 }

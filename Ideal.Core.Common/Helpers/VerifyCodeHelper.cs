@@ -1,5 +1,4 @@
 ﻿using SkiaSharp;
-using System;
 
 namespace Ideal.Core.Common.Helpers
 {
@@ -41,13 +40,13 @@ namespace Ideal.Core.Common.Helpers
                 var size = new SKRect();
                 sKPaint.MeasureText(chkCode[0].ToString(), ref size);//计算文字宽度以及高度
 
-                var temp = (bmp.Width / 4 - size.Size.Width) / 2;
-                var temp1 = bmp.Height - (bmp.Height - size.Size.Height) / 2;
+                var temp = ((bmp.Width / 4) - size.Size.Width) / 2;
+                var temp1 = bmp.Height - ((bmp.Height - size.Size.Height) / 2);
                 var random = new Random();
                 for (var i = 0; i < 4; i++)
                 {
                     sKPaint.Color = new SKColor((byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
-                    canvas.DrawText(chkCode[i].ToString(), temp + 20 * i, temp1, sKPaint);//画文字
+                    canvas.DrawText(chkCode[i].ToString(), temp + (20 * i), temp1, sKPaint);//画文字
                 }
                 //干扰线
                 for (var i = 0; i < 5; i++)

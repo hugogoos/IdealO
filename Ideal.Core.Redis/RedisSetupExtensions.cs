@@ -1,7 +1,6 @@
 ﻿using CSRedis;
 using Ideal.Core.Redis.Configurations;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Ideal.Core.Redis
 {
@@ -25,7 +24,6 @@ namespace Ideal.Core.Redis
             services.AddSingleton(serviceProvider =>
             {
                 var csredis = new CSRedisClient($"{options.Default.Server}:{options.Default.Port},password={options.Default.Password},defaultDatabase={options.Default.DefaultDatabase}");
-                RedisHelper.Initialization(csredis);
                 return csredis;
             });
 

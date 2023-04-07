@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
-
-namespace Ideal.Core.Common.Extensions
+﻿namespace Ideal.Core.Common.Extensions
 {
     /// <summary>
     /// 时间相关扩展
@@ -71,7 +65,7 @@ namespace Ideal.Core.Common.Extensions
         /// <returns></returns>
         public static DateTime? ToDateTime(this string source)
         {
-            if (DateTime.TryParse(source, out DateTime date))
+            if (DateTime.TryParse(source, out var date))
             {
                 return date;
             }

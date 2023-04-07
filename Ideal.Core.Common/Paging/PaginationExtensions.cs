@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Ideal.Core.Common.Paging
+﻿namespace Ideal.Core.Common.Paging
 {
     /// <summary>
     /// 分页查询扩展类

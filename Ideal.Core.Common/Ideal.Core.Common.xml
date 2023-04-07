@@ -29,30 +29,30 @@
             <summary>
             加密
             </summary>
-            <param name="Text"></param>
+            <param name="text"></param>
             <returns></returns>
         </member>
         <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Encrypt(System.String,System.String)">
             <summary>
             加密数据
             </summary>
-            <param name="Text"></param>
-            <param name="sKey"></param>
+            <param name="text"></param>
+            <param name="key"></param>
             <returns></returns>
         </member>
         <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Decrypt(System.String)">
             <summary>
             解密
             </summary>
-            <param name="Text"></param>
+            <param name="text"></param>
             <returns></returns>
         </member>
         <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Decrypt(System.String,System.String)">
             <summary>
             解密数据
             </summary>
-            <param name="Text"></param>
-            <param name="sKey"></param>
+            <param name="text"></param>
+            <param name="key"></param>
             <returns></returns>
         </member>
         <member name="T:Ideal.Core.Common.Encodings.Md5">
@@ -65,6 +65,25 @@
             netcore下的实现MD5加密
             </summary>
             <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Extensions.ByteExtension">
+            <summary>
+            字节相关扩展方法
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.ByteExtension.Compress(System.Byte[])">
+            <summary>
+            压缩字节数组
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.ByteExtension.Decompress(System.Byte[])">
+            <summary>
+            解压字节数组
+            </summary>
+            <param name="source"></param>
             <returns></returns>
         </member>
         <member name="T:Ideal.Core.Common.Extensions.DateTimeExtension">
@@ -110,7 +129,7 @@
         </member>
         <member name="T:Ideal.Core.Common.Extensions.EnumExtension">
             <summary>
-            枚举相关扩展
+            枚举扩展
             </summary>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.String)">
@@ -188,6 +207,20 @@
              </summary>
             <param name="enumType">枚举的类型</param>
              <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.LinqExtension.ParameterRebinder.#ctor(System.Collections.Generic.Dictionary{System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.ParameterExpression})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ideal.Core.Common.Extensions.LinqExtension.ParameterRebinder"/> class.
+            </summary>
+            <param name="map">The map.</param>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.LinqExtension.ParameterRebinder.ReplaceParameters(System.Collections.Generic.Dictionary{System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.ParameterExpression},System.Linq.Expressions.Expression)">
+            <summary>
+            Replaces the parameters.
+            </summary>
+            <param name="map">The map.</param>
+            <param name="exp">The exp.</param>
+            <returns>Expression</returns>
         </member>
         <member name="T:Ideal.Core.Common.Helpers.DateTimeHelper">
             <summary>
@@ -677,6 +710,68 @@
             <param name="dataSource">已排序的数据源</param>
             <param name="pager">分页器对象；当为空时，分页器取默认值</param>
             <returns>对象分页列表</returns>
+        </member>
+        <member name="T:Ideal.Core.Common.QueueBlocking`1">
+            <summary>
+            内存基本阻塞队列
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ideal.Core.Common.QueueBlocking`1.IsCompleted">
+            <summary>
+            是否完成
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.QueueBlocking`1.HasElement">
+            <summary>
+            有元素
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.QueueBlocking`1.Add(`0)">
+            <summary>
+            添加元素
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Common.QueueBlocking`1.Take">
+            <summary>
+            取出元素
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Common.ResultResponse`1">
+            <summary>
+            统一返回类型
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse`1.Data">
+            <summary>
+            获取 返回数据
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Common.ResultResponse">
+            <summary>
+            统一返回类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse.IsSucceed">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse.Code">
+            <summary>
+            操作结果类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Common.ResultResponse.Msg">
+            <summary>
+            获取 消息内容
+            </summary>
         </member>
         <member name="T:Ideal.Core.Common.Snowflake">
             <summary>

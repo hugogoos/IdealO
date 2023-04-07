@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ideal.Core.Orm.SqlSugar.Organization
+﻿namespace Ideal.Core.Orm.SqlSugar.Organization
 {
     /// <summary>
     /// 机构上下文
@@ -20,12 +18,12 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
         /// <summary>
         /// 机构Id
         /// </summary>
-        public string CurrentOrganizationId { get; set; }
+        public string CurrentOrgId { get; set; }
 
         /// <summary>
         /// 机构Id集合
         /// </summary>
-        public string[] OrganizationIds { get; set; }
+        public string[] OrgIds { get; set; }
 
         /// <summary>
         /// 
@@ -38,12 +36,12 @@ namespace Ideal.Core.Orm.SqlSugar.Organization
         /// <returns></returns>
         public bool HasOrganization()
         {
-            if (!string.IsNullOrWhiteSpace(CurrentOrganizationId))
+            if (!string.IsNullOrWhiteSpace(CurrentOrgId))
             {
-                if (OrganizationIds == null || OrganizationIds.Length == 0)
+                if (OrgIds == null || OrgIds.Length == 0)
                 {
-                    OrganizationIds = Array.Empty<string>();
-                    OrganizationIds[0] = CurrentOrganizationId;
+                    OrgIds = Array.Empty<string>();
+                    OrgIds[0] = CurrentOrgId;
                 }
 
                 return true;

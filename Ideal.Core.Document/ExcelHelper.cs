@@ -1,10 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using System;
 using System.Data;
-using System.IO;
-using System.Linq;
 using System.Xml;
 
 namespace Ideal.Core.Document

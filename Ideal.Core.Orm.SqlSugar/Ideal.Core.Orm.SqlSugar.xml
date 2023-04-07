@@ -67,6 +67,193 @@
             从库连接字符串
             </summary>
         </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions">
+            <summary>
+            分页查询扩展类
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FindByIdAsync``2(SqlSugar.ISugarQueryable{``0},``1)">
+            <summary>
+            根据主键查找实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="key">实体的主键</param>
+            <returns>返回实体结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FirstOrDefaultAsync``1(SqlSugar.ISugarQueryable{``0})">
+            <summary>
+            查找第一个实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <returns>返回实体结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FirstOrDefaultAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            根据条件查找第一个实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="predicate">条件谓词</param>
+            <returns>返回实体结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FindAllAsync``1(SqlSugar.ISugarQueryable{``0})">
+            <summary>
+            查找所有实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <returns>返回所有实体的列表的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.DateTime,System.DateTime)">
+            <summary>
+            查找所有分表实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns>返回所有分表实体的列表的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            查找满足条件的实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="predicate">条件谓词</param>
+            <returns>返回实体列表结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.FindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            查找满足条件的分表实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="predicate">条件谓词</param>
+            <returns>返回实体列表结果的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.PagedFindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            分页查找所有实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="orderByKeySelector">选择用于分页前排序的键</param>
+            <param name="orderByType">排序类型</param>
+            <param name="pager">分页器</param>
+            <returns>分页的实体列表</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.PagedFindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            分页查找所有分表实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="orderByKeySelector">选择用于分页前排序的键</param>
+            <param name="orderByType">排序类型</param>
+            <param name="pager">分页器</param>
+            <returns>分页的实体列表结果</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.PagedFindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            分页查找满足条件的实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="predicate">条件谓词</param>
+            <param name="orderByKeySelector">选择用于分页前排序的键</param>
+            <param name="orderByType">排序类型</param>
+            <param name="pager">分页器</param>
+            <returns>分页的实体列表</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.PagedFindAllAsync``1(SqlSugar.ISugarQueryable{``0},System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            分页查找满足条件的分表实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="predicate">条件谓词</param>
+            <param name="orderByKeySelector">选择用于分页前排序的键</param>
+            <param name="orderByType">排序类型</param>
+            <param name="pager">分页器</param>
+            <returns>分页的实体列表</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.ExistsAsync``2(SqlSugar.ISugarQueryable{``0},``1)">
+            <summary>
+            判断是否存在指定主键的实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="key">实体的主键</param>
+            <returns>返回是否存在的异步任务</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.ExistsAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            判断是否存在满足条件的实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="predicate">条件谓词</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.AnyAsync``1(SqlSugar.ISugarQueryable{``0})">
+            <summary>
+            判断是否存在实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.AnyAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            判断是否存在满足条件的实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="predicate">条件谓词</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.CountAsync``1(SqlSugar.ISugarQueryable{``0})">
+            <summary>
+            计算实体个数
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <returns>条数</returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.CountAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            计算满足条件的实体个数
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="source"></param>
+            <param name="predicate">条件谓词</param>
+            <returns>是否存在</returns>
+        </member>
         <member name="T:Ideal.Core.Orm.SqlSugar.Extensions.PaginationExtensions">
             <summary>
             分页查询扩展类
@@ -264,12 +451,12 @@
             用户名
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.CurrentOrganizationId">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.CurrentOrgId">
             <summary>
             机构Id
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.OrganizationIds">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.OrgIds">
             <summary>
             机构Id集合
             </summary>

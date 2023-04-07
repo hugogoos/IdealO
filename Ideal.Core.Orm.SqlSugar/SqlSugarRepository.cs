@@ -1,15 +1,11 @@
 ﻿using Ideal.Core.Common.Paging;
 using Ideal.Core.Orm.Domain;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Ideal.Core.Orm.SqlSugar
 {
-    public abstract class SqlSugarRepository<TAggregateRoot, TKey> : ISplitTableRepository<TAggregateRoot, TKey>, IQuerableRepository<TAggregateRoot, TKey>, IRepository<TAggregateRoot, TKey>
+    public abstract partial class SqlSugarRepository<TAggregateRoot, TKey> : IQuerableRepository<TAggregateRoot, TKey>, IRepository<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, new()
     {
         protected ISqlSugarClient Context { get; }
@@ -41,295 +37,191 @@ namespace Ideal.Core.Orm.SqlSugar
             return Context.Queryable<TAggregateRoot>().Where(predicate).OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc);
         }
 
-        public virtual async Task<TAggregateRoot> FindByIdAsync(TKey key)
+        public virtual TAggregateRoot FindById(TKey key)
         {
-            return await Context.Queryable<TAggregateRoot>().With(SqlWith.NoLock).InSingleAsync(key);
+            return Context.Queryable<TAggregateRoot>().With(SqlWith.NoLock).InSingle(key);
         }
 
-        public virtual async Task<TAggregateRoot> FirstOrDefaultAsync()
+        public virtual TAggregateRoot FirstOrDefault()
         {
-            return await Context.Queryable<TAggregateRoot>().With(SqlWith.NoLock).FirstAsync();
+            return Context.Queryable<TAggregateRoot>().With(SqlWith.NoLock).First();
         }
 
-        public virtual async Task<TAggregateRoot> FirstOrDefaultAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual TAggregateRoot FirstOrDefault(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().With(SqlWith.NoLock).FirstAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().With(SqlWith.NoLock).First(predicate);
         }
 
-        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync()
+        public virtual IEnumerable<TAggregateRoot> FindAll()
         {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (!isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().SplitTable(tabs => tabs).ToListAsync();
-            }
+            return Context.Queryable<TAggregateRoot>().ToList();
         }
 
-        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime)
+        public virtual IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().SplitTable(startTime, endTime).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().ToListAsync();
-            }
+            return Context.Queryable<TAggregateRoot>().Where(predicate).ToList();
         }
 
-        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (!isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(predicate).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(predicate).SplitTable(tabs => tabs).ToListAsync();
-            }
-        }
-
-        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate)
-        {
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(predicate).SplitTable(startTime, endTime).ToListAsync();
-            }
-            else
-            {
-                return await Context.Queryable<TAggregateRoot>().Where(predicate).ToListAsync();
-            }
-        }
-
-        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
-        {
-            var totalCount = new RefAsync<int>();
+            var totalCount = 0;
             var query = Context.Queryable<TAggregateRoot>();
 
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(tabs => tabs);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var page = query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageList(pager.PageIndex, pager.PageSize, ref totalCount);
             var result = new PagedList<TAggregateRoot>()
             {
                 PageIndex = pager.PageIndex,
                 PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
+                TotalCount = totalCount,
                 Entities = page
             };
             return result;
         }
 
-        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        public virtual IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
-            var totalCount = new RefAsync<int>();
-            var query = Context.Queryable<TAggregateRoot>();
-
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(startTime, endTime);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
-            var result = new PagedList<TAggregateRoot>()
-            {
-                PageIndex = pager.PageIndex,
-                PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
-                Entities = page
-            };
-            return result;
-        }
-
-        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
-        {
-            var totalCount = new RefAsync<int>();
+            var totalCount = 0;
             var query = Context.Queryable<TAggregateRoot>().Where(predicate);
 
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(tabs => tabs);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
+            var page = query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageList(pager.PageIndex, pager.PageSize, ref totalCount);
             var result = new PagedList<TAggregateRoot>()
             {
                 PageIndex = pager.PageIndex,
                 PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
+                TotalCount = totalCount,
                 Entities = page
             };
             return result;
         }
 
-        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        public virtual bool Exists(TKey key)
         {
-            var totalCount = new RefAsync<int>();
-            var query = Context.Queryable<TAggregateRoot>().Where(predicate);
-
-            var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-            if (isSplitTable)
-            {
-                query = query.SplitTable(startTime, endTime);
-            }
-
-            var page = await query.OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc).ToPageListAsync(pager.PageIndex, pager.PageSize, totalCount);
-            var result = new PagedList<TAggregateRoot>()
-            {
-                PageIndex = pager.PageIndex,
-                PageSize = pager.PageSize,
-                TotalCount = totalCount.Value,
-                Entities = page
-            };
-            return result;
+            return Context.Queryable<TAggregateRoot>().Any(entity => entity.Id.Equals(key));
         }
 
-        public virtual async Task<bool> ExistsAsync(TKey key)
+        public virtual bool Exists(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().AnyAsync(entity => entity.Id.Equals(key));
+            return Context.Queryable<TAggregateRoot>().Any(predicate);
         }
 
-        public virtual async Task<bool> ExistsAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual bool Any()
         {
-            return await Context.Queryable<TAggregateRoot>().AnyAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().Any();
         }
 
-        public virtual async Task<bool> AnyAsync()
+        public virtual bool Any(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().AnyAsync();
+            return Context.Queryable<TAggregateRoot>().Any(predicate);
         }
 
-        public virtual async Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual int Count()
         {
-            return await Context.Queryable<TAggregateRoot>().AnyAsync(predicate);
+            return Context.Queryable<TAggregateRoot>().Count();
         }
 
-        public virtual async Task<int> CountAsync()
+        public virtual int Count(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Queryable<TAggregateRoot>().CountAsync();
+            return Context.Queryable<TAggregateRoot>().Count(predicate);
         }
 
-        public virtual async Task<int> CountAsync(Expression<Func<TAggregateRoot, bool>> predicate)
-        {
-            return await Context.Queryable<TAggregateRoot>().CountAsync(predicate);
-        }
-
-        public virtual async Task<int> CreateAsync(TAggregateRoot entity)
+        public virtual int Create(TAggregateRoot entity)
         {
             if (entity != null)
             {
-                var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-                if (!isSplitTable)
-                {
-                    return await Context.Insertable(entity).ExecuteCommandAsync();
-                }
-                else
-                {
-                    return await Context.Insertable(entity).SplitTable().ExecuteCommandAsync();
-                }
+                return Context.Insertable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> CreateAsync(IEnumerable<TAggregateRoot> entities)
+        public virtual int Create(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
-                var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
-                if (!isSplitTable)
-                {
-                    return await Context.Insertable(entities.ToList()).ExecuteCommandAsync();
-                }
-                else
-                {
-                    return await Context.Insertable(entities.ToList()).SplitTable().ExecuteCommandAsync();
-                }
+                return Context.Insertable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> UpdateAsync(TAggregateRoot entity)
+        public virtual int Update(TAggregateRoot entity)
         {
             if (entity != null)
             {
-                return await Context.Updateable(entity).ExecuteCommandAsync();
+                return Context.Updateable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> UpdateAsync(IEnumerable<TAggregateRoot> entities)
+        public virtual int Update(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
-                return await Context.Updateable(entities.ToList()).ExecuteCommandAsync();
+                return Context.Updateable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> SaveAsync(TAggregateRoot entity)
+        public virtual int UpdateColumns(Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            return Context.Updateable<TAggregateRoot>().SetColumns(predicate).Where(t => t.Id != null).ExecuteCommand();
+        }
+
+        public virtual int UpdateColumns(Expression<Func<TAggregateRoot, TAggregateRoot>> predicate)
+        {
+            return Context.Updateable<TAggregateRoot>().SetColumns(predicate).Where(t => t.Id != null).ExecuteCommand();
+        }
+
+        public virtual int Save(TAggregateRoot entity)
         {
             if (entity != null)
             {
-                return await Context.Storageable(entity).ExecuteCommandAsync();
+                return Context.Storageable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> SaveAsync(IEnumerable<TAggregateRoot> entities)
+        public virtual int Save(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
-                return await Context.Storageable(entities.ToList()).ExecuteCommandAsync();
+                return Context.Storageable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> RemoveByIdAsync(TKey key)
+        public virtual int RemoveById(TKey key)
         {
-            return await Context.Deleteable<TAggregateRoot>().In(key).ExecuteCommandAsync();
+            return Context.Deleteable<TAggregateRoot>().In(key).ExecuteCommand();
         }
 
-        public virtual async Task<int> RemoveAsync(TAggregateRoot entity)
+        public virtual int Remove(TAggregateRoot entity)
         {
             if (entity != null)
             {
-                return await Context.Deleteable(entity).ExecuteCommandAsync();
+                return Context.Deleteable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> RemoveAsync(IEnumerable<TAggregateRoot> entities)
+        public virtual int Remove(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
-                return await Context.Deleteable(entities.ToList()).ExecuteCommandAsync();
+                return Context.Deleteable(entities.ToList()).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public virtual async Task<int> RemoveAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        public virtual int Remove(Expression<Func<TAggregateRoot, bool>> predicate)
         {
-            return await Context.Deleteable(predicate).ExecuteCommandAsync();
+            return Context.Deleteable(predicate).ExecuteCommand();
         }
 
         public void Dispose()

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ideal.Core.Orm.Domain
+﻿namespace Ideal.Core.Orm.Domain
 {
     /// <summary>
     /// 实体比较器
@@ -12,7 +10,8 @@ namespace Ideal.Core.Orm.Domain
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         /// <returns></returns>
         public override bool Equals(TEntity x, TEntity y)
         {

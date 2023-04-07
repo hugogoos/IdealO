@@ -1,10 +1,16 @@
 ﻿using Microsoft.Extensions.Hosting;
-using MQTTnet.Client;
+using MQTTnet.Extensions.ManagedClient;
 
 namespace Ideal.Core.Mqtt.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IMqttClientRepository : IHostedService
     {
-        IMqttClient GetMqttClient();
+        /// <summary>
+        /// 
+        /// </summary>
+        IDictionary<string, IEnumerable<IManagedMqttClient>> GetManagedMqttClients();
     }
 }

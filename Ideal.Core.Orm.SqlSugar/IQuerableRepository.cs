@@ -1,7 +1,6 @@
 ﻿using Ideal.Core.Common.Paging;
 using Ideal.Core.Orm.Domain;
 using SqlSugar;
-using System;
 using System.Linq.Expressions;
 
 namespace Ideal.Core.Orm.SqlSugar

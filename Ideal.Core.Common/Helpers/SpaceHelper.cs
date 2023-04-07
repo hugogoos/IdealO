@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ideal.Core.Common.Helpers
+﻿namespace Ideal.Core.Common.Helpers
 {
     /// <summary>
     /// 区域计算帮助
@@ -64,8 +61,8 @@ namespace Ideal.Core.Common.Helpers
                         }
                         else
                         {// cross point on the left side
-                            var xinters = (p.X - p1.X) * (p2.Y - p1.Y)
-                                    / (p2.X - p1.X) + p1.Y;
+                            var xinters = ((p.X - p1.X) * (p2.Y - p1.Y)
+                                    / (p2.X - p1.X)) + p1.Y;
                             // cross point of y
                             if (Math.Abs(p.Y - xinters) < precision)
                             {
@@ -124,10 +121,10 @@ namespace Ideal.Core.Common.Helpers
             var cn = 0;
             for (var i = 0; i < points.Length - 1; i++)
             {
-                if (points[i].Y <= current.Y && points[i + 1].Y > current.Y || points[i].Y > current.Y && points[i + 1].Y <= current.Y)
+                if ((points[i].Y <= current.Y && points[i + 1].Y > current.Y) || (points[i].Y > current.Y && points[i + 1].Y <= current.Y))
                 {
                     var vt = (current.Y - points[i].Y) / (points[i + 1].Y - points[i].Y);
-                    if (current.X < points[i].X + vt * (points[i + 1].X - points[i].X))
+                    if (current.X < points[i].X + (vt * (points[i + 1].X - points[i].X)))
                     {
                         ++cn;
                     }
@@ -210,7 +207,7 @@ namespace Ideal.Core.Common.Helpers
         /// <returns>0: current 在线段上 小于0: current 在线段右侧   大于0: current 在线段左侧 </returns>
         private static double JudgeDirection(in Point2D current, in Point2D start, in Point2D end)
         {
-            return (end.X - start.X) * (current.Y - start.Y) - (current.X - start.X) * (end.Y - start.Y);
+            return ((end.X - start.X) * (current.Y - start.Y)) - ((current.X - start.X) * (end.Y - start.Y));
         }
 
         /// <summary>
@@ -222,8 +219,8 @@ namespace Ideal.Core.Common.Helpers
         /// <returns></returns>
         public static (double X, double Y) TransforCoordinateLowerLeft(double x, double y, in MapInfo mapInfo)
         {
-            var point_x = mapInfo.ImageCenterPixelX + mapInfo.OriginOffsetPixelX + x / mapInfo.Scale;
-            var point_y = mapInfo.ImageCenterPixelY - mapInfo.OriginOffsetPixelY + y / mapInfo.Scale;
+            var point_x = mapInfo.ImageCenterPixelX + mapInfo.OriginOffsetPixelX + (x / mapInfo.Scale);
+            var point_y = mapInfo.ImageCenterPixelY - mapInfo.OriginOffsetPixelY + (y / mapInfo.Scale);
             return (point_x, point_y);
         }
 
@@ -282,14 +279,14 @@ namespace Ideal.Core.Common.Helpers
             var acLength = Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
             if (abRigth)
             {
-                var cX = b.X - bc * (a.Y - b.Y) / acLength;
-                var cY = b.Y + bc * (a.X - b.X) / acLength;
+                var cX = b.X - (bc * (a.Y - b.Y) / acLength);
+                var cY = b.Y + (bc * (a.X - b.X) / acLength);
                 return (cX, cY);
             }
             else
             {
-                var cX = b.X + bc * (a.Y - b.Y) / acLength;
-                var cY = b.Y - bc * (a.X - b.X) / acLength;
+                var cX = b.X + (bc * (a.Y - b.Y) / acLength);
+                var cY = b.Y - (bc * (a.X - b.X) / acLength);
                 return (cX, cY);
             }
         }
@@ -414,7 +411,7 @@ namespace Ideal.Core.Common.Helpers
             var unitVectorPoints = new Point2D[vectorPoints.Length];
             for (var i = 0; i < vectorPoints.Length; i++)
             {
-                var rideDouble = vectorPoints[i].X * vectorPoints[i].X + vectorPoints[i].Y * vectorPoints[i].Y;
+                var rideDouble = (vectorPoints[i].X * vectorPoints[i].X) + (vectorPoints[i].Y * vectorPoints[i].Y);
                 var value = 1.0 / Math.Sqrt(rideDouble);
                 var ride = new Point2D(vectorPoints[i].X * value, vectorPoints[i].Y * value);
                 unitVectorPoints[i] = ride;
@@ -425,7 +422,7 @@ namespace Ideal.Core.Common.Helpers
             {
                 var startIndex = i == 0 ? points.Length - 1 : i - 1;
                 var endIndex = i;
-                var sina = unitVectorPoints[startIndex].X * unitVectorPoints[endIndex].Y - unitVectorPoints[startIndex].Y * unitVectorPoints[endIndex].X;
+                var sina = (unitVectorPoints[startIndex].X * unitVectorPoints[endIndex].Y) - (unitVectorPoints[startIndex].Y * unitVectorPoints[endIndex].X);
                 var length = expand / sina;
                 var vector = new Point2D(unitVectorPoints[endIndex].X - unitVectorPoints[startIndex].X, unitVectorPoints[endIndex].Y - unitVectorPoints[startIndex].Y);
                 var ride = new Point2D(vector.X * length, vector.Y * length);

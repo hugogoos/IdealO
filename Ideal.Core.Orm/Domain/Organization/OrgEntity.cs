@@ -9,6 +9,6 @@
         /// <summary>
         /// 机构标志
         /// </summary>
-        public virtual string OrganizationId { get; set; }
+        public virtual string OrgId { get; set; }
     }
 }

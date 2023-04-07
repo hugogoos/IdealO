@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ideal.Core.Common
+﻿namespace Ideal.Core.Common
 {
     /// <summary>
     /// 雪花ID生成
@@ -37,10 +35,7 @@ namespace Ideal.Core.Common
         /// <returns></returns>
         public static Snowflake Instance()
         {
-            if (snowflake == null)
-            {
-                snowflake = new Snowflake(1, 1);
-            }
+            snowflake ??= new Snowflake(1, 1);
 
             return snowflake;
         }

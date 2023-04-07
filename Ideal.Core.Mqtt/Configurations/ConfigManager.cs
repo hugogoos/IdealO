@@ -22,6 +22,6 @@ namespace Ideal.Core.Mqtt.Configurations
         /// <summary>
         /// MQTT配置
         /// </summary>
-        public MQTTOptions MQTTOptions => _configuration.GetSection("MQTTOptions").Get<MQTTOptions>();
+        public IEnumerable<MqttOption> MqttOptions => _configuration.GetSection("MqttOptions").Get<IEnumerable<MqttOption>>();
     }
 }

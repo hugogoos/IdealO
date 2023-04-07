@@ -1,12 +1,11 @@
-﻿using MQTTnet.Client.Options;
-using System;
+﻿using MQTTnet.Extensions.ManagedClient;
 
 namespace Ideal.Core.Mqtt.Options
 {
     /// <summary>
-    /// Mqtt配置项创建
+    /// 
     /// </summary>
-    public class MqttClientOptionBuilder : MqttClientOptionsBuilder
+    public class ManagedMqttClientOptionBuilder : List<ManagedMqttClientOptions>
     {
         /// <summary>
         /// 
@@ -17,7 +16,7 @@ namespace Ideal.Core.Mqtt.Options
         /// 
         /// </summary>
         /// <param name="serviceProvider"></param>
-        public MqttClientOptionBuilder(IServiceProvider serviceProvider)
+        public ManagedMqttClientOptionBuilder(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ideal.Core.Common.Helpers
+﻿namespace Ideal.Core.Common.Helpers
 {
     /// <summary>
     /// 时间处理帮助类

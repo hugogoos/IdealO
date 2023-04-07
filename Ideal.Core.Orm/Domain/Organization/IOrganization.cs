@@ -8,6 +8,6 @@
         /// <summary>
         /// 机构Id
         /// </summary>
-        string OrganizationId { get; set; }
+        string OrgId { get; set; }
     }
 }

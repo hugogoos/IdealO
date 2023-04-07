@@ -1,5 +1,4 @@
 ﻿using SqlSugar;
-using System;
 using System.Collections.Concurrent;
 
 namespace Ideal.Core.Orm.SqlSugar

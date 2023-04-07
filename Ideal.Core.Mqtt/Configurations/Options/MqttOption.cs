@@ -3,8 +3,15 @@
     /// <summary>
     /// MQTT配置
     /// </summary>
-    public class MQTTOptions
+    public class MqttOption
     {
+        private int clientCount = 1;
+
+        /// <summary>
+        /// 启动客户端数量
+        /// </summary>
+        public int ClientCount { get => clientCount > 0 ? clientCount : 1; set => clientCount = value; }
+
         /// <summary>
         /// 服务地址
         /// </summary>

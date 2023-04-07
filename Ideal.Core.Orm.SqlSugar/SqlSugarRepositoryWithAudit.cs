@@ -1,31 +1,28 @@
 ﻿using Ideal.Core.Orm.Domain;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Ideal.Core.Orm.SqlSugar
 {
-    public abstract class SqlSugarRepositoryWithAudit<TAggregateRoot, TKey> : SqlSugarRepository<TAggregateRoot, TKey>
+    public abstract partial class SqlSugarRepositoryWithAudit<TAggregateRoot, TKey> : SqlSugarRepository<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, IAuditable, new()
     {
         protected SqlSugarRepositoryWithAudit(ISqlSugarClient context) : base(context)
         {
         }
 
-        public override async Task<int> UpdateAsync(TAggregateRoot entity)
+        public override int Update(TAggregateRoot entity)
         {
             if (entity != null)
             {
                 entity.UpdatedTime = DateTime.Now;
-                return await Context.Updateable(entity).ExecuteCommandAsync();
+                return Context.Updateable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> UpdateAsync(IEnumerable<TAggregateRoot> entities)
+        public override int Update(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -35,24 +32,34 @@ namespace Ideal.Core.Orm.SqlSugar
                     entity.UpdatedTime = DateTime.Now;
                 });
 
-                return await Context.Updateable(es).ExecuteCommandAsync();
+                return Context.Updateable(es).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> SaveAsync(TAggregateRoot entity)
+        public virtual int UpdateColumns(Expression<Func<TAggregateRoot, bool>> predicate)
+        {
+            return Context.Updateable<TAggregateRoot>().SetColumns(predicate).SetColumns(t => t.UpdatedTime == DateTime.Now).Where(t => t.Id != null).ExecuteCommand();
+        }
+
+        public virtual int UpdateColumns(Expression<Func<TAggregateRoot, TAggregateRoot>> predicate)
+        {
+            return Context.Updateable<TAggregateRoot>().SetColumns(predicate).SetColumns(t => t.UpdatedTime == DateTime.Now).Where(t => t.Id != null).ExecuteCommand();
+        }
+
+        public override int Save(TAggregateRoot entity)
         {
             if (entity != null)
             {
                 entity.UpdatedTime = DateTime.Now;
-                return await Context.Storageable(entity).ExecuteCommandAsync();
+                return Context.Storageable(entity).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
 
-        public override async Task<int> SaveAsync(IEnumerable<TAggregateRoot> entities)
+        public override int Save(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -62,10 +69,10 @@ namespace Ideal.Core.Orm.SqlSugar
                     entity.UpdatedTime = DateTime.Now;
                 });
 
-                return await Context.Storageable(es).ExecuteCommandAsync();
+                return Context.Storageable(es).ExecuteCommand();
             }
 
-            return await Task.FromResult(0);
+            return 0;
         }
     }
 }

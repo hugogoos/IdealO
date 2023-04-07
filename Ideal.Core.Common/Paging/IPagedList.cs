@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ideal.Core.Common.Paging
+﻿namespace Ideal.Core.Common.Paging
 {
     /// <summary>
     /// 分页接口

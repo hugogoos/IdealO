@@ -1,8 +1,6 @@
 ﻿using Ideal.Core.Common.Paging;
 using SqlSugar;
-using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Ideal.Core.Orm.SqlSugar.Extensions
 {

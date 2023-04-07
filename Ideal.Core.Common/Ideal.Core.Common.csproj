@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<PackageId>Ideal.Core.Common</PackageId>
 		<Authors>hugogoos</Authors>
 		<Company>$(Authors)</Company>
-		<Version>1.0.1</Version>
+		<Version>6.0.0</Version>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<FileVersion>$(Version)</FileVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -14,9 +14,11 @@
 		<DocumentationFile>Ideal.Core.Common.xml</DocumentationFile>
 		<Description>公共组件，该组件用于提供常用的，公共的功能封装。</Description>
 		<PackageProjectUrl>https://github.com/hugogoos/Ideal</PackageProjectUrl>
+		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="SharpZipLib" Version="1.4.2" />
 		<PackageReference Include="SkiaSharp" Version="2.80.3" />
 	</ItemGroup>
 

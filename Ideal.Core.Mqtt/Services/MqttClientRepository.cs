@@ -1,91 +1,115 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Ideal.Core.Mqtt.Configurations;
+using Microsoft.Extensions.Logging;
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnet.Client.Disconnecting;
-using MQTTnet.Client.Options;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using MQTTnet.Extensions.ManagedClient;
+using System.Text.Json;
 
 namespace Ideal.Core.Mqtt.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MqttClientRepository : IMqttClientRepository
     {
-        private readonly ILogger<MqttClientRepository> logger;
-        private readonly IMqttClient mqttClient;
-        private readonly IMqttClientOptions options;
-        private Timer _timer = null!;
+        private readonly ILogger<MqttClientRepository> _logger;
+        private readonly IDictionary<string, IEnumerable<IManagedMqttClient>> _managedMqttClients = new Dictionary<string, IEnumerable<IManagedMqttClient>>();
+        private readonly List<ManagedMqttClientOptions> _optionBuilders;
 
-        public MqttClientRepository(ILogger<MqttClientRepository> logger, IMqttClientOptions options)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="optionBuilders"></param>
+        /// <param name="configManager"></param>
+        public MqttClientRepository(ILogger<MqttClientRepository> logger, List<ManagedMqttClientOptions> optionBuilders, IConfigManager configManager)
         {
-            this.logger = logger;
-            this.options = options;
-            mqttClient = new MqttFactory().CreateMqttClient();
+            _logger = logger;
+            _optionBuilders = optionBuilders;
+            var mqttOptions = configManager.MqttOptions;
+
+            foreach (var mqttOption in mqttOptions)
+            {
+                var mqttClients = new List<IManagedMqttClient>();
+                var clientCount = mqttOption.ClientCount;
+                for (var i = 0; i < clientCount; i++)
+                {
+                    var mqttClient = new MqttFactory().CreateManagedMqttClient();
+                    mqttClients.Add(mqttClient);
+                }
+
+                _managedMqttClients.Add($"{mqttOption.Server}:{mqttOption.Port}", mqttClients);
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            try
+            foreach (var managedMqttClient in _managedMqttClients)
             {
-                await mqttClient.ConnectAsync(options);
-                if (!mqttClient.IsConnected)
+                var keys = managedMqttClient.Key.Split(':');
+                var optionBuilders = _optionBuilders.Where(m => ((MqttClientTcpOptions)m.ClientOptions.ChannelOptions).Server == keys[0]
+                                                                && ((MqttClientTcpOptions)m.ClientOptions.ChannelOptions).Port == int.Parse(keys[1])).ToList();
+                var mqttClients = managedMqttClient.Value;
+                var count = mqttClients.Count();
+                for (var i = 0; i < count; i++)
                 {
-                    await mqttClient.ReconnectAsync();
-                }
-
-                logger.LogInformation($"MQTT服务器连接成功！");
-                Console.WriteLine($"MQTT服务器连接成功！");
-            }
-            catch (Exception exp)
-            {
-                logger.LogError($"MQTT连接服务器失败 Msg：{exp.Message}");
-                Console.WriteLine($"MQTT连接服务器失败 Msg：{exp.Message}");
-            }
-
-            _timer = new Timer(CheckConnectionStatus, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(5));
-        }
-
-        private async void CheckConnectionStatus(object state)
-        {
-            try
-            {
-                if (!mqttClient.IsConnected)
-                {
-                    await mqttClient.ReconnectAsync();
-                    logger.LogInformation($"MQTT服务器重连成功！");
-                    Console.WriteLine($"MQTT服务器重连成功！");
+                    try
+                    {
+                        var mqttClient = mqttClients.ElementAt(i);
+                        await mqttClient.StartAsync(optionBuilders[i]);
+                        _logger.LogError($"ClientId：{mqttClient.Options.ClientOptions.ClientId}，连接成功！");
+                    }
+                    catch (Exception exp)
+                    {
+                        _logger.LogError($"MQTT连接服务器失败 Msg：{JsonSerializer.Serialize(exp)}");
+                    }
                 }
             }
-            catch (Exception exp)
-            {
-                logger.LogError($"MQTT重连服务器失败 Msg：{exp.Message}");
-                Console.WriteLine($"MQTT重连服务器失败 Msg：{exp.Message}");
-            }
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                var disconnectOption = new MqttClientDisconnectOptions
+                foreach (var managedMqttClient in _managedMqttClients)
                 {
-                    ReasonCode = MqttClientDisconnectReason.NormalDisconnection,
-                    ReasonString = "NormalDiconnection"
-                };
-                await mqttClient.DisconnectAsync(disconnectOption, cancellationToken);
-                logger.LogInformation($"MQTT服务器停止成功！");
-                Console.WriteLine($"MQTT服务器停止成功！");
+                    foreach (var mqttClient in managedMqttClient.Value)
+                    {
+                        await mqttClient.StopAsync();
+                        _logger.LogError($"ClientId：{mqttClient.Options.ClientOptions.ClientId}，停止成功！");
+                        Console.WriteLine($"ClientId：{mqttClient.Options.ClientOptions.ClientId}，停止成功！");
+                    }
+                }
             }
-            await mqttClient.DisconnectAsync();
-            logger.LogInformation($"MQTT服务器停止成功！");
-            Console.WriteLine($"MQTT服务器停止成功！");
+
+            foreach (var managedMqttClient in _managedMqttClients)
+            {
+                foreach (var mqttClient in managedMqttClient.Value)
+                {
+                    await mqttClient.StopAsync();
+                    _logger.LogError($"ClientId：{mqttClient.Options.ClientOptions.ClientId}，停止成功！");
+                    Console.WriteLine($"ClientId：{mqttClient.Options.ClientOptions.ClientId}，停止成功！");
+                }
+            }
         }
 
-        public IMqttClient GetMqttClient()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IDictionary<string, IEnumerable<IManagedMqttClient>> GetManagedMqttClients()
         {
-            return mqttClient;
+            return _managedMqttClients;
         }
     }
 }
