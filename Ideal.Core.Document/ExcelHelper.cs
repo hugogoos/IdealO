@@ -292,7 +292,7 @@ namespace Ideal.Core.Document
             }
 
             using var fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
-            workbook.Write(fs);
+            workbook.Write(fs, true);
         }
 
         /// <summary>
@@ -363,13 +363,13 @@ namespace Ideal.Core.Document
         private static void ExportFileStream(IWorkbook workbook, string filename)
         {
             using var fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
-            workbook.Write(fs);
+            workbook.Write(fs, true);
         }
 
         private static MemoryStream ExportMemoryStream(IWorkbook workbook)
         {
             var stream = new MemoryStream();
-            workbook.Write(stream);
+            workbook.Write(stream, true);
             stream.Flush();
             return stream;
         }
@@ -377,7 +377,7 @@ namespace Ideal.Core.Document
         private static byte[] WriteBytes(IWorkbook workbook)
         {
             using var stream = new MemoryStream();
-            workbook.Write(stream);
+            workbook.Write(stream, true);
             stream.Flush();
             return stream.ToArray();
         }
