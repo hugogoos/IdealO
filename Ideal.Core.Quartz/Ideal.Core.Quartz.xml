@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ideal.Core.Quartz</name>
+    </assembly>
+    <members>
+        <member name="T:Ideal.Core.Quartz.Extensions.QuartzSetupExtensions">
+            <summary>
+            Quartz启动项
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Quartz.Extensions.QuartzSetupExtensions.AddQuartzSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Quartz启动项
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Ideal.Core.Quartz.JobFactory._serviceProvider">
+            <summary>
+            注入反射获取依赖对象
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Quartz.JobFactory.NewJob(Quartz.Spi.TriggerFiredBundle,Quartz.IScheduler)">
+            <summary>
+            实现接口Job
+            </summary>
+            <param name="bundle"></param>
+            <param name="scheduler"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Quartz.TriggerWayEnum">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Quartz.TriggerWayEnum.Simple">
+            <summary>
+            Simple
+            </summary>
+        </member>
+        <member name="F:Ideal.Core.Quartz.TriggerWayEnum.Cron">
+            <summary>
+            Cron
+            </summary>
+        </member>
+    </members>
+</doc>
