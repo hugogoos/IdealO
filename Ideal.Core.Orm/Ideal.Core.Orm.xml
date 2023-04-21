@@ -10,6 +10,11 @@
             </summary>
             <typeparam name="TKey">实体标识类型</typeparam>
         </member>
+        <member name="M:Ideal.Core.Orm.Domain.AuditableEntity`1.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Ideal.Core.Orm.Domain.AuditableEntity`1.CreatedTime">
             <summary>
             创建时间
@@ -92,6 +97,11 @@
         <member name="P:Ideal.Core.Orm.Domain.IAuditable.UpdatedBy">
             <summary>
             修改人
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.Domain.IDbContext">
+            <summary>
+            数据上下文
             </summary>
         </member>
         <member name="T:Ideal.Core.Orm.Domain.IEntity`1">
@@ -234,13 +244,27 @@
             <summary>
             批量更新实体列
             </summary>
-            <param name="predicate">条件谓词</param>
+            <param name="predicate">列谓词</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            批量更新实体列
+            </summary>
+            <param name="columnPredicate">列谓词</param>
+            <param name="wherePredicate">条件谓词</param>
         </member>
         <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
             <summary>
             批量更新实体列
             </summary>
-            <param name="predicate">条件谓词</param>
+            <param name="predicate">实体谓词</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            批量更新实体列
+            </summary>
+            <param name="columnPredicate">实体谓词</param>
+            <param name="wherePredicate">条件谓词</param>
         </member>
         <member name="M:Ideal.Core.Orm.Domain.IRepository`2.Save(`0)">
             <summary>
@@ -400,13 +424,27 @@
             <summary>
             批量更新实体列
             </summary>
-            <param name="predicate">条件谓词</param>
+            <param name="predicate">列谓词</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            批量更新实体列
+            </summary>
+            <param name="columnPredicate">列谓词</param>
+            <param name="wherePredicate">条件谓词</param>
         </member>
         <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
             <summary>
             批量更新实体列
             </summary>
-            <param name="predicate">条件谓词</param>
+            <param name="predicate">实体谓词</param>
+        </member>
+        <member name="M:Ideal.Core.Orm.Domain.IRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            批量更新实体列
+            </summary>
+            <param name="columnPredicate">实体谓词</param>
+            <param name="wherePredicate">条件谓词</param>
         </member>
         <member name="M:Ideal.Core.Orm.Domain.IRepository`2.SaveAsync(`0)">
             <summary>
@@ -450,75 +488,6 @@
             </summary>
         </member>
         <member name="P:Ideal.Core.Orm.Domain.ISoftDelete.IsDeleted">
-            <summary>
-            软删除标志
-            </summary>
-        </member>
-        <member name="T:Ideal.Core.Orm.Domain.Organization.IOrgAggregateRoot`1">
-            <summary>
-            机构聚合根
-            </summary>
-            <typeparam name="TKey">实体标识类型</typeparam>
-        </member>
-        <member name="T:Ideal.Core.Orm.Domain.Organization.IOrganization">
-            <summary>
-            支持机构
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.IOrganization.OrgId">
-            <summary>
-            机构Id
-            </summary>
-        </member>
-        <member name="T:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1">
-            <summary>
-            支持机构审计的实体
-            </summary>
-            <typeparam name="TKey">实体标识类型</typeparam>
-        </member>
-        <member name="M:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.#ctor">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.CreatedTime">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.CreatedBy">
-            <summary>
-            创建人
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.UpdatedTime">
-            <summary>
-            修改时间
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgAuditableEntity`1.UpdatedBy">
-            <summary>
-            修改人
-            </summary>
-        </member>
-        <member name="T:Ideal.Core.Orm.Domain.Organization.OrgEntity`1">
-            <summary>
-            支持机构的实体
-            </summary>
-            <typeparam name="TKey">实体标识类型</typeparam>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgEntity`1.OrgId">
-            <summary>
-            机构标志
-            </summary>
-        </member>
-        <member name="T:Ideal.Core.Orm.Domain.Organization.OrgSoftDeleteEntity`1">
-            <summary>
-            支持机构软删除的实体
-            </summary>
-            <typeparam name="TKey">实体标识类型</typeparam>
-        </member>
-        <member name="P:Ideal.Core.Orm.Domain.Organization.OrgSoftDeleteEntity`1.IsDeleted">
             <summary>
             软删除标志
             </summary>

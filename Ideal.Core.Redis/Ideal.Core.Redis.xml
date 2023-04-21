@@ -4,28 +4,28 @@
         <name>Ideal.Core.Redis</name>
     </assembly>
     <members>
-        <member name="T:Ideal.Core.Redis.Configurations.ConfigManager">
+        <member name="T:Ideal.Core.Redis.Configurations.ConfigurationCenter">
             <summary>
             配置管理
             </summary>
         </member>
-        <member name="M:Ideal.Core.Redis.Configurations.ConfigManager.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Ideal.Core.Redis.Configurations.ConfigurationCenter.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             构造函数
             </summary>
             <param name="configuration">IConfiguration</param>
         </member>
-        <member name="P:Ideal.Core.Redis.Configurations.ConfigManager.RedisOptions">
+        <member name="P:Ideal.Core.Redis.Configurations.ConfigurationCenter.RedisOptions">
             <summary>
             字符串链接
             </summary>
         </member>
-        <member name="T:Ideal.Core.Redis.Configurations.IConfigManager">
+        <member name="T:Ideal.Core.Redis.Configurations.IConfigurationCenter">
             <summary>
             配置管理
             </summary>
         </member>
-        <member name="P:Ideal.Core.Redis.Configurations.IConfigManager.RedisOptions">
+        <member name="P:Ideal.Core.Redis.Configurations.IConfigurationCenter.RedisOptions">
             <summary>
             Redis配置
             </summary>

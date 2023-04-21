@@ -9,6 +9,9 @@ using System.Linq.Expressions;
 
 namespace Ideal.Core.Common.Extensions
 {
+    /// <summary>
+    /// Linq相关扩展方法
+    /// </summary>
     public static partial class LinqExtension
     {
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)

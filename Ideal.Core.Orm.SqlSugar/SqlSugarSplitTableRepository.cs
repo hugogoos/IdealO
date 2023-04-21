@@ -5,19 +5,28 @@ using System.Linq.Expressions;
 
 namespace Ideal.Core.Orm.SqlSugar
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TAggregateRoot"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     public abstract partial class SqlSugarSplitTableRepository<TAggregateRoot, TKey> : SqlSugarRepository<TAggregateRoot, TKey>, ISplitTableRepository<TAggregateRoot, TKey>, IQuerableRepository<TAggregateRoot, TKey>, IRepository<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, new()
     {
-        protected ISqlSugarClient Context { get; }
-
-        protected SqlSugarSplitTableRepository(ISqlSugarClient context) : base(context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        protected SqlSugarSplitTableRepository(IDbContext context) : base(context)
         {
-            Context = context;
         }
 
-        protected ISugarQueryable<TAggregateRoot> SugarQueryable => Context.Queryable<TAggregateRoot>();
-
-        public virtual TAggregateRoot FindById(TKey key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override TAggregateRoot FindById(TKey key)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -30,7 +39,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual TAggregateRoot FirstOrDefault()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override TAggregateRoot FirstOrDefault()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -43,7 +56,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual TAggregateRoot FirstOrDefault(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override TAggregateRoot FirstOrDefault(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -56,7 +74,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual IEnumerable<TAggregateRoot> FindAll()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerable<TAggregateRoot> FindAll()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -69,6 +91,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
         public virtual IEnumerable<TAggregateRoot> FindAll(DateTime startTime, DateTime endTime)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
@@ -82,7 +110,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -95,6 +128,13 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public virtual IEnumerable<TAggregateRoot> FindAll(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
@@ -108,7 +148,14 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
+        public override IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = 0;
             var query = Context.Queryable<TAggregateRoot>();
@@ -130,6 +177,15 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
         public virtual IPagedList<TAggregateRoot> PagedFindAll(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = 0;
@@ -152,7 +208,15 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
-        public virtual IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
+        public override IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = 0;
             var query = Context.Queryable<TAggregateRoot>().Where(predicate);
@@ -174,6 +238,16 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="predicate"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
         public virtual IPagedList<TAggregateRoot> PagedFindAll(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = 0;
@@ -196,7 +270,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
-        public virtual bool Exists(TKey key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override bool Exists(TKey key)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -209,7 +288,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual bool Exists(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override bool Exists(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -222,7 +306,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual bool Any()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override bool Any()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -235,7 +323,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual bool Any(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override bool Any(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -248,7 +341,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual int Count()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int Count()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -261,7 +358,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual int Count(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override int Count(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -274,7 +376,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual int Create(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override int Create(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -292,7 +399,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int Create(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override int Create(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -310,7 +422,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int Update(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override int Update(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -328,7 +445,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int Update(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override int Update(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -346,7 +468,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int UpdateColumns(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override int UpdateColumns(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -359,7 +486,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual int UpdateColumns(Expression<Func<TAggregateRoot, TAggregateRoot>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override int UpdateColumns(Expression<Func<TAggregateRoot, TAggregateRoot>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -372,7 +504,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual int Save(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override int Save(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -382,7 +519,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int Save(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override int Save(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -392,7 +534,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int RemoveById(TKey key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override int RemoveById(TKey key)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -406,7 +553,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual int Remove(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override int Remove(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -424,7 +576,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int Remove(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override int Remove(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -442,7 +599,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
-        public virtual int Remove(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override int Remove(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -453,11 +615,6 @@ namespace Ideal.Core.Orm.SqlSugar
             {
                 return Context.Deleteable(predicate).SplitTable().ExecuteCommand();
             }
-        }
-
-        public void Dispose()
-        {
-            Context.Dispose();
         }
     }
 }

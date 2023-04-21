@@ -2,13 +2,23 @@
 
 namespace Ideal.Core.Orm.SqlSugar.UnitOfWorks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
         private readonly object unitOfWorkLock = new();
         private readonly ISqlSugarClient _sqlSugarClient;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private int _tranCount { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqlSugarClient"></param>
         public UnitOfWork(ISqlSugarClient sqlSugarClient)
         {
             _sqlSugarClient = sqlSugarClient;
@@ -25,6 +35,9 @@ namespace Ideal.Core.Orm.SqlSugar.UnitOfWorks
             return _sqlSugarClient as SqlSugarScope;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void BeginTran()
         {
             lock (unitOfWorkLock)
@@ -34,6 +47,9 @@ namespace Ideal.Core.Orm.SqlSugar.UnitOfWorks
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CommitTran()
         {
             lock (unitOfWorkLock)
@@ -54,6 +70,9 @@ namespace Ideal.Core.Orm.SqlSugar.UnitOfWorks
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RollbackTran()
         {
             lock (unitOfWorkLock)

@@ -35,7 +35,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 查找第一个实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <returns>返回实体结果的异步任务</returns>
         public static async Task<T> FirstOrDefaultAsync<T>(this ISugarQueryable<T> source)
@@ -55,7 +54,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 根据条件查找第一个实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="predicate">条件谓词</param>
         /// <returns>返回实体结果的异步任务</returns>
@@ -76,7 +74,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 查找所有实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <returns>返回所有实体的列表的异步任务</returns>
         public static async Task<IEnumerable<T>> FindAllAsync<T>(this ISugarQueryable<T> source)
@@ -96,7 +93,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 查找所有分表实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
@@ -118,7 +114,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 查找满足条件的实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="predicate">条件谓词</param>
         /// <returns>返回实体列表结果的异步任务</returns>
@@ -139,7 +134,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 查找满足条件的分表实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
@@ -162,7 +156,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 分页查找所有实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="orderByKeySelector">选择用于分页前排序的键</param>
         /// <param name="orderByType">排序类型</param>
@@ -194,7 +187,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 分页查找所有分表实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
@@ -228,7 +220,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 分页查找满足条件的实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="predicate">条件谓词</param>
         /// <param name="orderByKeySelector">选择用于分页前排序的键</param>
@@ -261,7 +252,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 分页查找满足条件的分表实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
@@ -317,7 +307,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 判断是否存在满足条件的实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="predicate">条件谓词</param>
         /// <returns>是否存在</returns>
@@ -338,7 +327,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 判断是否存在实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <returns>是否存在</returns>
         public static async Task<bool> AnyAsync<T>(this ISugarQueryable<T> source)
         {
@@ -357,7 +345,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 判断是否存在满足条件的实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="predicate">条件谓词</param>
         /// <returns>是否存在</returns>
@@ -378,7 +365,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 计算实体个数
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <returns>条数</returns>
         public static async Task<int> CountAsync<T>(this ISugarQueryable<T> source)
@@ -398,7 +384,6 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// 计算满足条件的实体个数
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
         /// <param name="source"></param>
         /// <param name="predicate">条件谓词</param>
         /// <returns>是否存在</returns>

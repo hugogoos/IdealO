@@ -13,8 +13,8 @@ namespace Ideal.Core.Redis
         /// <returns></returns>
         public static IServiceCollection AddRedisClientSetup(this IServiceCollection services)
         {
-            services.AddTransient<IConfigManager, ConfigManager>();
-            var config = services.BuildServiceProvider().GetService<IConfigManager>();
+            services.AddTransient<IConfigurationCenter, ConfigurationCenter>();
+            var config = services.BuildServiceProvider().GetService<IConfigurationCenter>();
             var options = config.RedisOptions;
             if (options == null)
             {

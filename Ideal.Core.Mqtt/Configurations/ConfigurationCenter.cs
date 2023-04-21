@@ -6,7 +6,7 @@ namespace Ideal.Core.Mqtt.Configurations
     /// <summary>
     /// 配置管理
     /// </summary>
-    public class ConfigManager : IConfigManager
+    public class ConfigurationCenter : IConfigurationCenter
     {
         private readonly IConfiguration _configuration;
 
@@ -14,7 +14,7 @@ namespace Ideal.Core.Mqtt.Configurations
         /// 构造函数
         /// </summary>
         /// <param name="configuration">IConfiguration</param>
-        public ConfigManager(IConfiguration configuration)
+        public ConfigurationCenter(IConfiguration configuration)
         {
             _configuration = configuration;
         }

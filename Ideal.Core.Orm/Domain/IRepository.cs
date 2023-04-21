@@ -127,14 +127,28 @@ namespace Ideal.Core.Orm.Domain
         /// <summary>
         /// 批量更新实体列
         /// </summary>
-        /// <param name="predicate">条件谓词</param>
+        /// <param name="predicate">列谓词</param>
         int UpdateColumns(Expression<Func<TAggregateRoot, bool>> predicate);
 
         /// <summary>
         /// 批量更新实体列
         /// </summary>
-        /// <param name="predicate">条件谓词</param>
+        /// <param name="columnPredicate">列谓词</param>
+        /// <param name="wherePredicate">条件谓词</param>
+        int UpdateColumns(Expression<Func<TAggregateRoot, bool>> columnPredicate, Expression<Func<TAggregateRoot, bool>> wherePredicate);
+
+        /// <summary>
+        /// 批量更新实体列
+        /// </summary>
+        /// <param name="predicate">实体谓词</param>
         int UpdateColumns(Expression<Func<TAggregateRoot, TAggregateRoot>> predicate);
+
+        /// <summary>
+        /// 批量更新实体列
+        /// </summary>
+        /// <param name="columnPredicate">实体谓词</param>
+        /// <param name="wherePredicate">条件谓词</param>
+        int UpdateColumns(Expression<Func<TAggregateRoot, TAggregateRoot>> columnPredicate, Expression<Func<TAggregateRoot, bool>> wherePredicate);
 
         /// <summary>
         /// 保存实体

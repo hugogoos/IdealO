@@ -22,7 +22,7 @@ namespace Ideal.Core.Mqtt.Services
         /// <param name="logger"></param>
         /// <param name="optionBuilders"></param>
         /// <param name="configManager"></param>
-        public MqttClientRepository(ILogger<MqttClientRepository> logger, List<ManagedMqttClientOptions> optionBuilders, IConfigManager configManager)
+        public MqttClientRepository(ILogger<MqttClientRepository> logger, List<ManagedMqttClientOptions> optionBuilders, IConfigurationCenter configManager)
         {
             _logger = logger;
             _optionBuilders = optionBuilders;

@@ -5,58 +5,117 @@ using System.Linq.Expressions;
 
 namespace Ideal.Core.Orm.SqlSugar
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract partial class SqlSugarRepositoryWithDeleteFilter<TAggregateRoot, TKey> :
         SqlSugarRepositoryWithAudit<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, IAuditable, ISoftDelete, new()
     {
-        protected SqlSugarRepositoryWithDeleteFilter(ISqlSugarClient context) : base(context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        protected SqlSugarRepositoryWithDeleteFilter(IDbContext context) : base(context)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override ISugarQueryable<TAggregateRoot> Query()
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted);
         }
 
-        public virtual ISugarQueryable<TAggregateRoot> Query(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <returns></returns>
+        public override ISugarQueryable<TAggregateRoot> Query(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc);
         }
 
-        public virtual ISugarQueryable<TAggregateRoot> Query(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override ISugarQueryable<TAggregateRoot> Query(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate);
         }
 
-        public virtual ISugarQueryable<TAggregateRoot> Query(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <returns></returns>
+        public override ISugarQueryable<TAggregateRoot> Query(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).OrderBy(orderByKeySelector, orderByType == OrderByMode.Asc ? OrderByType.Asc : OrderByType.Desc);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public override TAggregateRoot FindById(TKey key)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).InSingle(key);
         }
-        public virtual TAggregateRoot FirstOrDefault()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override TAggregateRoot FirstOrDefault()
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).First();
         }
 
-        public virtual TAggregateRoot FirstOrDefault(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override TAggregateRoot FirstOrDefault(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).With(SqlWith.NoLock).First(predicate);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override IEnumerable<TAggregateRoot> FindAll()
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public override IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Where(predicate).ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
         public override IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = 0;
@@ -73,6 +132,14 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
         public override IPagedList<TAggregateRoot> PagedFindAll(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = 0;
@@ -89,42 +156,79 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public override bool Exists(TKey key)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any(entity => entity.Id.Equals(key));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public override bool Exists(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any(predicate);
         }
 
-
-        public virtual bool Any()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override bool Any()
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any();
         }
 
-        public virtual bool Any(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override bool Any(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Any(predicate);
         }
 
-        public virtual int Count()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int Count()
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Count();
         }
 
-        public virtual int Count(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override int Count(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Queryable<TAggregateRoot>().Where(entity => !entity.IsDeleted).Count(predicate);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public override int RemoveById(TKey key)
         {
             return Context.Updateable<TAggregateRoot>().SetColumns(entity => entity.IsDeleted == true).SetColumns(entity => entity.UpdatedTime == DateTime.Now).Where(entity => entity.Id.Equals(key)).ExecuteCommand();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public override int Remove(TAggregateRoot entity)
         {
             if (entity != null)
@@ -137,6 +241,11 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
         public override int Remove(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
@@ -154,6 +263,11 @@ namespace Ideal.Core.Orm.SqlSugar
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public override int Remove(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             return Context.Updateable<TAggregateRoot>().SetColumns(entity => entity.IsDeleted == true).SetColumns(entity => entity.UpdatedTime == DateTime.Now).Where(predicate).ExecuteCommand();

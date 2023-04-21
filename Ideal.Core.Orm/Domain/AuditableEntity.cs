@@ -6,6 +6,9 @@
     /// <typeparam name="TKey">实体标识类型</typeparam>
     public class AuditableEntity<TKey> : Entity<TKey>, IAuditable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public AuditableEntity()
         {
             var currentTime = DateTime.Now;

@@ -4,9 +4,9 @@ using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 namespace Ideal.Core.Common.Extensions
 {
     /// <summary>
-    /// 字节相关扩展方法
+    /// 编码解码相关扩展方法
     /// </summary>
-    public static class ByteExtension
+    public static class CodecExtension
     {
         /// <summary>
         /// 压缩字节数组

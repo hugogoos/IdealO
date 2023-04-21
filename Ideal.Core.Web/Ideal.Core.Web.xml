@@ -4,37 +4,6 @@
         <name>Ideal.Core.Web</name>
     </assembly>
     <members>
-        <member name="T:Ideal.Core.Web.ResultResponse`1">
-            <summary>
-            统一返回类型
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="P:Ideal.Core.Web.ResultResponse`1.Data">
-            <summary>
-            获取 返回数据
-            </summary>
-        </member>
-        <member name="T:Ideal.Core.Web.ResultResponse">
-            <summary>
-            统一返回类型
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Web.ResultResponse.IsSucceed">
-            <summary>
-            是否成功
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Web.ResultResponse.Code">
-            <summary>
-            操作结果类型
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Web.ResultResponse.Msg">
-            <summary>
-            获取 消息内容
-            </summary>
-        </member>
         <member name="T:Ideal.Core.Web.LifetimesEnum">
             <summary>
             生命周期

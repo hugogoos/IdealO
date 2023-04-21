@@ -20,66 +20,19 @@
             </summary>
             <param name="tableColumnName"></param>
         </member>
-        <member name="T:Ideal.Core.Common.Encodings.DESEncrypt">
+        <member name="T:Ideal.Core.Common.Extensions.CodecExtension">
             <summary>
-            DES加密、解密帮助类
+            编码解码相关扩展方法
             </summary>
         </member>
-        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Encrypt(System.String)">
-            <summary>
-            加密
-            </summary>
-            <param name="text"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Encrypt(System.String,System.String)">
-            <summary>
-            加密数据
-            </summary>
-            <param name="text"></param>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Decrypt(System.String)">
-            <summary>
-            解密
-            </summary>
-            <param name="text"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Ideal.Core.Common.Encodings.DESEncrypt.Decrypt(System.String,System.String)">
-            <summary>
-            解密数据
-            </summary>
-            <param name="text"></param>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Ideal.Core.Common.Encodings.Md5">
-            <summary>
-            MD5加密
-            </summary>
-        </member>
-        <member name="M:Ideal.Core.Common.Encodings.Md5.MD5Hash(System.String)">
-            <summary>
-            netcore下的实现MD5加密
-            </summary>
-            <param name="input"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Ideal.Core.Common.Extensions.ByteExtension">
-            <summary>
-            字节相关扩展方法
-            </summary>
-        </member>
-        <member name="M:Ideal.Core.Common.Extensions.ByteExtension.Compress(System.Byte[])">
+        <member name="M:Ideal.Core.Common.Extensions.CodecExtension.Compress(System.Byte[])">
             <summary>
             压缩字节数组
             </summary>
             <param name="source"></param>
             <returns></returns>
         </member>
-        <member name="M:Ideal.Core.Common.Extensions.ByteExtension.Decompress(System.Byte[])">
+        <member name="M:Ideal.Core.Common.Extensions.CodecExtension.Decompress(System.Byte[])">
             <summary>
             解压字节数组
             </summary>
@@ -88,125 +41,283 @@
         </member>
         <member name="T:Ideal.Core.Common.Extensions.DateTimeExtension">
             <summary>
-            时间相关扩展
+            时间相关扩展方法
             </summary>
-        </member>
-        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateBySeconds(System.Int64)">
-            <summary>
-             时间戳转本地时间-时间戳精确到秒
-            </summary> 
-        </member>
-        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateBySeconds(System.Int64)">
-            <summary>
-             时间戳转UTC时间-时间戳精确到秒
-            </summary> 
         </member>
         <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUnixTimestampBySeconds(System.DateTime)">
             <summary>
-             时间转时间戳Unix-时间戳精确到秒
-            </summary> 
-        </member>
-        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateByMilliseconds(System.Int64)">
-            <summary>
-             时间戳转本地时间-时间戳精确到毫秒
-            </summary> 
-        </member>
-        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateByMilliseconds(System.Int64)">
-            <summary>
-             时间戳转UTC时间-时间戳精确到毫秒
-            </summary> 
+            日期时间转时间戳（秒）
+            </summary>
+            <param name="dateTime">日期时间</param>
+            <returns>时间戳（秒）</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUnixTimestampByMilliseconds(System.DateTime)">
             <summary>
-             时间转时间戳Unix-时间戳精确到毫秒
+             日期时间转时间戳（毫秒）
             </summary> 
+            <param name="dateTime">日期时间</param>
+            <returns>时间戳（毫秒）</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateTimeBySeconds(System.Int64)">
+            <summary>
+            时间戳（秒）转本地日期时间
+            </summary>
+            <param name="timestamp">时间戳（秒）</param>
+            <returns>本地日期时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateTimeBySeconds(System.Int64)">
+            <summary>
+             时间戳（秒）转UTC日期时间
+            </summary> 
+            <param name="timestamp">时间戳（秒）</param>
+            <returns>UTC日期时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateTimeByMilliseconds(System.Int64)">
+            <summary>
+             时间戳（毫秒）转本地日期时间
+            </summary> 
+            <param name="timestamp">时间戳（毫秒）</param>
+            <returns>本地日期时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateTimeByMilliseconds(System.Int64)">
+            <summary>
+             时间戳（毫秒）转UTC日期时间
+            </summary> 
+            <param name="timestamp">时间戳（毫秒）</param>
+            <returns>UTC日期时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateBySeconds(System.Int64)">
+            <summary>
+             时间戳（秒）转本地日期
+            </summary> 
+            <param name="timestamp">时间戳（秒）</param>
+            <returns>本地日期</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateBySeconds(System.Int64)">
+            <summary>
+             时间戳（秒）转UTC日期
+            </summary> 
+            <param name="timestamp">时间戳（秒）</param>
+            <returns>UTC日期</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeDateByMilliseconds(System.Int64)">
+            <summary>
+             时间戳（毫秒）转本地日期
+            </summary> 
+            <param name="timestamp">时间戳（毫秒）</param>
+            <returns>本地日期</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeDateByMilliseconds(System.Int64)">
+            <summary>
+             时间戳（毫秒）转UTC日期
+            </summary> 
+            <param name="timestamp">时间戳（毫秒）</param>
+            <returns>UTC日期</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeTimeBySeconds(System.Int64)">
+            <summary>
+             时间戳（秒）转本地时间
+            </summary> 
+            <param name="timestamp">时间戳（秒）</param>
+            <returns>本地时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeTimeBySeconds(System.Int64)">
+            <summary>
+             时间戳（秒）转UTC时间
+            </summary> 
+            <param name="timestamp">时间戳（秒）</param>
+            <returns>UTC时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToLocalTimeTimeByMilliseconds(System.Int64)">
+            <summary>
+             时间戳（毫秒）转本地时间
+            </summary> 
+            <param name="timestamp">时间戳（毫秒）</param>
+            <returns>本地时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToUniversalTimeTimeByMilliseconds(System.Int64)">
+            <summary>
+             时间戳（毫秒）转UTC时间
+            </summary> 
+            <param name="timestamp">时间戳（毫秒）</param>
+            <returns>UTC时间</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToDateTime(System.String)">
             <summary>
+            字符串转日期时间，转换失败则返回空
+            </summary>
+            <param name="source">需转换的字符串</param>
+            <returns>日期时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToDateTime(System.String,System.DateTime)">
+            <summary>
+            字符串转日期时间，转换失败则返回默认值
+            </summary>
+            <param name="source">需转换的字符串</param>
+            <param name="dateTime">默认日期时间</param>
+            <returns>日期时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToDateOnly(System.String)">
+            <summary>
+            字符串转日期，转换失败则返回空
+            </summary>
+            <param name="source">需转换的字符串</param>
+            <returns>日期</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToDateOnly(System.String,System.DateOnly)">
+            <summary>
+            字符串转日期，转换失败则返回默认日期
+            </summary>
+            <param name="source">需转换的字符串</param>
+            <param name="dateOnly">默认日期</param>
+            <returns>日期</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToTimeOnly(System.String)">
+            <summary>
             字符串转时间，转换失败则返回空
             </summary>
-            <returns></returns>
+            <param name="source">需转换的字符串</param>
+            <returns>时间</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.DateTimeExtension.ToTimeOnly(System.String,System.TimeOnly)">
+            <summary>
+            字符串转时间，转换失败则返回默认时间
+            </summary>
+            <param name="source">需转换的字符串</param>
+            <param name="timeOnly">默认时间</param>
+            <returns>时间</returns>
         </member>
         <member name="T:Ideal.Core.Common.Extensions.EnumExtension">
             <summary>
-            枚举扩展
+            枚举相关扩展方法
             </summary>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.String)">
             <summary>
-            根据枚举名称转换成枚举
+            根据枚举名称转换成枚举，转换失败则返回空
             </summary>
-            <typeparam name="T"></typeparam>
+            <typeparam name="T">枚举类型</typeparam>
             <param name="name">枚举名称</param>
-            <returns></returns>
+            <returns>枚举</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.String,``0)">
+            <summary>
+            根据枚举名称转换成枚举，转换失败则返回默认枚举值
+            </summary>
+            <typeparam name="T">枚举类型</typeparam>
+            <param name="name">枚举名称</param>
+            <param name="defaultValue">默认枚举值</param>
+            <returns>枚举</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.Int32)">
             <summary>
-            根据枚举值转换成枚举
+            根据枚举值转换成枚举，转换失败则返回空
             </summary>
-            <typeparam name="T"></typeparam>
+            <typeparam name="T">枚举类型</typeparam>
             <param name="value">枚举值</param>
-            <returns></returns>
+            <returns>枚举</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnum``1(System.Int32,``0)">
+            <summary>
+            根据枚举值转换成枚举，转换失败则返回默认枚举值
+            </summary>
+            <typeparam name="T">枚举类型</typeparam>
+            <param name="value">枚举值</param>
+            <param name="defaultValue">默认枚举值</param>
+            <returns>枚举</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumByDescription``1(System.String)">
             <summary>
-            将注释转换成枚举值，匹配不上返回Null
+            将枚举描述转换成枚举值，匹配失败返回空
             </summary>
-            <param name="description"></param>
-            <returns></returns>
+            <typeparam name="T">枚举类型</typeparam>
+            <param name="description">枚举描述</param>
+            <returns>枚举</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumByDescription``1(System.String,``0)">
+            <summary>
+            将枚举描述转换成枚举值，匹配失败返回默认枚举值
+            </summary>
+            <typeparam name="T">枚举类型</typeparam>
+            <param name="description">枚举描述</param>
+            <param name="defaultValue">默认枚举值</param>
+            <returns>枚举</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumName``1(System.Int32)">
             <summary>
-            根据枚举值转换成枚举名称
+            根据枚举值转换成枚举名称，转换失败则返回当前枚举值
             </summary>
-            <typeparam name="T"></typeparam>
+            <typeparam name="T">枚举类型</typeparam>
             <param name="value">枚举值</param>
-            <returns></returns>
+            <returns>枚举名称</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumName``1(System.Int32,``0)">
+            <summary>
+            根据枚举值转换成枚举名称，转换失败则返回默认枚举名称
+            </summary>
+            <typeparam name="T">枚举类型</typeparam>
+            <param name="value">枚举值</param>
+            <param name="defaultValue">默认枚举名称</param>
+            <returns>枚举名称</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumValue``1(System.String)">
             <summary>
-            根据枚举名称转换成枚举值
+            根据枚举名称转换成枚举值，转换失败则返回空
             </summary>
-            <typeparam name="T"></typeparam>
+            <typeparam name="T">枚举类型</typeparam>
             <param name="name">枚举名称</param>
-            <returns></returns>
+            <returns>枚举值</returns>
+        </member>
+        <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumValue``1(System.String,``0)">
+            <summary>
+            根据枚举名称转换成枚举值，转换失败则返回默认枚举值
+            </summary>
+            <typeparam name="T">枚举类型</typeparam>
+            <param name="name">枚举名称</param>
+            <param name="defaultValue">默认枚举值</param>
+            <returns>枚举值</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToDescription(System.Enum,System.String)">
             <summary>
-            获取枚举的描述信息(Descripion)。
+            获取枚举描述(Descripion)。
             支持位域，如果是位域组合值，多个按分隔符组合。
             </summary>
-            <param name="source"></param>
+            <param name="source">枚举</param>
             <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
-            <returns></returns>
+            <returns>枚举描述</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumNameDescriptions(System.Type)">
             <summary>
-             获取枚举名+描述
+             获取枚举名称+描述
             </summary>
-            <param name="enumType">枚举的类型</param>
-            <returns>键值对</returns>
+            <param name="enumType">枚举类型</param>
+            <returns>键值对(枚举名称-描述)</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.ToEnumValueDescriptions(System.Type)">
             <summary>
              获取枚举值+描述
             </summary>
-            <param name="enumType">枚举的类型</param>
-            <returns>键值对</returns>
+            <param name="enumType">枚举类型</param>
+            <returns>键值对(枚举值-描述)</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumNameValues(System.Type)">
              <summary>
-             获取枚举名+值
+             获取枚举名称+枚举值
              </summary>
-            <param name="enumType">枚举的类型</param>
-             <returns></returns>
+            <param name="enumType">枚举类型</param>
+             <returns>键值对(枚举名称-枚举值)</returns>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.EnumExtension.GetEnumValueNames(System.Type)">
              <summary>
-             获取枚举值+名
+             获取枚举值+枚举名称
              </summary>
             <param name="enumType">枚举的类型</param>
-             <returns></returns>
+             <returns>键值对(枚举值-枚举名称)</returns>
+        </member>
+        <member name="T:Ideal.Core.Common.Extensions.LinqExtension">
+            <summary>
+            Linq相关扩展方法
+            </summary>
         </member>
         <member name="M:Ideal.Core.Common.Extensions.LinqExtension.ParameterRebinder.#ctor(System.Collections.Generic.Dictionary{System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.ParameterExpression})">
             <summary>
@@ -222,31 +333,6 @@
             <param name="exp">The exp.</param>
             <returns>Expression</returns>
         </member>
-        <member name="T:Ideal.Core.Common.Helpers.DateTimeHelper">
-            <summary>
-            时间处理帮助类
-            </summary>
-        </member>
-        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToLocalTimeDateBySeconds(System.Int64)">
-            <summary>
-             时间戳转本地时间-时间戳精确到秒
-            </summary> 
-        </member>
-        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToUnixTimestampBySeconds(System.DateTime)">
-            <summary>
-             时间转时间戳Unix-时间戳精确到秒
-            </summary> 
-        </member>
-        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToLocalTimeDateByMilliseconds(System.Int64)">
-            <summary>
-             时间戳转本地时间-时间戳精确到毫秒
-            </summary> 
-        </member>
-        <member name="M:Ideal.Core.Common.Helpers.DateTimeHelper.ToUnixTimestampByMilliseconds(System.DateTime)">
-            <summary>
-             时间转时间戳Unix-时间戳精确到毫秒
-            </summary> 
-        </member>
         <member name="T:Ideal.Core.Common.Helpers.SpaceHelper">
             <summary>
             区域计算帮助
@@ -254,10 +340,10 @@
         </member>
         <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsPtInPoly(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D[]@)">
             <summary>
-            是否在区域内
+            点是否在区域内
             </summary>
-            <param name="point"></param>
-            <param name="pts"></param>
+            <param name="point">点</param>
+            <param name="pts">区域坐标点集合</param>
             <returns></returns>
         </member>
         <member name="M:Ideal.Core.Common.Helpers.SpaceHelper.IsInAreaByCrossingNumber(Ideal.Core.Common.Helpers.Point2D@,Ideal.Core.Common.Helpers.Point2D[]@)">

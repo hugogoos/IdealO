@@ -5,7 +5,7 @@ namespace Ideal.Core.Mqtt.Configurations
     /// <summary>
     /// 配置管理
     /// </summary>
-    public interface IConfigManager
+    public interface IConfigurationCenter
     {
         /// <summary>
         /// MQTT配置

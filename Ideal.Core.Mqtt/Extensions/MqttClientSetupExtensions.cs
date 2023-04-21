@@ -21,8 +21,8 @@ namespace Ideal.Core.Mqtt.Extensions
         /// <returns></returns>
         public static IServiceCollection AddMqttClientSetup(this IServiceCollection services)
         {
-            services.AddTransient<IConfigManager, ConfigManager>();
-            var config = services.BuildServiceProvider().GetService<IConfigManager>();
+            services.AddTransient<IConfigurationCenter, ConfigurationCenter>();
+            var config = services.BuildServiceProvider().GetService<IConfigurationCenter>();
             var options = config.MqttOptions;
 
             return AddMqttClientSetupWithConfig(services, options);

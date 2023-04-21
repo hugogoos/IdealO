@@ -5,7 +5,7 @@ namespace Ideal.Core.Redis.Configurations
     /// <summary>
     /// 配置管理
     /// </summary>
-    public interface IConfigManager
+    public interface IConfigurationCenter
     {
         /// <summary>
         /// Redis配置

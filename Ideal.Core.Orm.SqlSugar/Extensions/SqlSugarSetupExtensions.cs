@@ -1,6 +1,6 @@
-﻿using Ideal.Core.Orm.SqlSugar.Configurations;
+﻿using Ideal.Core.Orm.Domain;
+using Ideal.Core.Orm.SqlSugar.Configurations;
 using Ideal.Core.Orm.SqlSugar.Options;
-using Ideal.Core.Orm.SqlSugar.Organization;
 using Ideal.Core.Orm.SqlSugar.UnitOfWorks;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
@@ -16,33 +16,35 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// SqlSugar启动项
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="connectionString">数据库字符串链接</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public static void AddSqlSugarSetup(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
         {
-            // 把多个连接对象注入服务，这里必须采用Scope，因为有事务操作
-            services.AddScoped<ISqlSugarClient>(o =>
+            services.AddTransient<IConfigurationCenter, ConfigurationCenter>();
+            var config = services.BuildServiceProvider().GetService<IConfigurationCenter>();
+            var sqlSugarOption = config?.SqlSugarOptions;
+            if (sqlSugarOption is null)
             {
-                return new SqlSugarScope(new ConnectionConfig()
-                {
-                    ConnectionString = connectionString,
-                    DbType = DbType.MySql,
-                    IsAutoCloseConnection = true,
-                    InitKeyType = InitKeyType.Attribute,
-                    MoreSettings = new ConnMoreSettings()
-                    {
-                        IsWithNoLockQuery = true,
-                        DefaultCacheDurationInSeconds = 5,
-                        IsAutoRemoveDataCache = true
-                    },
-                    //ConfigureExternalServices = new ConfigureExternalServices
-                    //{
-                    //    DataInfoCacheService = new SugarMemoryCache()
-                    //}
-                });
-            });
+                throw new ArgumentException("请检查SqlSugarOptions配置是否添加");
+            }
 
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            if (sqlSugarOption.SingleDbOption is not null)
+            {
+                services.AddSqlSugarSingleDbSetup();
+            }
+            else if (sqlSugarOption.MultiDbOptions is not null)
+            {
+                services.AddSqlSugarMultiDbSetup();
+            }
+            else if (sqlSugarOption.MasterSlaveOption is not null)
+            {
+                services.AddSqlSugaMasterSlaverDbSetup();
+            }
+            else
+            {
+                throw new ArgumentException("请检查SqlSugarOptions配置是否正确");
+            }
+
+            return services;
         }
 
         /// <summary>
@@ -50,28 +52,85 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
+        public static IServiceCollection AddSqlSugarSingleDbSetup(this IServiceCollection services)
         {
-            services.AddTransient<IConfigManager, ConfigManager>();
-            var config = services.BuildServiceProvider().GetService<IConfigManager>();
-            var connectionString = config.ConnectionString;
-            if (connectionString == null)
+            services.AddTransient<IConfigurationCenter, ConfigurationCenter>();
+            var config = services.BuildServiceProvider().GetService<IConfigurationCenter>();
+            var option = config?.SqlSugarOptions?.SingleDbOption;
+            if (option is null)
             {
-                throw new ArgumentException("请检查ConnectionString配置是否添加");
+                throw new ArgumentException("请检查SqlSugarOptions.SingleDbOption配置是否添加");
             }
 
             services.AddSqlSugarSetupWithConfig(optionBuilder =>
             {
-                optionBuilder.ConnectionString = connectionString;
-                optionBuilder.DbType = DbType.MySql;
-                optionBuilder.IsAutoCloseConnection = true;
-                optionBuilder.InitKeyType = InitKeyType.Attribute;
-                optionBuilder.MoreSettings = new ConnMoreSettings()
+                var config = new ConnectionConfig
                 {
-                    IsWithNoLockQuery = true,
-                    DefaultCacheDurationInSeconds = 5,
-                    IsAutoRemoveDataCache = true
+                    ConnectionString = option.ConnectionString,
+                    DbType = option.DbType,
+                    IsAutoCloseConnection = true,
+                    InitKeyType = InitKeyType.Attribute,
+                    MoreSettings = new ConnMoreSettings()
+                    {
+                        IsWithNoLockQuery = true,
+                        DefaultCacheDurationInSeconds = 5,
+                        IsAutoRemoveDataCache = true
+                    }
                 };
+
+                if (!string.IsNullOrWhiteSpace(option.ConfigId))
+                {
+                    config.ConfigId = option.ConfigId;
+                }
+
+                optionBuilder.Add(config);
+            });
+
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            return services;
+        }
+
+        /// <summary>
+        /// SqlSugar启动项
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddSqlSugarMultiDbSetup(this IServiceCollection services)
+        {
+            services.AddTransient<IConfigurationCenter, ConfigurationCenter>();
+            var config = services.BuildServiceProvider().GetService<IConfigurationCenter>();
+            var options = config?.SqlSugarOptions?.MultiDbOptions;
+            if (options is null || !options.Any())
+            {
+                throw new ArgumentException("请检查SqlSugarOptions.MultiDbOptions配置是否添加");
+            }
+
+            var unique = options.DistinctBy(m => m.ConfigId);
+
+            if (unique.Count() != options.Length)
+            {
+                throw new ArgumentException("请确保ConfigId唯一");
+            }
+
+            services.AddSqlSugarSetupWithConfig(optionBuilder =>
+            {
+                foreach (var item in options)
+                {
+                    optionBuilder.Add(new ConnectionConfig
+                    {
+                        ConfigId = item.ConfigId,
+                        ConnectionString = item.ConnectionString,
+                        DbType = item.DbType,
+                        IsAutoCloseConnection = true,
+                        InitKeyType = InitKeyType.Attribute,
+                        MoreSettings = new ConnMoreSettings()
+                        {
+                            IsWithNoLockQuery = true,
+                            DefaultCacheDurationInSeconds = 5,
+                            IsAutoRemoveDataCache = true
+                        }
+                    });
+                }
             });
             return services;
         }
@@ -81,54 +140,56 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddSqlSugaMasterSlaverSetup(this IServiceCollection services)
+        public static IServiceCollection AddSqlSugaMasterSlaverDbSetup(this IServiceCollection services)
         {
-            services.AddTransient<IConfigManager, ConfigManager>();
-            var config = services.BuildServiceProvider().GetService<IConfigManager>();
-            var options = config.ConnectionStrings;
-            if (options == null)
+            services.AddTransient<IConfigurationCenter, ConfigurationCenter>();
+            var config = services.BuildServiceProvider().GetService<IConfigurationCenter>();
+            var option = config?.SqlSugarOptions?.MasterSlaveOption;
+            if (option is null)
             {
-                throw new ArgumentException(nameof(config.ConnectionString));
+                throw new ArgumentException("请检查SqlSugarOptions.MasterSlaveOption配置是否添加");
             }
 
             services.AddSqlSugarSetupWithConfig(optionBuilder =>
             {
-                optionBuilder.ConnectionString = options.Master;
-                optionBuilder.DbType = DbType.MySql;
-                optionBuilder.IsAutoCloseConnection = true;
-                optionBuilder.InitKeyType = InitKeyType.Attribute;
-                optionBuilder.MoreSettings = new ConnMoreSettings()
+                optionBuilder.Add(new ConnectionConfig
                 {
-                    IsWithNoLockQuery = true,
-                    DefaultCacheDurationInSeconds = 5,
-                    IsAutoRemoveDataCache = true
-                };
-
-                optionBuilder.SlaveConnectionConfigs = options.Slaves.Select(connectionString => new SlaveConnectionConfig
-                {
-                    HitRate = 10,
-                    ConnectionString = connectionString
-                }).ToList();
+                    ConnectionString = option.MasterConnectionString,
+                    DbType = option.DbType,
+                    IsAutoCloseConnection = true,
+                    InitKeyType = InitKeyType.Attribute,
+                    MoreSettings = new ConnMoreSettings()
+                    {
+                        IsWithNoLockQuery = true,
+                        DefaultCacheDurationInSeconds = 5,
+                        IsAutoRemoveDataCache = true
+                    },
+                    SlaveConnectionConfigs = option.SlaveConnectionStrings.Select(connectionString => new SlaveConnectionConfig
+                    {
+                        HitRate = 10,
+                        ConnectionString = connectionString
+                    }).ToList()
+                });
             });
             return services;
         }
 
         /// <summary>
-        /// Mqtt客户端启动项
+        /// 客户端启动项
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configure">Mqtt配置项</param>
         /// <returns></returns>
         public static IServiceCollection AddSqlSugarSetupWithConfig(this IServiceCollection services, Action<ConnectionConfigOptions> configure)
         {
-            services.AddScoped<OrgContext>();
-
-            // 把多个连接对象注入服务，这里必须采用Scope，因为有事务操作
-            services.AddSingleton<ISqlSugarClient>(serviceProvider =>
+            services.AddSingleton<IDbContext>(serviceProvider =>
             {
                 var optionBuilder = new ConnectionConfigOptions(serviceProvider);
                 configure(optionBuilder);
-                var scope = new SqlSugarScope(optionBuilder,
+                return new SqlSugarDbContext
+                {
+                    ConnectionConfigs = optionBuilder,
+                    ISqlSugarClient = new SqlSugarScope(optionBuilder,
                     db =>
                     {
                         ////每次Sql执行前事件
@@ -155,10 +216,8 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
                         //    }
                         //    return new System.Collections.Generic.KeyValuePair<string, SugarParameter[]>(sql, pars);
                         //};
-                    }
-                );
-
-                return scope;
+                    })
+                };
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

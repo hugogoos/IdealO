@@ -5,7 +5,7 @@ namespace Ideal.Core.Orm.SqlSugar.Options
     /// <summary>
     /// SqlSugar配置项创建
     /// </summary>
-    public class ConnectionConfigOptions : ConnectionConfig
+    public class ConnectionConfigOptions : List<ConnectionConfig>
     {
         /// <summary>
         /// 

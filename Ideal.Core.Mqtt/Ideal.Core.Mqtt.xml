@@ -4,28 +4,28 @@
         <name>Ideal.Core.Mqtt</name>
     </assembly>
     <members>
-        <member name="T:Ideal.Core.Mqtt.Configurations.ConfigManager">
+        <member name="T:Ideal.Core.Mqtt.Configurations.ConfigurationCenter">
             <summary>
             配置管理
             </summary>
         </member>
-        <member name="M:Ideal.Core.Mqtt.Configurations.ConfigManager.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Ideal.Core.Mqtt.Configurations.ConfigurationCenter.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             构造函数
             </summary>
             <param name="configuration">IConfiguration</param>
         </member>
-        <member name="P:Ideal.Core.Mqtt.Configurations.ConfigManager.MqttOptions">
+        <member name="P:Ideal.Core.Mqtt.Configurations.ConfigurationCenter.MqttOptions">
             <summary>
             MQTT配置
             </summary>
         </member>
-        <member name="T:Ideal.Core.Mqtt.Configurations.IConfigManager">
+        <member name="T:Ideal.Core.Mqtt.Configurations.IConfigurationCenter">
             <summary>
             配置管理
             </summary>
         </member>
-        <member name="P:Ideal.Core.Mqtt.Configurations.IConfigManager.MqttOptions">
+        <member name="P:Ideal.Core.Mqtt.Configurations.IConfigurationCenter.MqttOptions">
             <summary>
             MQTT配置
             </summary>
@@ -331,7 +331,7 @@
             
             </summary>
         </member>
-        <member name="M:Ideal.Core.Mqtt.Services.MqttClientRepository.#ctor(Microsoft.Extensions.Logging.ILogger{Ideal.Core.Mqtt.Services.MqttClientRepository},System.Collections.Generic.List{MQTTnet.Extensions.ManagedClient.ManagedMqttClientOptions},Ideal.Core.Mqtt.Configurations.IConfigManager)">
+        <member name="M:Ideal.Core.Mqtt.Services.MqttClientRepository.#ctor(Microsoft.Extensions.Logging.ILogger{Ideal.Core.Mqtt.Services.MqttClientRepository},System.Collections.Generic.List{MQTTnet.Extensions.ManagedClient.ManagedMqttClientOptions},Ideal.Core.Mqtt.Configurations.IConfigurationCenter)">
             <summary>
             
             </summary>

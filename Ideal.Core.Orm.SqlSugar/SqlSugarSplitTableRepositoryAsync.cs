@@ -8,7 +8,12 @@ namespace Ideal.Core.Orm.SqlSugar
     public abstract partial class SqlSugarSplitTableRepository<TAggregateRoot, TKey> : SqlSugarRepository<TAggregateRoot, TKey>, ISplitTableRepository<TAggregateRoot, TKey>, IQuerableRepository<TAggregateRoot, TKey>, IRepository<TAggregateRoot, TKey>
         where TAggregateRoot : class, IAggregateRoot<TKey>, new()
     {
-        public virtual async Task<TAggregateRoot> FindByIdAsync(TKey key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override async Task<TAggregateRoot> FindByIdAsync(TKey key)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -21,7 +26,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<TAggregateRoot> FirstOrDefaultAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override async Task<TAggregateRoot> FirstOrDefaultAsync()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -34,7 +43,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<TAggregateRoot> FirstOrDefaultAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override async Task<TAggregateRoot> FirstOrDefaultAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -47,7 +61,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override async Task<IEnumerable<TAggregateRoot>> FindAllAsync()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -60,6 +78,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
         public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
@@ -73,7 +97,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override async Task<IEnumerable<TAggregateRoot>> FindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -86,6 +115,13 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public virtual async Task<IEnumerable<TAggregateRoot>> FindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
@@ -99,7 +135,14 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
+        public override async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = new RefAsync<int>();
             var query = Context.Queryable<TAggregateRoot>();
@@ -121,6 +164,15 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
         public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = new RefAsync<int>();
@@ -143,7 +195,15 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
-        public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
+        public override async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = new RefAsync<int>();
             var query = Context.Queryable<TAggregateRoot>().Where(predicate);
@@ -165,6 +225,16 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="predicate"></param>
+        /// <param name="orderByKeySelector"></param>
+        /// <param name="orderByType"></param>
+        /// <param name="pager"></param>
+        /// <returns></returns>
         public virtual async Task<IPagedList<TAggregateRoot>> PagedFindAllAsync(DateTime startTime, DateTime endTime, Expression<Func<TAggregateRoot, bool>> predicate, Expression<Func<TAggregateRoot, object>> orderByKeySelector, OrderByMode orderByType, Pager pager)
         {
             var totalCount = new RefAsync<int>();
@@ -187,7 +257,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return result;
         }
 
-        public virtual async Task<bool> ExistsAsync(TKey key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override async Task<bool> ExistsAsync(TKey key)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -200,7 +275,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<bool> ExistsAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override async Task<bool> ExistsAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -213,7 +293,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<bool> AnyAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override async Task<bool> AnyAsync()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -226,7 +310,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override async Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -239,7 +328,11 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<int> CountAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override async Task<int> CountAsync()
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -252,7 +345,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<int> CountAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override async Task<int> CountAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -265,7 +363,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<int> CreateAsync(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override async Task<int> CreateAsync(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -283,7 +386,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> CreateAsync(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override async Task<int> CreateAsync(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -301,7 +409,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> UpdateAsync(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override async Task<int> UpdateAsync(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -319,7 +432,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> UpdateAsync(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override async Task<int> UpdateAsync(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -337,33 +455,50 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> UpdateColumnsAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnPredicate"></param>
+        /// <param name="wherePredicate"></param>
+        /// <returns></returns>
+        public override Task<int> UpdateColumnsAsync(Expression<Func<TAggregateRoot, bool>> columnPredicate, Expression<Func<TAggregateRoot, bool>> wherePredicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
             {
-                return await Context.Updateable<TAggregateRoot>().SetColumns(predicate).Where(t => t.Id != null).ExecuteCommandAsync();
+                return Context.Updateable<TAggregateRoot>().SetColumns(columnPredicate).Where(wherePredicate).ExecuteCommandAsync();
             }
             else
             {
-                return await Context.Updateable<TAggregateRoot>().SetColumns(predicate).Where(t => t.Id != null).SplitTable().ExecuteCommandAsync();
+                return Context.Updateable<TAggregateRoot>().SetColumns(columnPredicate).Where(wherePredicate).SplitTable().ExecuteCommandAsync();
             }
         }
 
-        public virtual async Task<int> UpdateColumnsAsync(Expression<Func<TAggregateRoot, TAggregateRoot>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnPredicate"></param>
+        /// <param name="wherePredicate"></param>
+        /// <returns></returns>
+        public override Task<int> UpdateColumnsAsync(Expression<Func<TAggregateRoot, TAggregateRoot>> columnPredicate, Expression<Func<TAggregateRoot, bool>> wherePredicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
             {
-                return await Context.Updateable<TAggregateRoot>().SetColumns(predicate).Where(t => t.Id != null).ExecuteCommandAsync();
+                return Context.Updateable<TAggregateRoot>().SetColumns(columnPredicate).Where(wherePredicate).ExecuteCommandAsync();
             }
             else
             {
-                return await Context.Updateable<TAggregateRoot>().SetColumns(predicate).Where(t => t.Id != null).SplitTable().ExecuteCommandAsync();
+                return Context.Updateable<TAggregateRoot>().SetColumns(columnPredicate).Where(wherePredicate).SplitTable().ExecuteCommandAsync();
             }
         }
 
-        public virtual async Task<int> SaveAsync(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override async Task<int> SaveAsync(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -373,7 +508,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> SaveAsync(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override async Task<int> SaveAsync(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -383,7 +523,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> RemoveByIdAsync(TKey key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override async Task<int> RemoveByIdAsync(TKey key)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)
@@ -397,7 +542,12 @@ namespace Ideal.Core.Orm.SqlSugar
             }
         }
 
-        public virtual async Task<int> RemoveAsync(TAggregateRoot entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override async Task<int> RemoveAsync(TAggregateRoot entity)
         {
             if (entity != null)
             {
@@ -415,7 +565,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> RemoveAsync(IEnumerable<TAggregateRoot> entities)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public override async Task<int> RemoveAsync(IEnumerable<TAggregateRoot> entities)
         {
             if (entities != null && entities.Any())
             {
@@ -433,7 +588,12 @@ namespace Ideal.Core.Orm.SqlSugar
             return await Task.FromResult(0);
         }
 
-        public virtual async Task<int> RemoveAsync(Expression<Func<TAggregateRoot, bool>> predicate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public override async Task<int> RemoveAsync(Expression<Func<TAggregateRoot, bool>> predicate)
         {
             var isSplitTable = ClassHelper.IsSplitTable<TAggregateRoot>();
             if (!isSplitTable)

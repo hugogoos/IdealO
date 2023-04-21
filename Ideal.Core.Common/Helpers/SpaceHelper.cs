@@ -6,10 +6,10 @@
     public class SpaceHelper
     {
         /// <summary>
-        /// 是否在区域内
+        /// 点是否在区域内
         /// </summary>
-        /// <param name="point"></param>
-        /// <param name="pts"></param>
+        /// <param name="point">点</param>
+        /// <param name="pts">区域坐标点集合</param>
         /// <returns></returns>
         public static bool IsPtInPoly(in Point2D point, in Point2D[] pts)
         {

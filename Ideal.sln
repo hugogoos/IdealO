@@ -21,7 +21,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ideal.Core.Orm.SqlSugar", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ideal.Core.Common.Test", "Ideal.Core.Common.Test\Ideal.Core.Common.Test.csproj", "{4D1EA517-0FD0-48BE-AE7E-C34EB0B106C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ideal.Core.Quartz", "Ideal.Core.Quartz\Ideal.Core.Quartz.csproj", "{CB2A6330-1FE4-482B-8559-ABBA2D929206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ideal.Core.Quartz", "Ideal.Core.Quartz\Ideal.Core.Quartz.csproj", "{CB2A6330-1FE4-482B-8559-ABBA2D929206}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5274CB30-6439-4A5A-A998-6EB5A219443C}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Common-Extension-DateTime.md = docs\Common-Extension-DateTime.md
+		docs\Common-Extension-Enum.md = docs\Common-Extension-Enum.md
+		docs\Common.md = docs\Common.md
+		docs\Document.md = docs\Document.md
+		docs\Mqtt.md = docs\Mqtt.md
+		docs\Orm.md = docs\Orm.md
+		docs\Orm.SqlSugar.md = docs\Orm.SqlSugar.md
+		docs\README.md = docs\README.md
+		docs\Redis.md = docs\Redis.md
+		docs\SignalR.md = docs\SignalR.md
+		docs\Web.md = docs\Web.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

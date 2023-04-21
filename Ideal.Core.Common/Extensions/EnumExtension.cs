@@ -5,7 +5,7 @@ using System.Reflection;
 namespace Ideal.Core.Common.Extensions
 {
     /// <summary>
-    /// 枚举扩展
+    /// 枚举相关扩展方法
     /// </summary>
     public static class EnumExtension
     {
@@ -14,42 +14,75 @@ namespace Ideal.Core.Common.Extensions
         private static readonly ConcurrentDictionary<Type, Dictionary<string, int>> _concurrentNameValueDictionary = new();
         private static readonly ConcurrentDictionary<Type, Dictionary<int, string>> _concurrentValueNameDictionary = new();
         private static readonly ConcurrentDictionary<Enum, string> _concurrentDescriptionDictionary = new();
-        private static readonly ConcurrentDictionary<string, string> _concurrentEnumByDescriptionDictionary = new();
 
         /// <summary>
-        /// 根据枚举名称转换成枚举
+        /// 根据枚举名称转换成枚举，转换失败则返回空
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">枚举类型</typeparam>
         /// <param name="name">枚举名称</param>
-        /// <returns></returns>
+        /// <returns>枚举</returns>
         public static T? ToEnum<T>(this string name) where T : struct, Enum
         {
-            Enum.TryParse(typeof(T), name, true, out var result);
-            if (result is null)
+            if (Enum.TryParse(typeof(T), name, true, out var result))
             {
-                return default;
+                return (T)result!;
             }
 
-            return (T?)result!;
-
+            return default;
         }
 
         /// <summary>
-        /// 根据枚举值转换成枚举
+        /// 根据枚举名称转换成枚举，转换失败则返回默认枚举值
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="name">枚举名称</param>
+        /// <param name="defaultValue">默认枚举值</param>
+        /// <returns>枚举</returns>
+        public static T ToEnum<T>(this string name, T defaultValue) where T : struct, Enum
+        {
+            if (Enum.TryParse(typeof(T), name, true, out var result))
+            {
+                return (T)result!;
+            }
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// 根据枚举值转换成枚举，转换失败则返回空
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
         /// <param name="value">枚举值</param>
-        /// <returns></returns>
+        /// <returns>枚举</returns>
         public static T? ToEnum<T>(this int value) where T : struct, Enum
         {
             return value.ToString().ToEnum<T>();
         }
 
         /// <summary>
-        /// 将注释转换成枚举值，匹配不上返回Null
+        /// 根据枚举值转换成枚举，转换失败则返回默认枚举值
         /// </summary>
-        /// <param name="description"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="value">枚举值</param>
+        /// <param name="defaultValue">默认枚举值</param>
+        /// <returns>枚举</returns>
+        public static T? ToEnum<T>(this int value, T defaultValue) where T : struct, Enum
+        {
+            var result = value.ToString().ToEnum<T>();
+            if (result is not null)
+            {
+                return result;
+            }
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// 将枚举描述转换成枚举值，匹配失败返回空
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="description">枚举描述</param>
+        /// <returns>枚举</returns>
         public static T? ToEnumByDescription<T>(this string description) where T : struct, Enum
         {
             var type = typeof(T);
@@ -66,48 +99,104 @@ namespace Ideal.Core.Common.Extensions
         }
 
         /// <summary>
-        /// 根据枚举值转换成枚举名称
+        /// 将枚举描述转换成枚举值，匹配失败返回默认枚举值
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="description">枚举描述</param>
+        /// <param name="defaultValue">默认枚举值</param>
+        /// <returns>枚举</returns>
+        public static T? ToEnumByDescription<T>(this string description, T defaultValue) where T : struct, Enum
+        {
+            var type = typeof(T);
+            foreach (var obj in Enum.GetValues(type))
+            {
+                var nEnum = (Enum)obj;
+                if (nEnum.ToDescription() == description)
+                {
+                    return (T)obj;
+                }
+            }
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// 根据枚举值转换成枚举名称，转换失败则返回当前枚举值
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
         /// <param name="value">枚举值</param>
-        /// <returns></returns>
+        /// <returns>枚举名称</returns>
         public static string ToEnumName<T>(this int value) where T : struct, Enum
         {
             var result = value.ToEnum<T>();
-            if (result is null)
+            if (result is not null)
             {
-                return value.ToString();
+                return ((T)result).ToString();
             }
 
-            return result.ToString()!;
-
+            return value.ToString();
         }
 
         /// <summary>
-        /// 根据枚举名称转换成枚举值
+        /// 根据枚举值转换成枚举名称，转换失败则返回默认枚举名称
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="value">枚举值</param>
+        /// <param name="defaultValue">默认枚举名称</param>
+        /// <returns>枚举名称</returns>
+        public static string ToEnumName<T>(this int value, T defaultValue) where T : struct, Enum
+        {
+            var result = value.ToEnum<T>();
+            if (result is not null)
+            {
+                return ((T)result).ToString();
+            }
+
+            return defaultValue.ToString();
+        }
+
+        /// <summary>
+        /// 根据枚举名称转换成枚举值，转换失败则返回空
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
         /// <param name="name">枚举名称</param>
-        /// <returns></returns>
+        /// <returns>枚举值</returns>
         public static int? ToEnumValue<T>(this string name) where T : struct, Enum
         {
             var result = name.ToEnum<T>();
-            if (result is null)
+            if (result is not null)
             {
-                return null;
-
+                return result.GetHashCode();
             }
 
-            return result.GetHashCode();
+            return null;
         }
 
         /// <summary>
-        /// 获取枚举的描述信息(Descripion)。
+        /// 根据枚举名称转换成枚举值，转换失败则返回默认枚举值
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="name">枚举名称</param>
+        /// <param name="defaultValue">默认枚举值</param>
+        /// <returns>枚举值</returns>
+        public static int ToEnumValue<T>(this string name, T defaultValue) where T : struct, Enum
+        {
+            var result = name.ToEnum<T>();
+            if (result is not null)
+            {
+                return result.GetHashCode();
+            }
+
+            return defaultValue.GetHashCode();
+        }
+
+        /// <summary>
+        /// 获取枚举描述(Descripion)。
         /// 支持位域，如果是位域组合值，多个按分隔符组合。
         /// </summary>
-        /// <param name="source"></param>
+        /// <param name="source">枚举</param>
         /// <param name="split">位枚举的分割符号（仅对位枚举有作用）</param>
-        /// <returns></returns>
+        /// <returns>枚举描述</returns>
         public static string ToDescription(this Enum source, string split = ",")
         {
             return _concurrentDescriptionDictionary.GetOrAdd(source, (key) =>
@@ -131,10 +220,10 @@ namespace Ideal.Core.Common.Extensions
         }
 
         ///<summary>
-        /// 获取枚举名+描述
+        /// 获取枚举名称+描述
         ///</summary>
-        ///<param name="enumType">枚举的类型</param>
-        ///<returns>键值对</returns>
+        ///<param name="enumType">枚举类型</param>
+        ///<returns>键值对(枚举名称-描述)</returns>
         public static Dictionary<string, string> ToEnumNameDescriptions(this Type enumType)
         {
             var dic = new Dictionary<string, string>();
@@ -162,8 +251,8 @@ namespace Ideal.Core.Common.Extensions
         ///<summary>
         /// 获取枚举值+描述
         ///</summary>
-        ///<param name="enumType">枚举的类型</param>
-        ///<returns>键值对</returns>
+        ///<param name="enumType">枚举类型</param>
+        ///<returns>键值对(枚举值-描述)</returns>
         public static Dictionary<int, string> ToEnumValueDescriptions(this Type enumType)
         {
             var dic = new Dictionary<int, string>();
@@ -190,10 +279,10 @@ namespace Ideal.Core.Common.Extensions
         }
 
         /// <summary>
-        /// 获取枚举名+值
+        /// 获取枚举名称+枚举值
         /// </summary>
-        ///<param name="enumType">枚举的类型</param>
-        /// <returns></returns>
+        ///<param name="enumType">枚举类型</param>
+        /// <returns>键值对(枚举名称-枚举值)</returns>
         public static Dictionary<string, int> GetEnumNameValues(this Type enumType)
         {
             var dic = new Dictionary<string, int>();
@@ -219,10 +308,10 @@ namespace Ideal.Core.Common.Extensions
         }
 
         /// <summary>
-        /// 获取枚举值+名
+        /// 获取枚举值+枚举名称
         /// </summary>
         ///<param name="enumType">枚举的类型</param>
-        /// <returns></returns>
+        /// <returns>键值对(枚举值-枚举名称)</returns>
         public static Dictionary<int, string> GetEnumValueNames(this Type enumType)
         {
             var dic = new Dictionary<int, string>();

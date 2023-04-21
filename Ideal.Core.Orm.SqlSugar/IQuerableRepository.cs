@@ -14,6 +14,13 @@ namespace Ideal.Core.Orm.SqlSugar
         where TAggregateRoot : class, IAggregateRoot<TKey>
     {
         /// <summary>
+        /// sql语句查询
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        ISugarQueryable<TAggregateRoot> SqlQuery(string sql);
+
+        /// <summary>
         /// 查询实体
         /// </summary>
         /// <returns>实体的IQueryable结果</returns>

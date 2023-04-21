@@ -16,55 +16,125 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
-        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.ConfigManager">
+        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.ConfigurationCenter">
             <summary>
             配置管理
             </summary>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.Configurations.ConfigManager.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.Configurations.ConfigurationCenter.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             构造函数
             </summary>
             <param name="configuration">IConfiguration</param>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.ConfigManager.ConnectionString">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.ConfigurationCenter.ConnectionString">
             <summary>
             字符串链接
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.ConfigManager.ConnectionStrings">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.ConfigurationCenter.ConnectionStrings">
             <summary>
             数据库主从连接字符串
             </summary>
         </member>
-        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.IConfigManager">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.ConfigurationCenter.SqlSugarOptions">
+            <summary>
+            数据库配置
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.IConfigurationCenter">
             <summary>
             配置管理
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.IConfigManager.ConnectionString">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.IConfigurationCenter.ConnectionString">
             <summary>
             数据库连接字符串
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.IConfigManager.ConnectionStrings">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.IConfigurationCenter.ConnectionStrings">
             <summary>
             数据库主从连接字符串
             </summary>
         </member>
-        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOptions">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.IConfigurationCenter.SqlSugarOptions">
+            <summary>
+            数据库配置
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.Options.DbOption">
+            <summary>
+            多库 配置
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.DbOption.ConfigId">
+            <summary>
+            多库唯一标识
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.DbOption.ConnectionString">
+            <summary>
+            多库连接字符串
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.DbOption.DbType">
+            <summary>
+            多库数据库类型
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOption">
             <summary>
             主从库 配置
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOptions.Master">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOption.DbType">
+            <summary>
+            多库数据库类型
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOption.MasterConnectionString">
             <summary>
             主库连接字符串
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOptions.Slaves">
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.MasterSlaveOption.SlaveConnectionStrings">
             <summary>
             从库连接字符串
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.Configurations.Options.SqlSugarOptions">
+            <summary>
+            主从库 配置
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.SqlSugarOptions.SingleDbOption">
+            <summary>
+            多库
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.SqlSugarOptions.MultiDbOptions">
+            <summary>
+            多库
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.Configurations.Options.SqlSugarOptions.MasterSlaveOption">
+            <summary>
+            主从
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext">
+            <summary>
+            DB上下文
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.ISqlSugarClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.ConnectionConfigs">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions">
@@ -87,7 +157,6 @@
             查找第一个实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <returns>返回实体结果的异步任务</returns>
         </member>
@@ -96,7 +165,6 @@
             根据条件查找第一个实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="predicate">条件谓词</param>
             <returns>返回实体结果的异步任务</returns>
@@ -106,7 +174,6 @@
             查找所有实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <returns>返回所有实体的列表的异步任务</returns>
         </member>
@@ -115,7 +182,6 @@
             查找所有分表实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="startTime">开始时间</param>
             <param name="endTime">结束时间</param>
@@ -126,7 +192,6 @@
             查找满足条件的实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="predicate">条件谓词</param>
             <returns>返回实体列表结果的异步任务</returns>
@@ -136,7 +201,6 @@
             查找满足条件的分表实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="startTime">开始时间</param>
             <param name="endTime">结束时间</param>
@@ -148,7 +212,6 @@
             分页查找所有实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="orderByKeySelector">选择用于分页前排序的键</param>
             <param name="orderByType">排序类型</param>
@@ -160,7 +223,6 @@
             分页查找所有分表实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="startTime">开始时间</param>
             <param name="endTime">结束时间</param>
@@ -174,7 +236,6 @@
             分页查找满足条件的实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="predicate">条件谓词</param>
             <param name="orderByKeySelector">选择用于分页前排序的键</param>
@@ -187,7 +248,6 @@
             分页查找满足条件的分表实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="startTime">开始时间</param>
             <param name="endTime">结束时间</param>
@@ -212,7 +272,6 @@
             判断是否存在满足条件的实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="predicate">条件谓词</param>
             <returns>是否存在</returns>
@@ -222,7 +281,6 @@
             判断是否存在实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <returns>是否存在</returns>
         </member>
         <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions.AnyAsync``1(SqlSugar.ISugarQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
@@ -230,7 +288,6 @@
             判断是否存在满足条件的实体
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="predicate">条件谓词</param>
             <returns>是否存在</returns>
@@ -240,7 +297,6 @@
             计算实体个数
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <returns>条数</returns>
         </member>
@@ -249,7 +305,6 @@
             计算满足条件的实体个数
             </summary>
             <typeparam name="T"></typeparam>
-            <typeparam name="TKey"></typeparam>
             <param name="source"></param>
             <param name="predicate">条件谓词</param>
             <returns>是否存在</returns>
@@ -306,22 +361,28 @@
             SqlSugar 启动服务
             </summary>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugarSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugarSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             SqlSugar启动项
             </summary>
             <param name="services"></param>
-            <param name="connectionString">数据库字符串链接</param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugarSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugarSingleDbSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             SqlSugar启动项
             </summary>
             <param name="services"></param>
             <returns></returns>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugaMasterSlaverSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugarMultiDbSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            SqlSugar启动项
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugaMasterSlaverDbSetup(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             SqlSugar 主从启动项
             </summary>
@@ -330,7 +391,7 @@
         </member>
         <member name="M:Ideal.Core.Orm.SqlSugar.Extensions.SqlSugarSetupExtensions.AddSqlSugarSetupWithConfig(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Ideal.Core.Orm.SqlSugar.Options.ConnectionConfigOptions})">
             <summary>
-            Mqtt客户端启动项
+            客户端启动项
             </summary>
             <param name="services"></param>
             <param name="configure">Mqtt配置项</param>
@@ -342,6 +403,13 @@
             </summary>
             <typeparam name="TAggregateRoot">充当聚合根的实体类型</typeparam>
             <typeparam name="TKey">实体的主键类型</typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.IQuerableRepository`2.SqlQuery(System.String)">
+            <summary>
+            sql语句查询
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
         </member>
         <member name="M:Ideal.Core.Orm.SqlSugar.IQuerableRepository`2.Query">
             <summary>
@@ -420,6 +488,19 @@
             <param name="pager">分页器</param>
             <returns>分页的实体列表</returns>
         </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.ISqlSugarSqlRepository`1">
+            <summary>
+            Sql仓储接口
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.ISqlSugarSqlRepository`1.SqlQuery(System.String)">
+            <summary>
+            sql语句查询
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
         <member name="T:Ideal.Core.Orm.SqlSugar.Options.ConnectionConfigOptions">
             <summary>
             SqlSugar配置项创建
@@ -436,47 +517,1374 @@
             </summary>
             <param name="serviceProvider"></param>
         </member>
-        <member name="T:Ideal.Core.Orm.SqlSugar.Organization.OrgContext">
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2">
             <summary>
-            机构上下文
+            
             </summary>
+            <typeparam name="TAggregateRoot"></typeparam>
+            <typeparam name="TKey"></typeparam>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.UserId">
-            <summary>
-            用户Id
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.UserName">
-            <summary>
-            用户名
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.CurrentOrgId">
-            <summary>
-            机构Id
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.OrgIds">
-            <summary>
-            机构Id集合
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.GetUserIdAndName">
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Context">
             <summary>
             
             </summary>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.Organization.OrgContext.HasOrganization">
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.SugarQueryable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.SqlQuery(System.String)">
+            <summary>
+            sql语句查询
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Query">
             <summary>
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Query(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Query(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Query(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FindById(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FirstOrDefault">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FirstOrDefault(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FindAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.PagedFindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.PagedFindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Exists(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Exists(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Any">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Any(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Count">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Count(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Create(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Update(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Update(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="columnPredicate"></param>
+            <param name="wherePredicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="columnPredicate"></param>
+            <param name="wherePredicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Save(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Save(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.RemoveById(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Remove(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Remove(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Remove(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FindByIdAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FirstOrDefaultAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FindAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.FindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.ExistsAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.ExistsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.AnyAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.CountAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.CountAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.CreateAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.CreateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="columnPredicate"></param>
+            <param name="wherePredicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="columnPredicate"></param>
+            <param name="wherePredicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.SaveAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.SaveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.RemoveByIdAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.RemoveAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.RemoveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.RemoveAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TAggregateRoot"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.Update(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.Update(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.Save(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.Save(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.UpdateAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.SaveAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.SaveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+            <typeparam name="TAggregateRoot"></typeparam>
+            <typeparam name="TKey"></typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Query">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Query(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Query(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Query(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FindById(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FirstOrDefault">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FirstOrDefault(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FindAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.PagedFindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.PagedFindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Exists(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Exists(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Any">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Any(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Count">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Count(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.RemoveById(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Remove(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Remove(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.Remove(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FindByIdAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FirstOrDefaultAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FindAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.FindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.ExistsAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.ExistsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.AnyAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.CountAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.CountAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.RemoveByIdAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.RemoveAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.RemoveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.RemoveAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TAggregateRoot"></typeparam>
+            <typeparam name="TKey"></typeparam>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindById(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FirstOrDefault">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FirstOrDefault(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAll(System.DateTime,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAll(System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAll(System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAll(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAll(System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Exists(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Exists(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Any">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Any(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Count">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Count(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Create(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Update(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Update(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.UpdateColumns(System.Linq.Expressions.Expression{System.Func{`0,`0}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Save(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Save(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.RemoveById(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Remove(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Remove(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.Remove(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindByIdAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FirstOrDefaultAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAllAsync(System.DateTime,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.FindAllAsync(System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAllAsync(System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAllAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.PagedFindAllAsync(System.DateTime,System.DateTime,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Ideal.Core.Common.Paging.OrderByMode,Ideal.Core.Common.Paging.Pager)">
+            <summary>
+            
+            </summary>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="predicate"></param>
+            <param name="orderByKeySelector"></param>
+            <param name="orderByType"></param>
+            <param name="pager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.ExistsAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.ExistsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.AnyAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.CountAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.CountAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.CreateAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.CreateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.UpdateAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="columnPredicate"></param>
+            <param name="wherePredicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.UpdateColumnsAsync(System.Linq.Expressions.Expression{System.Func{`0,`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="columnPredicate"></param>
+            <param name="wherePredicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.SaveAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.SaveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.RemoveByIdAsync(`1)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.RemoveAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.RemoveAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.RemoveAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.DbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.SqlQuery``1(System.String)">
+            <summary>
+            sql语句查询
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.UnitOfWorks.IUnitOfWork">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.IUnitOfWork.GetDbClient">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.IUnitOfWork.BeginTran">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.IUnitOfWork.CommitTran">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.IUnitOfWork.RollbackTran">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork._tranCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork.#ctor(SqlSugar.ISqlSugarClient)">
+            <summary>
+            
+            </summary>
+            <param name="sqlSugarClient"></param>
         </member>
         <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork.GetDbClient">
             <summary>
             获取DB，保证唯一性
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork.BeginTran">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork.CommitTran">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.UnitOfWorks.UnitOfWork.RollbackTran">
+            <summary>
+            
+            </summary>
         </member>
     </members>
 </doc>

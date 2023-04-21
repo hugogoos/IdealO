@@ -6,7 +6,7 @@ namespace Ideal.Core.Orm.SqlSugar.Configurations
     /// <summary>
     /// 配置管理
     /// </summary>
-    public class ConfigManager : IConfigManager
+    public class ConfigurationCenter : IConfigurationCenter
     {
         private readonly IConfiguration _configuration;
 
@@ -14,7 +14,7 @@ namespace Ideal.Core.Orm.SqlSugar.Configurations
         /// 构造函数
         /// </summary>
         /// <param name="configuration">IConfiguration</param>
-        public ConfigManager(IConfiguration configuration)
+        public ConfigurationCenter(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -27,6 +27,12 @@ namespace Ideal.Core.Orm.SqlSugar.Configurations
         /// <summary>
         /// 数据库主从连接字符串
         /// </summary>
-        public MasterSlaveOptions ConnectionStrings => _configuration.GetSection("ConnectionStringSettings").Get<MasterSlaveOptions>();
+        public MasterSlaveOption ConnectionStrings => _configuration.GetSection("ConnectionStringSettings").Get<MasterSlaveOption>();
+
+
+        /// <summary>
+        /// 数据库配置
+        /// </summary>
+        public SqlSugarOptions SqlSugarOptions => _configuration.GetSection("SqlSugarOptions").Get<SqlSugarOptions>();
     }
 }
