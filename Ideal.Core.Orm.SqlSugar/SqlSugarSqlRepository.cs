@@ -12,15 +12,15 @@ namespace Ideal.Core.Orm.SqlSugar
         /// <summary>
         /// 
         /// </summary>
-        protected IDbContext DbContext { get; }
+        protected ISqlSugarClient Context { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dbContext"></param>
-        protected SqlSugarSqlRepository(IDbContext dbContext)
+        /// <param name="context"></param>
+        protected SqlSugarSqlRepository(ISqlSugarClient context)
         {
-            DbContext = dbContext;
+            Context = context;
         }
 
         /// <summary>
@@ -31,17 +31,15 @@ namespace Ideal.Core.Orm.SqlSugar
         /// <returns></returns>
         public virtual ISugarQueryable<T> SqlQuery<T>(string sql) where T : class, new()
         {
-            var context = (SqlSugarDbContext)DbContext;
-            var scopedContext = ((SqlSugarScope)context.ISqlSugarClient).ScopedContext;
-            if (1 == context.ConnectionConfigs.Count)
+            var context = (SqlSugarDbContext)Context;
+            if (context.IsSingleDb)
             {
-                var provider = new SqlSugarScopeProvider(scopedContext.Context);
-                return provider.SqlQueryable<T>(sql);
+                return Context.SqlQueryable<T>(sql);
             }
             else
             {
-                var provider = scopedContext.GetConnectionScopeWithAttr<T>();
-                return provider.SqlQueryable<T>(sql);
+                var dbContext = context.GetConnectionScopeWithAttr<T>();
+                return dbContext.SqlQueryable<T>(sql);
             }
         }
     }

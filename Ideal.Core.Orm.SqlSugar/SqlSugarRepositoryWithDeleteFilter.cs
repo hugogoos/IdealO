@@ -16,7 +16,7 @@ namespace Ideal.Core.Orm.SqlSugar
         /// 
         /// </summary>
         /// <param name="context"></param>
-        protected SqlSugarRepositoryWithDeleteFilter(IDbContext context) : base(context)
+        protected SqlSugarRepositoryWithDeleteFilter(ISqlSugarClient context) : base(context)
         {
         }
 

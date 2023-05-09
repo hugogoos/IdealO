@@ -182,41 +182,13 @@ namespace Ideal.Core.Orm.SqlSugar.Extensions
         /// <returns></returns>
         public static IServiceCollection AddSqlSugarSetupWithConfig(this IServiceCollection services, Action<ConnectionConfigOptions> configure)
         {
-            services.AddSingleton<IDbContext>(serviceProvider =>
+            services.AddSingleton<ISqlSugarClient>(serviceProvider =>
             {
                 var optionBuilder = new ConnectionConfigOptions(serviceProvider);
                 configure(optionBuilder);
-                return new SqlSugarDbContext
+                return new SqlSugarDbContext(optionBuilder)
                 {
-                    ConnectionConfigs = optionBuilder,
-                    ISqlSugarClient = new SqlSugarScope(optionBuilder,
-                    db =>
-                    {
-                        ////每次Sql执行前事件
-                        //db.Aop.OnLogExecuting = (sql, pars) =>
-                        //{
-                        //    //我可以在这里面写逻辑
-                        //};
-                        //db.Aop.DataExecuting = (oldValue, entityInfo) =>
-                        //{
-
-                        //};
-                        //db.Aop.DataExecuting = (value, entity) =>
-                        //{
-
-                        //};
-                        //db.Aop.OnExecutingChangeSql = (sql, pars) => //可以修改SQL和参数的值
-                        //{
-                        //    var ae3 = MysqlAesHelper.Encrypt("小王", "rw_desencrypt_2022");
-                        //    var ad3 = MysqlAesHelper.Decrypt(ae3, "rw_desencrypt_2022");
-                        //    //sql=newsql
-                        //    foreach (var p in pars) //修改
-                        //    {
-
-                        //    }
-                        //    return new System.Collections.Generic.KeyValuePair<string, SugarParameter[]>(sql, pars);
-                        //};
-                    })
+                    IsSingleDb = 1 == optionBuilder.Count,
                 };
             });
 

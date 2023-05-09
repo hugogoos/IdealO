@@ -16,7 +16,7 @@ namespace Ideal.Core.Orm.SqlSugar
         /// 
         /// </summary>
         /// <param name="context"></param>
-        protected SqlSugarRepositoryWithAudit(IDbContext context) : base(context)
+        protected SqlSugarRepositoryWithAudit(ISqlSugarClient context) : base(context)
         {
         }
 

@@ -122,21 +122,6 @@
             主从
             </summary>
         </member>
-        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext">
-            <summary>
-            DB上下文
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.ISqlSugarClient">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.ConnectionConfigs">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:Ideal.Core.Orm.SqlSugar.Extensions.ISugarQueryableExtensions">
             <summary>
             分页查询扩展类
@@ -517,6 +502,42 @@
             </summary>
             <param name="serviceProvider"></param>
         </member>
+        <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext">
+            <summary>
+            DB上下文
+            </summary>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.#ctor(SqlSugar.ConnectionConfig)">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.#ctor(System.Collections.Generic.List{SqlSugar.ConnectionConfig})">
+            <summary>
+            
+            </summary>
+            <param name="configs"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.#ctor(SqlSugar.ConnectionConfig,System.Action{SqlSugar.SqlSugarClient})">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+            <param name="configAction"></param>
+        </member>
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.#ctor(System.Collections.Generic.List{SqlSugar.ConnectionConfig},System.Action{SqlSugar.SqlSugarClient})">
+            <summary>
+            
+            </summary>
+            <param name="configs"></param>
+            <param name="configAction"></param>
+        </member>
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarDbContext.IsSingleDb">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2">
             <summary>
             
@@ -529,11 +550,11 @@
             
             </summary>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.#ctor(SqlSugar.ISqlSugarClient)">
             <summary>
             
             </summary>
-            <param name="dbContext"></param>
+            <param name="context"></param>
         </member>
         <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarRepository`2.SugarQueryable">
             <summary>
@@ -976,7 +997,7 @@
             
             </summary>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithAudit`2.#ctor(SqlSugar.ISqlSugarClient)">
             <summary>
             
             </summary>
@@ -1076,7 +1097,7 @@
             <typeparam name="TAggregateRoot"></typeparam>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarRepositoryWithDeleteFilter`2.#ctor(SqlSugar.ISqlSugarClient)">
             <summary>
             
             </summary>
@@ -1359,7 +1380,7 @@
             <typeparam name="TAggregateRoot"></typeparam>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSplitTableRepository`2.#ctor(SqlSugar.ISqlSugarClient)">
             <summary>
             
             </summary>
@@ -1804,16 +1825,16 @@
             
             </summary>
         </member>
-        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.DbContext">
+        <member name="P:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.Context">
             <summary>
             
             </summary>
         </member>
-        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.#ctor(Ideal.Core.Orm.Domain.IDbContext)">
+        <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.#ctor(SqlSugar.ISqlSugarClient)">
             <summary>
             
             </summary>
-            <param name="dbContext"></param>
+            <param name="context"></param>
         </member>
         <member name="M:Ideal.Core.Orm.SqlSugar.SqlSugarSqlRepository.SqlQuery``1(System.String)">
             <summary>

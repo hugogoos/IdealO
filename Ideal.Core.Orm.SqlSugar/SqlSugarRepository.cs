@@ -11,23 +11,22 @@ namespace Ideal.Core.Orm.SqlSugar
         /// <summary>
         /// 
         /// </summary>
-        protected SqlSugarScopeProvider Context { get; }
+        protected ISqlSugarClient Context { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dbContext"></param>
-        protected SqlSugarRepository(IDbContext dbContext) : base(dbContext)
+        /// <param name="context"></param>
+        protected SqlSugarRepository(ISqlSugarClient context) : base(context)
         {
-            var context = (SqlSugarDbContext)dbContext;
-            var scopedContext = ((SqlSugarScope)context.ISqlSugarClient).ScopedContext;
-            if (1 == context.ConnectionConfigs.Count)
+            var dbContext = (SqlSugarDbContext)context;
+            if (dbContext.IsSingleDb)
             {
-                Context = new SqlSugarScopeProvider(scopedContext.Context);
+                Context = context;
             }
             else
             {
-                Context = scopedContext.GetConnectionScopeWithAttr<TAggregateRoot>();
+                Context = dbContext.GetConnectionScopeWithAttr<TAggregateRoot>();
             }
         }
 

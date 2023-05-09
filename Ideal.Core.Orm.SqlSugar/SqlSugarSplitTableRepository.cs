@@ -17,7 +17,7 @@ namespace Ideal.Core.Orm.SqlSugar
         /// 
         /// </summary>
         /// <param name="context"></param>
-        protected SqlSugarSplitTableRepository(IDbContext context) : base(context)
+        protected SqlSugarSplitTableRepository(ISqlSugarClient context) : base(context)
         {
         }
 

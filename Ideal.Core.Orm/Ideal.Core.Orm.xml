@@ -99,11 +99,6 @@
             修改人
             </summary>
         </member>
-        <member name="T:Ideal.Core.Orm.Domain.IDbContext">
-            <summary>
-            数据上下文
-            </summary>
-        </member>
         <member name="T:Ideal.Core.Orm.Domain.IEntity`1">
             <summary>
             实体
